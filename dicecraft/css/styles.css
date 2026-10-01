@@ -1,0 +1,2480 @@
+/* Blockhead Odyssey: DiceCraft — one committed look, the website's: deep
+   indigo, Minecraft screenshots behind everything, light type, copper and
+   gold. Every color is a token on :root and every surface paints explicitly,
+   so the page holds together whatever ground the host puts behind it. The
+   Blockhead Odyssey layer at the end of this file is where the theme lives;
+   the rules above it are the game's layout. */
+
+:root {
+  /* surfaces: the deep indigo of blockheadodyssey.com */
+  --vellum:      #0b0828;
+  --vellum-lit:  #1d1845;
+  --leaf:        #231d52;
+  --leaf-sunk:   #15113a;
+  /* ink */
+  --ink:         #e8e4f6;
+  --ink-deep:    #ffffff;
+  --muted:       #aea7d2;
+  --rule:        #554d92;
+  --rule-soft:   #3a336f;
+  /* accents: copper for anything that commits you, gold for everything else */
+  --oxblood:     #c25a2a;
+  --oxblood-lit: #e0703a;
+  --gilt:        #d9a53a;
+  --gilt-lit:    #f2c75a;
+  --good:        #62c24c;
+  --bad:         #ef6a58;
+  /* map */
+  --sepia:       #8f86c9;
+  --radius: 4px;
+  /* How wide the game is allowed to get. It used to stop at 1180px, which on
+     a 1440 screen handed 260px back to the margins — and the company rail and
+     the floor plan both want every pixel there is. */
+  --board: 1400px;
+  --serif:  "Uncial Antiqua", "Iowan Old Style", Palatino, Georgia, serif;
+  --letter: "Lato", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --sans:   "Lato", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --pixel:  "Silkscreen", ui-monospace, "Courier New", monospace;
+}
+
+* { box-sizing: border-box; }
+
+/* The game is a frame, not a document. The page itself never scrolls: the
+   masthead is a fixed band, the view below it takes exactly what is left,
+   and anything too tall for that scrolls inside its own panel rather than
+   pushing the board off the bottom of the screen. */
+html { height: 100%; }
+
+body {
+  margin: 0;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.5;
+  background-color: var(--vellum);
+  /* a sheet that has been handled: grain, plus warmth pooling at the edges */
+  background-image:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 250, 235, .55) 0%, rgba(255, 250, 235, 0) 55%),
+    radial-gradient(160% 130% at 50% 100%, rgba(92, 68, 30, .13) 0%, rgba(92, 68, 30, 0) 68%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-blend-mode: normal, normal, multiply;
+}
+
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; margin: 0; color: var(--ink-deep); letter-spacing: .015em; }
+
+::selection { background: rgba(123, 47, 39, .22); }
+:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 2px; }
+
+/* --- Masthead -------------------------------------------------------------- */
+
+.topbar {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  align-items: flex-end; justify-content: space-between;
+  padding: 16px 16px 10px; max-width: var(--board); margin: 0 auto; width: 100%;
+}
+.brand h1 { font-size: 30px; color: var(--oxblood); letter-spacing: .05em; }
+.tagline { margin: 3px 0 0; color: var(--muted); font-size: 14px; font-family: var(--letter); font-style: italic; }
+
+.purse { display: flex; flex-wrap: wrap; gap: 7px; }
+/* The name you are playing under is also the way back to the characters. */
+button.coin { cursor: pointer; font: inherit; color: inherit; text-align: left; }
+button.coin:hover { border-color: var(--gilt); }
+button.coin.alarm { border-color: var(--oxblood); color: var(--oxblood); }
+button.coin.alarm b { color: var(--oxblood); }
+
+.coin {
+  display: flex; align-items: baseline; gap: 6px;
+  background: var(--leaf); border: 1px solid var(--rule);
+  border-radius: 2px; padding: 4px 11px; font-size: 14px;
+  box-shadow: 0 1px 0 rgba(255, 252, 240, .6) inset;
+}
+.coin b { font-variant-numeric: tabular-nums; color: var(--ink-deep); }
+.coin.readlog { display: none; }
+.pinned { display: flex; gap: 7px; align-items: flex-end; }
+@media (max-width: 880px) { .coin.readlog { display: flex; } }
+.coin span { color: var(--muted); font-family: var(--serif); font-size: 12px; letter-spacing: .06em; }
+
+/* What a screen that spends something is holding. The masthead carries the
+   purse, but full screen takes the masthead away, and a hall full of prices
+   with no sight of the purse is a shop with the till turned to the wall. The
+   strip sits under the header of every screen that asks you to spend, and
+   carries only what that screen spends. */
+.pursebar {
+  display: flex; flex-wrap: wrap; gap: 7px; flex: none;
+  margin: 0 0 13px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+/* Nothing left of it. Said in the color of a price you cannot pay, because
+   that is what it means on a screen like this. */
+.pursebar .coin.short { border-color: var(--oxblood); }
+.pursebar .coin.short b { color: var(--oxblood); }
+body.scened .pursebar { border-bottom-color: rgba(185, 164, 118, .4); }
+
+/* --- The whole window -----------------------------------------------------
+   The masthead and the Chronicle are reference; the board is the game. Every
+   screen can hand them their room back, and each one carries the pair of
+   controls that does it. */
+/* With the masthead gone the body has one row to fill, not two — otherwise
+   the board lands in the `auto` row and is only as tall as what is on it,
+   which is how an encounter ended up half a screen high with bare parchment
+   under it. */
+body.wide { grid-template-rows: minmax(0, 1fr); }
+body.wide > .topbar { display: none; }
+body.wide .chronicle { display: none; }
+body.wide .layout { grid-template-columns: minmax(0, 1fr); padding-block: 10px 10px; }
+body.wide .panel.invite { display: none; }
+/* Unless somebody asked for it, from the menu or by opening it. */
+body.wide .panel.invite.shown { display: block; }
+
+/* --- Layout --------------------------------------------------------------- */
+
+.layout {
+  display: grid; grid-template-columns: minmax(0, 1fr) 286px; gap: 22px;
+  max-width: var(--board); margin: 0 auto; width: 100%;
+  padding-inline: 16px; padding-block: 0 16px;
+  min-height: 0; /* so the children may be shorter than their content */
+}
+/* The view is the board. It fills what the masthead left and hands any
+   overflow to whichever panel inside it asked to be scrollable. */
+.view {
+  min-height: 0; display: flex; flex-direction: column; gap: 14px;
+  /* The safety net, and only that: every screen is built to fit, but a very
+     long roster or a very small window must never put a button out of reach. */
+  overflow-y: auto; overflow-x: hidden;
+  /* Reserve the scrollbar's room whether or not one is showing. Without it
+     the board oscillates on a short window — a scrollbar appears, the narrower
+     content no longer needs one, it goes away, and around again — and a button
+     that never stops moving is a button that cannot be pressed. */
+  scrollbar-gutter: stable;
+}
+
+.panel {
+  background: var(--leaf);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px; margin: 0;
+  box-shadow: 0 1px 0 rgba(255, 252, 240, .7) inset, 0 6px 16px -12px rgba(50, 34, 12, .8);
+  /* An ordinary panel is exactly as tall as what it holds and never shrinks:
+     the view is a flex column, and a panel allowed to shrink below its
+     contents spills them over itself — which is how a back button ended up
+     underneath the paragraph above it on a phone held sideways. Only a panel
+     that asked to fill flexes. */
+  flex: 0 0 auto;
+}
+/* A panel marked `fill` takes the slack and scrolls its own contents; every
+   other panel is exactly as tall as what it holds. */
+/* A filling panel takes the slack, but never shrinks below what it needs to
+   be usable: its header plus a scroller with room to scroll in. When the
+   window cannot give it that — a phone turned sideways — it keeps its size
+   and the view scrolls instead. Two nested scrollers fighting each other is
+   how a button ends up unclickable. */
+.panel.fill {
+  flex: 1 1 auto; display: flex; flex-direction: column; overflow: hidden;
+  /* A flex item that hides its overflow has an automatic minimum size of
+     zero, so without a floor the panel is squeezed until its own header and
+     buttons are clipped away with no way to scroll to them. The floor is
+     "320px, or the whole board if the board is smaller than that": on a
+     normal screen it changes nothing, and on a short one the panel keeps
+     the board to itself and its siblings push the view into scrolling. */
+  min-height: min(320px, 100%);
+}
+.panel.fill > .scroller { flex: 1 1 auto; min-height: 0; overflow-y: auto; margin: 0 -4px; padding: 0 4px; }
+/* A filling panel that never named a scroller scrolls itself rather than
+   quietly clipping its last few pixels. Only one of the two ever scrolls,
+   which is what keeps a button from becoming unclickable between them. */
+.panel.fill:not(:has(> .scroller)):not(:has(> .railwrap)) { overflow-y: auto; }
+/* What the screen is asking you to decide stays put while the choices move. */
+.panelfoot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--rule-soft);
+}
+.panelfoot .hint, .panelfoot .notice { margin: 0; }
+
+/* Small square controls that sit in a line of text without breaking it. */
+button.ghost.tiny {
+  padding: 2px 7px; font-size: 13px; line-height: 1.35; vertical-align: middle;
+}
+.bearings-ctl { float: right; display: inline-flex; gap: 5px; margin-left: 10px; }
+/* The controls that live in a panel's header: the way back, and the pair
+   that gives the board the window. */
+.headctl { display: inline-flex; align-items: center; gap: 7px; flex: none; }
+.headctl .meta { margin-right: 2px; }
+
+/* The way back is not a decoration. It reads as the door it is. */
+button.ghost.backmap {
+  border-color: var(--gilt); color: var(--ink-deep);
+  font-family: var(--serif); letter-spacing: .05em; white-space: nowrap;
+}
+button.ghost.backmap:hover { background: color-mix(in srgb, var(--gilt) 14%, transparent); }
+
+/* The table: the tray sits in the middle of whatever room the panel has, so
+   a throw lands in open space rather than against the instructions. */
+.tabletop { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+/* On a short board there is no open space to give it. The panel scrolls as
+   one piece instead, and the table stops being a scroller so the two are
+   never both trying to be. */
+@media (max-height: 520px) {
+  .panel.encounter { overflow-y: auto; }
+  .encounter .tabletop { overflow: visible; min-height: 0; }
+}
+.encfoot .instruction { flex: 1 1 100%; }
+.panel > header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.panel h2 { font-size: 21px; }
+.hint { color: var(--muted); font-size: 14px; margin: 0; }
+.hint b { color: var(--ink); }
+
+/* --- Buttons -------------------------------------------------------------- */
+
+button.action, button.ghost {
+  appearance: none; cursor: pointer; font: inherit; font-family: var(--serif);
+  letter-spacing: .04em; border-radius: 2px; padding: 8px 16px;
+  transition: background .12s, border-color .12s, color .12s;
+}
+button.action {
+  background: var(--oxblood); color: #f4e9cf; border: 1px solid #5e221c;
+  box-shadow: 0 1px 0 rgba(255, 235, 200, .25) inset;
+}
+button.action:hover:not(:disabled) { background: var(--oxblood-lit); }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+button.ghost:hover:not(:disabled) { border-color: var(--gilt); color: var(--ink-deep); }
+button.ghost.danger { color: var(--oxblood); border-color: var(--rule); width: 100%; margin-top: 14px; font-size: 14px; }
+button.ghost.danger:hover { border-color: var(--oxblood); }
+button:disabled { opacity: .42; cursor: not-allowed; }
+.buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* --- Sending a character ---------------------------------------------------
+   The line and the square, side by side, so whichever the other device can
+   take is the one you use. */
+
+.sendrow { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; margin-top: 14px; }
+.sendcode { flex: 1 1 320px; min-width: 0; }
+.sendcode textarea {
+  width: 100%; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 12px; line-height: 1.45; color: var(--ink);
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft); border-radius: 2px; padding: 8px;
+  resize: vertical;
+}
+.sendcode .hint { margin-top: 8px; }
+.sendqr { margin: 0; text-align: center; }
+.sendqr .qr { border: 1px solid var(--rule-soft); border-radius: 2px; display: block; }
+.sendqr figcaption {
+  margin-top: 6px; color: var(--muted); font-size: 13px;
+  font-family: var(--serif); letter-spacing: .03em;
+}
+
+/* --- Roster cards --------------------------------------------------------- */
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(256px, 1fr)); gap: 12px; }
+
+/* Reference, not a decision: folded away until somebody wants it. */
+/* An invitation folded into one line until somebody wants it. */
+details.panel.invite { padding: 10px 16px; flex: none; }
+details.invite summary { cursor: pointer; font-size: 15px; }
+details.invite summary b { font-family: var(--serif); letter-spacing: .04em; }
+details.invite summary .hint { display: inline; font-size: 14px; }
+details.invite[open] summary { margin-bottom: 8px; }
+details.invite .buttons { margin-top: 10px; }
+
+details.aside { border: 1px dashed var(--rule-soft); border-radius: 2px; padding: 8px 12px; align-self: start; }
+details.aside summary {
+  cursor: pointer; font-family: var(--serif); letter-spacing: .06em;
+  color: var(--muted); font-size: 14px;
+}
+details.aside[open] summary { margin-bottom: 8px; color: var(--ink); }
+/* A closed <details> hides its contents by way of a UA rule that an author's
+   own `display` on a child defeats — and .lookrow and .legend both set one,
+   so the figure picker and the symbol key were laid out below the fold while
+   the fold said they were shut. Said plainly here instead. */
+details.aside:not([open]) > *:not(summary),
+details.invite:not([open]) > *:not(summary) { display: none; }
+details.aside .hint { font-size: 13px; }
+
+/* --- Who you are on the map ------------------------------------------------
+   Sixty-nine figures on one sheet, each cell shown by moving the sheet behind
+   a window the size of one cell. One request, however many faces. */
+.lookrow { display: flex; flex-wrap: wrap; gap: 6px; }
+.lookpick {
+  appearance: none; cursor: pointer; font: inherit; padding: 3px 3px 1px;
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft); border-radius: 2px;
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  transition: border-color .12s, background .12s;
+}
+.lookpick:hover { border-color: var(--gilt); }
+.lookpick[aria-checked="true"] { border-color: var(--oxblood); background: var(--leaf); box-shadow: 0 0 0 1px var(--oxblood) inset; }
+.lookpick em {
+  font-style: normal; font-family: var(--serif); font-size: 11px;
+  letter-spacing: .03em; color: var(--muted); max-width: 70px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.lookpick[aria-checked="true"] em { color: var(--ink-deep); }
+/* A window one cell wide with the whole sheet behind it, shifted so the right
+   figure shows. The markup gives the cell's column and row; the size lives
+   here, so the same markup works at any size the layout asks for. */
+.figcell {
+  --cell: 64px;
+  display: block; width: var(--cell); height: var(--cell);
+  /* The page sets this, not the stylesheet. A url() here resolves against
+     css/styles.css when the sheet is a file and against the page when it is
+     inlined — which is exactly what the published build does — so the same
+     line cannot be right in both places. js/looks.js owns the path. */
+  background-image: var(--sheet);
+  background-repeat: no-repeat;
+  background-size: calc(var(--cols) * var(--cell)) calc(var(--rows) * var(--cell));
+  background-position: calc(var(--col) * var(--cell) * -1) calc(var(--row) * var(--cell) * -1);
+}
+/* Who you are, on your own card. The figure is the button. */
+.whoami { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.whoami-say { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
+.whoami-say b { font-family: var(--serif); font-weight: 400; font-size: 15px; color: var(--ink-deep); }
+.lookpick.current { padding: 3px; }
+.lookpick.current .figcell { --cell: 56px; }
+
+/* A saved character shows its figure beside its name. */
+.whorow { display: flex; align-items: center; gap: 10px; }
+.whorow .figcell { --cell: 44px; flex: none; }
+.whorow h3 { margin: 0; }
+
+/* --- The company, as a rail ------------------------------------------------
+   Companions read across rather than down: one card at a time at full size,
+   with its dice and the price of its next rank on it, because choosing who
+   to spend the pool on is a comparison between two whole cards and not a
+   scan down a column of them. */
+.railwrap { display: flex; align-items: center; gap: 6px; flex: 1 1 auto; min-height: 0; }
+.rail {
+  /* `start`, not the default stretch: a card is as tall as what is on it,
+     and a short one should not be a tall box with a hole in the bottom. */
+  display: flex; align-items: start; gap: 12px; flex: 1 1 auto; min-width: 0;
+  /* A flex item will not shrink below its content unless told to, and the
+     rail's content is a row of whole cards — so without this it kept its
+     full height, overflowed the wrap, and the panel clipped what it could
+     not hold. */
+  min-height: 0; max-height: 100%;
+  overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x proximity; scroll-behavior: smooth;
+  padding-bottom: 4px;
+}
+/* Every card on a rail behaves the same, whoever drew it: a companion, a
+   calling, a face in the hall, a character in this browser. */
+.rail > * {
+  flex: 0 0 min(290px, 78%); scroll-snap-align: start;
+  /* Short cards stay short (that is what `align-items: start` is for), and a
+     card too tall for the rail is capped and scrolls itself rather than
+     spilling out of a rail that hides what it cannot hold. */
+  max-height: 100%; overflow-y: auto; min-height: 0;
+  scrollbar-width: none;
+}
+.rail > *::-webkit-scrollbar { width: 0; }
+#callings > *, #paths > * { flex-basis: min(330px, 84%); }
+/* A rail inside a panel that is not filling still needs a height to scroll
+   within, or the cards stretch it instead. */
+.railwrap { max-height: 100%; }
+
+/* A scroller with arrows of its own has no use for a bar as well. */
+.scroller.quiet { scrollbar-width: none; -ms-overflow-style: none; }
+.scroller.quiet::-webkit-scrollbar { width: 0; height: 0; }
+
+.stepper {
+  appearance: none; cursor: pointer; flex: none; align-self: center;
+  padding: 14px 0; width: 26px; font: inherit; font-size: 20px; line-height: 1;
+  color: var(--muted); background: var(--vellum-lit);
+  border: 1px solid var(--rule-soft); border-radius: 2px;
+  transition: color .12s, border-color .12s, opacity .12s;
+}
+.stepper:hover:not(:disabled) { color: var(--ink-deep); border-color: var(--gilt); }
+.stepper:disabled { opacity: .3; cursor: default; }
+
+/* Up and down for a column, sitting under it rather than beside it: the camp
+   column has no width to spare and one row of arrows costs it nothing. */
+.steprow { display: flex; justify-content: center; gap: 6px; margin-top: 8px; flex: none; }
+.steprow[hidden] { display: none; }
+.steprow .stepper { width: 46px; padding: 3px 0; font-size: 17px; }
+
+/* On a phone the rail is swiped, and two arrows are two thumbs of wasted
+   width. The column keeps its pair — a phone scrolls it, but the arrows are
+   also how you know there is more down there. */
+@media (max-width: 620px) { .railwrap > .stepper { display: none; } }
+
+.lookfoot { gap: 8px; }
+.lookfoot .hint { flex: none; }
+details.aside.looks { margin-top: 10px; }
+
+/* Camp on a wide screen: you and the company side by side, not stacked. */
+@media (min-width: 881px) {
+  .view:has(.campself) { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); align-items: stretch; }
+}
+/* The column is a header, a body that scrolls, and the arrows that scroll it. */
+.campself { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.campself > .scroller { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+/* The Company's header is a paragraph and two buttons. Side by side the
+   paragraph became a column six words wide, so it takes the full width and
+   the buttons sit under it. */
+.company > header { flex-wrap: wrap; }
+.company > header > div { flex: 1 1 100%; }
+
+/* Camp's own column is narrow by design, so its header never tries to sit
+   the title and the name field beside each other. */
+.campself > header { flex-wrap: wrap; }
+.campself > header > div { flex: 1 1 100%; }
+/* Four controls and a text field do not fit across 330px. The buttons keep
+   one row and the name takes the next. */
+.campself .namerow { width: 100%; flex-wrap: wrap; row-gap: 7px; }
+.campself .namerow input { flex: 1 1 130px; min-width: 110px; }
+.campself .namerow button { flex: none; }
+.campself .namerow .headctl { order: -1; }
+/* Camp's column is narrow at every size, so the way back is an arrow here
+   whatever the window is doing. */
+.campself .backmap .longform { display: none; }
+
+.companion {
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--rarity, var(--rule));
+  border-radius: 2px; padding: 13px; text-align: left; width: 100%;
+  display: block; color: inherit; font: inherit;
+}
+button.companion { cursor: pointer; }
+button.companion:hover { border-color: var(--gilt); }
+.companion[aria-pressed="true"] { outline: 2px solid var(--oxblood); outline-offset: 1px; }
+.companion.spent { opacity: .48; }
+.companion.is-hero { background: #f5ead0; }
+.companion h3 { font-size: 18px; }
+.companion .title { color: var(--muted); font-size: 13px; margin: 1px 0 9px; }
+.companion .blurb { color: var(--muted); font-size: 13px; font-style: italic; margin: 9px 0 0; font-family: var(--letter); }
+.rank-row { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--muted); }
+.meter { flex: 1; height: 5px; background: var(--leaf-sunk); border-radius: 2px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--gilt); }
+.meter.stamina i { background: var(--good); }
+.rank-row .cost { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* The price of the next step, on the card of whoever it buys. */
+.trainrow { margin-top: 10px; align-items: center; gap: 8px; }
+.trainrow .hint { font-size: 12px; margin: 0; }
+
+.dicerow { display: flex; flex-wrap: wrap; gap: 7px 6px; margin: 9px 0 4px; }
+
+/* --- Dice ----------------------------------------------------------------- */
+
+.die {
+  --face: var(--muted);
+  position: relative; display: grid; place-items: center;
+  width: 62px; height: 62px; background: none; border: 0; padding: 0;
+  color: var(--face);
+  /* A die is a die. In a narrow card the row would otherwise squeeze them
+     out of shape rather than wrap them onto the next line. */
+  flex: none;
+}
+.die.mini { width: 38px; height: 38px; }
+.die > svg:not(.shell) { width: 60%; height: 60%; fill: currentColor; }
+.die .shell { width: 100%; height: 100%; display: block; }
+.die .shell polygon {
+  fill: color-mix(in srgb, var(--face) 9%, #f6ecd4);
+  stroke: color-mix(in srgb, var(--face) 82%, var(--sepia));
+  stroke-width: 3.8;
+  stroke-linejoin: round;
+}
+.die .shell .pip { fill: color-mix(in srgb, var(--face) 88%, var(--ink-deep)); }
+.die.power .shell polygon { fill: color-mix(in srgb, var(--face) 20%, #f6ecd4); stroke: var(--face); stroke-width: 4.2; }
+.die .pips {
+  position: absolute; bottom: -2px; right: 0; font-size: 10px; color: var(--muted);
+  font-variant-numeric: tabular-nums; background: var(--leaf); padding: 0 2px; border-radius: 2px;
+}
+.die.mini .pips { font-size: 9px; bottom: -3px; right: -2px; background: var(--vellum-lit); }
+
+button.die { cursor: pointer; }
+button.die.matchable .shell polygon { stroke: var(--oxblood); stroke-width: 6; }
+button.die.matchable { filter: drop-shadow(0 1px 4px rgba(123, 47, 39, .38)); }
+button.die.targetable .shell polygon { stroke: var(--gilt); stroke-dasharray: 6 4; }
+button.die.dead { opacity: .5; }
+
+/* A die that is more than its size: what it leans toward, or the wild face it
+   carries, stamped in the corner. Two d6 in a hand are not the same d6, and
+   the moment that matters is the moment you are choosing one to throw away. */
+.die .mark {
+  position: absolute; top: 3px; left: 3px;
+  width: 15px; height: 15px; display: grid; place-items: center;
+  border-radius: 50%; background: #f7efd9; border: 1px solid color-mix(in srgb, var(--mark) 55%, transparent);
+  color: var(--mark); line-height: 0;
+}
+.die .mark svg { width: 9px; height: 9px; fill: currentColor; }
+/* Small dice carry the mark too. A hand is chosen from these rows — on the
+   muster screen, on a companion's card — and "which of these has the wild
+   face" is exactly the question being asked there. */
+.die.mini .mark { top: 0; left: 0; width: 13px; height: 13px; border-width: 1px; }
+.die.mini .mark svg { width: 8px; height: 8px; }
+.die.special .shell polygon { stroke-dasharray: none; }
+
+/* Armed to be dropped: said on the die, not only in a line of text. */
+.fs-nature { display: block; color: var(--muted); font-style: normal; font-size: 12px; margin-bottom: 4px; }
+button.die[aria-pressed="true"] { outline: 2px solid var(--oxblood); outline-offset: -2px; }
+/* A die that has just been turned into something else. It flares once, on the
+   beat between the ability being spent and the die being laid in the slot, so
+   the change is something you watch rather than something you find already done. */
+@keyframes reshape {
+  0%   { transform: scale(1) rotate(0deg); filter: none; }
+  35%  { transform: scale(1.22) rotate(-8deg); filter: brightness(1.5) drop-shadow(0 0 10px var(--face)); }
+  70%  { transform: scale(.97) rotate(3deg); filter: brightness(1.15) drop-shadow(0 0 6px var(--face)); }
+  100% { transform: scale(1) rotate(0deg); filter: none; }
+}
+.die.reshaped { animation: reshape 560ms cubic-bezier(.3, .7, .3, 1); z-index: 45; }
+@media (prefers-reduced-motion: reduce) {
+  .die.reshaped { animation: none; filter: brightness(1.3); }
+}
+button.die:disabled { cursor: default; }
+
+/* A throw, rather than a spin: the die falls in off-axis, lands short, takes
+   one small bounce and settles, with a shadow that arrives when it does. */
+@keyframes tumble {
+  0% {
+    opacity: 0;
+    transform: perspective(520px) translate3d(0, var(--drop, -24px), 0)
+               rotateX(var(--sx, 300deg)) rotateY(var(--sy, 260deg)) rotateZ(var(--sz, 200deg)) scale(.68);
+  }
+  40% { opacity: 1; }
+  /* The out-of-plane spin finishes first, so the last third of the flight
+     always shows a readable face and the symbols can be read as it settles.
+     Only the in-plane spin is still running by here. */
+  52% {
+    transform: perspective(520px) translate3d(0, -4px, 0)
+               rotateX(0deg) rotateY(0deg) rotateZ(calc(var(--sz, 200deg) * 0.16)) scale(1.02);
+  }
+  62% {
+    transform: perspective(520px) translate3d(0, 0, 0)
+               rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.09);
+  }
+  75% {
+    transform: perspective(520px) translate3d(0, -7px, 0)
+               rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(.97);
+  }
+  88% {
+    transform: perspective(520px) translate3d(0, 0, 0)
+               rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(520px) translate3d(0, 0, 0)
+               rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+  }
+}
+
+@keyframes landing {
+  0%   { opacity: 0; transform: translateX(-50%) scale(.3); }
+  55%  { opacity: .12; transform: translateX(-50%) scale(.62); }
+  64%  { opacity: .5; transform: translateX(-50%) scale(1.16); }
+  80%  { opacity: .26; transform: translateX(-50%) scale(.92); }
+  100% { opacity: 0; transform: translateX(-50%) scale(1); }
+}
+
+.die::after {
+  content: ''; position: absolute; left: 50%; bottom: -7px;
+  width: 64%; height: 8px; opacity: 0; pointer-events: none;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(58, 42, 20, .5), rgba(58, 42, 20, 0));
+}
+
+/* `backward` rather than `both`: the die holds its starting pose through the
+   stagger, then gives the transform up entirely once it has landed, so no
+   stacking context is left behind. */
+.die.rolling {
+  animation: tumble var(--dur, 520ms) cubic-bezier(.22, .72, .24, 1) var(--delay, 0ms) backward;
+}
+.die.rolling::after {
+  animation: landing var(--dur, 520ms) cubic-bezier(.22, .72, .24, 1) var(--delay, 0ms) backward;
+}
+.die.mini::after { display: none; }
+
+/* Reduce the motion, do not remove the feedback. Turning the throw off
+   entirely leaves no way to tell a fresh roll from the dice already on the
+   table, which reads as the dice not rolling at all. A short fade says "these
+   are new" without anything traveling, spinning or tilting. */
+@keyframes settle {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .die.rolling { animation: settle 240ms ease-out var(--delay, 0ms) backward; }
+  .die.rolling::after { animation: none; }
+}
+
+
+/* --- The 3D stage ---------------------------------------------------------- */
+
+.dicestage {
+  /* The whole window is the table. It used to be a strip over the encounter
+     panel, which meant dice thrown hard rolled out of the strip and were cut
+     off at its edge — trapped in a bar rather than thrown across a table.
+     The gather is what brings them back to the tray afterward, so the throw
+     itself has no reason to be penned in.
+     Fixed, not absolute: the page behind it does not scroll any more, so the
+     frame and the window are the same thing. */
+  position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  /* A breath of shade so the dice sit on something, light enough to read the
+     board through. No mask: a fade at the top would swallow a die that bounced
+     high. */
+  background: radial-gradient(ellipse at 50% 42%, rgba(240, 228, 198, .10), rgba(58, 42, 20, .20));
+}
+.dicestage canvas { display: block; width: 100%; height: 100%; }
+/* The table is measured before it is lit: the physics world is built from the
+   stage's size, so it has to be laid out while the library loads. */
+.dicestage.waiting { opacity: 0; }
+
+.tray { transition: opacity 160ms ease-out; }
+body.throwing .tray { opacity: 0; transition: none; }
+@media (prefers-reduced-motion: reduce) { .tray { transition: none; } }
+
+/* --- Encounter ------------------------------------------------------------ */
+
+.encounter header { margin-bottom: 4px; }
+/* The thing itself, beside its own name. Same token the floor plan drew, so
+   walking into a room is never a surprise about what is in it — only about
+   whether you can beat it. */
+.foe { display: flex; align-items: center; gap: 13px; min-width: 0; }
+.foe > div { min-width: 0; }
+.foe .plate {
+  flex: none; display: block;
+  filter: drop-shadow(0 2px 4px rgba(20, 12, 4, .55));
+}
+@media (max-width: 480px) { .foe .plate { width: 52px; height: 52px; } }
+.badge {
+  display: inline-block; font-family: var(--serif); font-size: 12px; letter-spacing: .08em;
+  border: 1px solid var(--gilt); color: var(--gilt); border-radius: 2px; padding: 1px 8px; margin-left: 9px;
+  vertical-align: middle;
+}
+.badge.warn { border-color: var(--oxblood); color: var(--oxblood); }
+
+/* Curios: the company's once-a-night things, offered only where they work. */
+.buttons.curios { margin-top: 10px; }
+.curio { border-style: dashed; }
+.curio.escape { border-color: var(--oxblood); color: var(--oxblood); }
+.hurt { color: var(--bad); font-weight: 600; }
+.hint.warnline b { color: var(--oxblood); }
+/* Who fought the last room, and who sat it out. */
+.freshtag { color: var(--good); font-weight: 600; }
+/* What the Seer's Glass showed of the room next door. */
+.scried { margin: 8px 0 4px; }
+.scried .trials { margin: 8px 0 0; }
+.scried .slot.hidden { font-family: var(--serif); font-size: 20px; color: var(--muted); border-style: dashed; }
+body.scened .scried b { color: #f7edd5; }
+.tiredtag { color: var(--gilt); }
+.curiocard.owned { opacity: .8; }
+
+.trials { display: flex; flex-direction: column; gap: 8px; margin: 15px 0; }
+.trial {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 10px; border: 1px dashed var(--rule); border-radius: 2px;
+}
+.trial.current { border-style: solid; border-color: var(--gilt); background: var(--vellum-lit); }
+.trial.done { opacity: .5; }
+.trial .label { font-family: var(--serif); font-size: 12px; letter-spacing: .08em; color: var(--muted); min-width: 60px; }
+
+/* An empty slot says what it wants, so what it wants has to be readable. At
+   38% of a muted ink on sunk parchment it was a gray smudge of a symbol on a
+   gray square — the one thing the row exists to tell you. The symbol is drawn
+   in its own color now, held back only enough to keep an empty slot from
+   reading as a filled one, and the square is tinted and outlined in the same
+   color so the pair carries at a glance. */
+.slot {
+  width: 42px; height: 42px; border-radius: 2px; display: grid; place-items: center;
+  border: 1px dashed color-mix(in srgb, var(--face, var(--rule)) 55%, var(--rule));
+  background: color-mix(in srgb, var(--face, var(--muted)) 10%, var(--vellum-lit));
+  color: var(--face, var(--muted));
+}
+.slot svg { width: 58%; height: 58%; fill: currentColor; opacity: .72; }
+.slot.filled {
+  background: color-mix(in srgb, var(--face) 26%, var(--vellum-lit));
+  border: 1px solid var(--face);
+}
+.slot.filled svg { opacity: 1; }
+button.slot { cursor: pointer; }
+button.slot.choosable { border-color: var(--oxblood); box-shadow: 0 0 0 1px var(--oxblood) inset; }
+
+.tray { display: flex; flex-wrap: wrap; gap: 11px; margin: 15px 0; min-height: 62px; }
+/* Two rows when the hand is split: what can be played, and what is only worth
+   spending. The second row is set back a little so the eye starts at the top,
+   with a rule between them rather than a label — the dice already say which is
+   which. */
+.tray.live { margin-bottom: 0; width: 100%; justify-content: center; }
+.tray.idle {
+  margin-top: 0; padding-top: 12px; border-top: 1px dashed var(--rule-soft);
+  opacity: .92; width: 100%; justify-content: center;
+}
+body.scened .tray.idle { border-top-color: rgba(185, 164, 118, .35); }
+@media (max-width: 620px) {
+  /* On a phone the hand is short and the rule costs more than it says. */
+  .tray.idle { padding-top: 8px; border-top-style: dotted; }
+}
+
+/* The throw, on the table rather than under it. The dice that answer sit
+   directly beneath it, which is where the eye already is when the question is
+   "take this, or roll again?". On a phone the table has no room to give and
+   the thumb is at the bottom of the screen, so there the foot keeps it. */
+.rollhere { display: none; }
+@media (min-width: 621px) {
+  .rollhere {
+    display: flex; justify-content: center; width: 100%;
+    margin-bottom: 4px; flex: none;
+  }
+  .rollhere button { padding: 7px 26px; font-size: 16px; }
+  .encfoot > .rollfoot { display: none; }
+}
+.tray-empty { color: var(--muted); font-style: italic; font-family: var(--letter); }
+
+/* The choices for a die that could answer more than one symbol, opened on
+   the die itself: a row of the symbols it can be, and a way back out. */
+.diepick { position: relative; display: inline-flex; flex: none; }
+.facepick {
+  position: absolute; bottom: calc(100% + 9px); left: 50%; transform: translateX(-50%);
+  z-index: 55; display: flex; gap: 6px; padding: 6px;
+  background: var(--vellum-lit); border: 1px solid var(--gilt); border-radius: 4px;
+  box-shadow: 0 10px 24px -8px rgba(20, 12, 4, .85);
+  white-space: nowrap;
+}
+.facepick::after {
+  content: ''; position: absolute; top: 100%; left: 50%; margin-left: -7px;
+  border: 7px solid transparent; border-top-color: var(--gilt);
+}
+.pickface {
+  appearance: none; cursor: pointer; width: 42px; height: 42px; padding: 0;
+  display: grid; place-items: center; border-radius: 3px; font: inherit;
+  border: 1px solid color-mix(in srgb, var(--face, var(--rule)) 70%, var(--rule));
+  background: color-mix(in srgb, var(--face, var(--muted)) 14%, var(--vellum-lit));
+  color: var(--face, var(--muted));
+}
+.pickface svg { width: 62%; height: 62%; fill: currentColor; }
+.pickface:hover, .pickface:focus-visible { background: color-mix(in srgb, var(--face, var(--muted)) 30%, var(--vellum-lit)); border-color: var(--face, var(--gilt)); }
+.pickface.shut { width: 30px; font-size: 20px; color: var(--muted); border-color: var(--rule-soft); background: transparent; }
+@media (prefers-reduced-motion: no-preference) {
+  .facepick { animation: facepick-in 140ms ease-out; }
+  @keyframes facepick-in { from { opacity: 0; transform: translate(-50%, 6px); } to { opacity: 1; transform: translate(-50%, 0); } }
+}
+
+.ability-btn { font-size: 15px; }
+.ability-btn[aria-pressed="true"] { border-color: var(--oxblood); color: var(--oxblood); }
+.ability { font-size: 13px; color: var(--muted); margin: 11px 0 0; font-family: var(--letter); }
+.ability b { color: var(--ink-deep); font-family: var(--sans); }
+
+.status-line { color: var(--muted); font-size: 14px; margin: 6px 0 12px; }
+.status-line b { color: var(--ink-deep); }
+
+.outcome { border-radius: 2px; padding: 15px; margin-top: 14px; border: 1px solid var(--rule); }
+.outcome.good { border-color: #6f8a63; background: #e7e5c3; }
+.outcome.bad { border-color: #a9705f; background: #ecdcc9; }
+.outcome h3 { margin-bottom: 7px; font-size: 20px; }
+.outcome p { margin: 0 0 13px; color: var(--muted); }
+.outcome p b { color: var(--ink-deep); }
+
+/* --- Kit ------------------------------------------------------------------
+   A piece of kit is a picture first. One sheet holds every kind at every
+   grade, and a window the size of one cell shows whichever this is — so a
+   Runed Sword and a Worn Sword are not the same drawing, and the grade is
+   something you can see on the rack before you read the label. */
+.kitcell {
+  --cell: 58px;
+  display: block; flex: none; width: var(--cell); height: var(--cell);
+  /* The page sets --kit, not this sheet: a relative url() in a stylesheet and
+     the same url() inlined into the page do not resolve to the same file. */
+  background-image: var(--kit);
+  background-repeat: no-repeat;
+  background-size: calc(var(--kitcols) * var(--cell)) calc(var(--kitrows) * var(--cell));
+  background-position: calc(var(--col) * var(--cell) * -1) calc(var(--row) * var(--cell) * -1);
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px var(--rule-soft), 0 2px 5px -3px rgba(40, 26, 8, .9);
+}
+.kit { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 11px; align-items: start; }
+.kit > .kitsay { display: block; min-width: 0; }
+.kit > .sockets, .kit > .socketpick, .kit > .kitrow { grid-column: 1 / -1; }
+.kit.broken .kitcell { filter: grayscale(.85) brightness(.7); }
+.kit .cannot { font-style: italic; color: var(--oxblood); font-size: 13px; }
+/* A piece with somebody else's trick in it. Rare enough to be worth a line of
+   its own rather than a footnote. */
+.kit .gift {
+  margin: 5px 0 0; font-size: 13px; color: var(--gilt-lit);
+  border-top: 1px dotted color-mix(in srgb, var(--gilt) 55%, transparent); padding-top: 5px;
+}
+.kit .gift b { color: var(--gilt); font-family: var(--serif); letter-spacing: .03em; }
+
+/* The socket itself: a well cut into the piece, with the die sitting in it.
+   An empty one is a hole, and a cracked one is a hole you cannot use until a
+   smith has been at it. */
+.sockets { display: flex; flex-wrap: wrap; gap: 8px; }
+.socket {
+  appearance: none; cursor: pointer; padding: 3px; font: inherit;
+  display: grid; place-items: center;
+  width: 48px; height: 48px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(20, 12, 4, .38), rgba(20, 12, 4, .1) 62%, transparent 70%),
+    var(--leaf-sunk);
+  border: 1px solid var(--rule);
+  box-shadow: inset 0 2px 4px rgba(40, 26, 8, .55), 0 1px 0 rgba(255, 252, 240, .5);
+  transition: border-color .12s, box-shadow .12s;
+}
+.socket:hover, .socket.open { border-color: var(--gilt); box-shadow: inset 0 2px 4px rgba(40, 26, 8, .5), 0 0 0 2px var(--gilt); }
+.socket .die.mini { width: 34px; height: 34px; }
+.socket .hole {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(40, 26, 8, .4);
+  box-shadow: inset 0 2px 3px rgba(20, 12, 4, .7);
+}
+/* Filled by the piece rather than by you: it works, and it is still a choice
+   waiting to be made. */
+.socket.auto { border-style: dashed; }
+.socket.cracked { opacity: .45; border-color: var(--oxblood); }
+
+.socketnote { font-size: 12px; color: var(--oxblood); font-style: italic; align-self: center; flex: 1 1 100%; }
+
+.socketpick {
+  border-top: 1px dashed var(--rule-soft); padding-top: 10px; margin-top: 2px;
+}
+.socketpick .hint { font-size: 13px; }
+.socketpick .picks { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin: 8px 0; }
+.socketopt {
+  appearance: none; cursor: pointer; font: inherit; font-family: var(--serif);
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft); border-radius: 2px;
+  padding: 3px; display: grid; place-items: center;
+}
+.socketopt:hover { border-color: var(--gilt); }
+.socketopt[aria-pressed="true"] { border-color: var(--oxblood); box-shadow: 0 0 0 1px var(--oxblood) inset; }
+.socketopt.elsewhere { opacity: .55; }
+.socketopt.clear { padding: 6px 10px; font-size: 13px; letter-spacing: .04em; }
+
+/* The sheet, on a phone. It exists to change kit, and the hand is the
+   consequence rather than the question — so on a narrow screen the rack and
+   the pool come first and the dice go under them, instead of the Wear buttons
+   sitting two screens down where nobody found them. */
+.sheetpart { display: block; }
+#sheet { display: flex; flex-direction: column; }
+.sheetpart.hand { order: 1; }
+.sheetpart.worn { order: 2; }
+.sheetpart.pool { order: 3; }
+@media (max-width: 620px) {
+  /* The pool first: it is the only part of the sheet with anything to press. */
+  .sheetpart.pool { order: 1; }
+  .sheetpart.worn { order: 2; }
+  .sheetpart.hand { order: 3; }
+  /* And everything on it gets out of its own way. */
+  .sheetpage .dicerow .die { width: 44px; height: 44px; }
+  .sheetpage .kitcell { --cell: 46px; }
+  .sheetpage .kit { gap: 8px 9px; }
+  .sheetpage .kit p { font-size: 14px; }
+  .sheetpage .socket { width: 42px; height: 42px; }
+  /* Six slots stacked one to a screen is six screens of scrolling; two to a
+     row, and an empty slot is a line rather than a card. */
+  .sheetpage .kits { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .sheetpage .kit.empty { padding: 5px 8px; }
+  .sheetpage .kit.empty em { display: none; }
+  .sheetpage .kit > .kitsay > p { margin: 2px 0 0; }
+}
+
+/* What somebody is wearing, in miniature, on their own card. */
+/* A companion who is going hungry, said on their own card. */
+.hunger {
+  margin: 8px 0 0; font-size: 13px; font-style: italic; color: var(--gilt);
+  border-left: 2px solid var(--gilt); padding-left: 8px;
+}
+.hunger.grim { color: var(--oxblood); border-left-color: var(--oxblood); font-style: normal; }
+.hungerwarn { color: var(--oxblood); }
+.hungerwarn b { color: var(--oxblood); }
+
+.kitline { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 9px 0 0; }
+.kitline .hint { font-size: 12px; margin-left: 3px; }
+.kitcell.tiny { --cell: 26px; border-radius: 2px; box-shadow: 0 0 0 1px var(--rule-soft); }
+button.ghost.tiny.kitlink { margin-left: auto; white-space: nowrap; }
+
+/* Whose kit the sheet is showing. The whole company can be outfitted now, and
+   the pack belongs to all of them, so the sheet points at one person at a
+   time. Creatures are not on the row — they have no hands for a rack. */
+.whosekit {
+  display: flex; flex-wrap: wrap; gap: 7px; flex: none;
+  margin: 0 0 12px; padding-bottom: 11px; border-bottom: 1px solid var(--rule-soft);
+}
+.kitwho {
+  appearance: none; cursor: pointer; font: inherit; font-family: var(--serif);
+  letter-spacing: .04em; padding: 5px 13px; border-radius: 2px;
+  background: var(--leaf); color: var(--ink); border: 1px solid var(--rule);
+}
+.kitwho:hover { border-color: var(--gilt); }
+.kitwho.on { border-color: var(--oxblood); color: var(--ink-deep); box-shadow: 0 0 0 1px var(--oxblood) inset; }
+body.scened .whosekit { border-bottom-color: rgba(185, 164, 118, .4); }
+
+/* --- Callings ------------------------------------------------------------- */
+
+.grid.classes { grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.classcard {
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft); border-radius: 2px;
+  padding: 15px; text-align: left; color: inherit; font: inherit; cursor: pointer;
+  border-top: 3px solid var(--face, var(--rule));
+}
+.classcard:hover { border-color: var(--gilt); }
+.classcard[aria-pressed="true"] { outline: 2px solid var(--oxblood); outline-offset: 1px; }
+.classhead { display: flex; align-items: center; gap: 9px; color: var(--face, var(--oxblood)); }
+.classhead svg { width: 21px; height: 21px; fill: currentColor; }
+.classhead h3 { font-size: 19px; color: var(--ink-deep); }
+.classcard .dicerow { margin: 11px 0 7px; }
+.grants { list-style: none; margin: 11px 0 0; padding: 0; font-size: 13px; color: var(--muted); }
+.grants li { padding: 4px 0; border-top: 1px solid var(--rule-soft); }
+.grants b { display: inline-block; min-width: 20px; color: var(--gilt); font-variant-numeric: tabular-nums; }
+.grants em { color: var(--oxblood); font-style: normal; white-space: nowrap; }
+
+.field { display: block; margin-bottom: 14px; max-width: 340px; }
+.field span { display: block; font-family: var(--serif); font-size: 13px; color: var(--muted); margin-bottom: 4px; letter-spacing: .04em; }
+.field input, .namerow input, .joinrow input {
+  width: 100%; background: var(--vellum-lit); border: 1px solid var(--rule);
+  border-radius: 2px; color: var(--ink); font: inherit; padding: 9px 11px;
+}
+.field input:focus, .namerow input:focus, .joinrow input:focus { outline: none; border-color: var(--gilt); background: #fbf3de; }
+
+.namerow { display: flex; gap: 9px; align-items: flex-end; flex-wrap: wrap; }
+.namerow .field { margin-bottom: 0; }
+.namerow input { min-width: 190px; width: auto; }
+
+/* --- The map, drawn as a surveyed sheet ----------------------------------- */
+
+.maprail { position: relative; overflow-x: auto; padding-bottom: 4px; }
+/* The floor is the screen: it takes whatever height the panel has left and
+   the drawing scales into it, rather than sitting small above empty paper. */
+.floorpanel .maprail { display: flex; align-items: center; justify-content: center; }
+.floorpanel svg.map { max-height: 100%; }
+
+/* The end of a floor lands on the floor: the outcome, whatever is still down
+   there to go back for, and the way out, all in the middle of the map. */
+.mapover {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  padding: 16px; pointer-events: none;
+}
+.mapover .outcome {
+  pointer-events: auto; max-width: 420px; width: 100%; margin: 0; text-align: center;
+  box-shadow: 0 18px 40px -18px rgba(40, 26, 8, .85);
+}
+.mapover .outcome .buttons { justify-content: center; }
+.lastcall {
+  border-top: 1px solid var(--rule-soft); margin: 0 0 13px; padding-top: 11px;
+}
+.lastcall p { margin: 0 0 9px; }
+.lastcall .hint { margin: 0; }
+.map {
+  width: 100%; min-width: 320px; height: auto; display: block;
+  border-radius: 2px;
+  box-shadow: 0 2px 0 rgba(255, 250, 235, .5), 0 10px 22px -12px rgba(50, 34, 12, .85), 0 0 0 1px var(--rule);
+}
+
+.vellum { fill: #e8d9b5; }
+/* What the sheet is floored with: the tile pack's own ground, laid edge to
+   edge under the plan, and behind it the painting of the country the dungeon
+   is under. Both are held well back — the map is still ink on vellum, and a
+   floor you can read beats a floor you can admire. */
+/* The paintings come from eleven hands and are lit from eleven directions: a
+   sewer cistern is nearly black and a market street nearly white. Held back by
+   opacity alone, one is a stain and the other is nothing, so both are washed
+   toward the paper first — warmed, flattened and lifted — and only then let
+   through. */
+.map .backdrop {
+  opacity: .12; pointer-events: none;
+  filter: sepia(.55) saturate(.5) brightness(1.4) contrast(.75);
+}
+/* The ground, laid across the whole sheet at the strength the pack painted it,
+   so the country under the party and the country they have not reached yet are
+   the same country. What the fog takes away is what is standing on it. */
+.map .everyground { pointer-events: none; opacity: 1; }
+.map.out-of-doors .everyground { filter: saturate(1.25); }
+.map:not(.out-of-doors) .everyground { filter: sepia(.55) saturate(.9) brightness(1.12) contrast(.95); }
+/* The sheet is the country's own color, wall to wall. A breath off full
+   strength, so the paper under it still warms it, and the grain and the
+   vignette over it still do their work. */
+/* Full strength: the tint is already the color the ground draws as, so any
+   paper showing through it would make the fog a different green from the
+   grass — which is the whole thing this is for. */
+.map .fog { opacity: 1; pointer-events: none; }
+.map.out-of-doors .backdrop { opacity: .1; }
+.map.out-of-doors .ground { opacity: .36; }
+.grain { filter: url(#grain); mix-blend-mode: multiply; opacity: .55; pointer-events: none; }
+.vignette { fill: url(#vignette); pointer-events: none; }
+.rule { fill: none; stroke: var(--sepia); }
+.rule.outer { stroke-width: 2.5; opacity: .75; }
+.rule.inner { stroke-width: 0.9; opacity: .5; }
+
+/* --- Stonework ------------------------------------------------------------
+   The painted dungeon under the drawn map. It is warmed toward the vellum
+   rather than left cold gray, so the two read as one page: the floor plan is
+   the ink map's own subject, not a photograph pasted onto it. */
+.stone { opacity: .97; filter: sepia(.55) saturate(.9) brightness(1.12) contrast(.95); }
+/* Ground the party has been told about but not walked: the same stone, further
+   off, the way an unvisited corner of a map is drawn fainter but not blank. */
+.stone.unlit { opacity: .72; filter: sepia(.7) saturate(.6) brightness(1.16) contrast(.88); }
+
+.corridor { stroke: var(--sepia); stroke-width: 5.5; stroke-linecap: round; opacity: .68; filter: url(#ink-rough-line); }
+.corridor.unsurveyed { stroke-width: 2; opacity: .18; stroke-dasharray: 3 6; }
+
+/* The room you click. An SVG shape is only a target where it is painted, so
+   once the stonework took over and the drawn square stopped being filled, a
+   room could only be hit on its outline — the whole cell is a target now,
+   which is a bigger one than the square ever was. */
+.tile .hit { fill: transparent; pointer-events: all; }
+.tile .floor, .tile .stone, .tile .pin, .tile .done { pointer-events: none; }
+.tile.state-hidden .hit { pointer-events: none; }
+
+/* With stonework underneath, the drawn square stops being a room and becomes a
+   hit target: what is left of it is the marks that carry meaning — what you can
+   reach, what is waiting in there, where you are standing. The stone corridors
+   are the corridors, so the drawn ones are kept only where there is no stone to
+   draw, out in the unsurveyed dark. */
+.map.stone-floor .tile .floor { fill: none; stroke: none; }
+.map.stone-floor .tile.state-hidden .floor {
+  stroke: var(--sepia); stroke-width: 1; stroke-dasharray: 3 5; opacity: .3;
+}
+.map.stone-floor .tile.kind-boss .floor { stroke: #7b2f27; stroke-width: 3; }
+.map.stone-floor .tile.kind-treasure .floor { stroke: var(--gilt); stroke-width: 2.4; stroke-dasharray: 7 3; }
+.map.stone-floor .tile.kind-lair .floor { stroke: #4c6b30; stroke-width: 2.6; }
+/* No outline round a room you can reach: the arrow pointing into it says that
+   already, and said twice it is just another box on a map that has enough of
+   them. The hover fill stays, because a wide forgiving target that lights up
+   under the pointer is not the same claim — it is the target itself. */
+.map.stone-floor .tile.reachable:hover .floor { fill: color-mix(in srgb, var(--tint) 30%, transparent); }
+.map.stone-floor .corridor { display: none; }
+.map.stone-floor .corridor.unsurveyed { display: inline; }
+.tile .floor {
+  fill: color-mix(in srgb, var(--tint) 20%, #f0e4c6);
+  stroke: var(--sepia); stroke-width: 1.7; filter: url(#ink-rough);
+}
+/* --- Out of doors ----------------------------------------------------------
+   No walls to draw, so the map draws the ways instead: a trail from clearing
+   to clearing, and scrub closing every side no trail runs through. A clearing
+   is not a room, so nothing is drawn round it — the ground is the ground, and
+   what stops you is what is growing. */
+.wildground image { opacity: .95; }
+.wildground image.unlit { opacity: .45; }
+/* The walking path: worn earth with a paler tread down the middle of it, laid
+   over the whole map so the country reads as one network of trails rather than
+   a handful of clearings that happen to be near each other. Every bed is drawn
+   before any tread, so where two paths meet the tread runs over the join
+   instead of stopping at it. */
+.trail { fill: none; stroke-linecap: round; stroke-linejoin: round; filter: url(#ink-rough); }
+.trail.bed { stroke: #6f5a33; stroke-width: 19; opacity: .34; }
+.trail.tread { stroke: #ddc9a0; stroke-width: 10; opacity: .62; }
+/* A way nobody has walked yet is still a way: drawn, but barely. */
+.trail.bed.unwalked { opacity: .2; }
+.trail.tread.unwalked { opacity: .42; stroke-width: 7; stroke-dasharray: 11 10; }
+/* Trees stand on the ground, they are not printed into it. Multiplied into
+   the grass at nine tenths they went see-through, which is not how the packs'
+   own example maps look: the cuts carry their own shadow, so they are drawn
+   as they were painted. */
+.scrubs image { opacity: 1; pointer-events: none; }
+.scrubs image.unlit { opacity: .55; }
+.map.out-of-doors .corridor { display: none; }
+/* The country's color lies over it lightly: grass and fen have colors of
+   their own worth keeping. */
+.map.out-of-doors .weather { opacity: .3; }
+/* A wood's ground is the greenest thing on the sheet; the country's tint was
+   taking that back off it. */
+.map.out-of-doors .wildground image { opacity: 1; filter: saturate(1.25); }
+.map.out-of-doors .vellum, .map.out-of-doors .grain { opacity: .35; }
+/* Outdoors the only rings left are the ones that say what is waiting. A
+   clearing nobody has walked to is not drawn as a ghost of a room any more:
+   the path arriving at it says it is there, and a square as well was the
+   sketched box we already decided the arrows had replaced. */
+.map.out-of-doors .tile.state-hidden .floor { display: none; }
+
+/* What is in a room is a thing in the room: the pack's own furniture, or the
+   creature token of whatever is waiting. Drawn as painted, with a shadow under
+   it so it stands on the floor rather than being printed into it — the pen
+   engravings that used to be here belong to the region map, where a map symbol
+   is exactly the right thing to be. */
+.tile .holds { pointer-events: none; }
+.tile .held {
+  opacity: .96;
+  filter: drop-shadow(0 2px 3px rgba(20, 12, 4, .55));
+}
+.tile.state-seen .held { opacity: .8; }
+.tile .held.spent { opacity: .45; filter: grayscale(.6) drop-shadow(0 1px 2px rgba(20, 12, 4, .4)); }
+
+/* The marks for what the plan will not show you. Something in a room is a
+   pair of eyes in the dark; the thing at the end of the floor has horns and a
+   mouth. A hazard is a warning, an obstacle a barricade, a sprung trap its
+   jaws. They are inked, not painted: signs on the plan, not things in it. */
+.glyph { filter: drop-shadow(0 2px 3px rgba(20, 12, 4, .55)); }
+.glyph .g-disc { fill: #1d140a; stroke: var(--ink-deep); stroke-width: 3; opacity: .88; }
+.glyph .g-disc.dread { fill: #2a0f0b; stroke: var(--oxblood); stroke-width: 4; }
+.glyph .g-eye { fill: #f2d479; }
+.glyph .g-eye.dread { fill: #f06a3a; }
+.glyph .g-horn { fill: #3a2716; stroke: var(--ink-deep); stroke-width: 2; }
+.glyph .g-maw { fill: none; stroke: #f06a3a; stroke-width: 3; stroke-linejoin: round; }
+.glyph .g-warn { fill: #e8c25a; stroke: var(--ink-deep); stroke-width: 5; stroke-linejoin: round; }
+.glyph .g-mark { stroke: var(--ink-deep); stroke-width: 9; stroke-linecap: round; }
+.glyph .g-dot { fill: var(--ink-deep); }
+.glyph .g-plank { fill: #e8c25a; stroke: var(--ink-deep); stroke-width: 4; }
+.glyph .g-stripe { stroke: var(--oxblood); stroke-width: 8; }
+.glyph .g-post { stroke: var(--ink-deep); stroke-width: 7; stroke-linecap: round; }
+.glyph .g-jaw { fill: none; stroke: #5d5a55; stroke-width: 7; }
+.glyph .g-teeth { fill: none; stroke: #8d8a82; stroke-width: 4; stroke-linejoin: miter; }
+.tile.state-seen .glyph { opacity: .85; }
+.glyph-lurk .g-eye { animation: lurk-blink 6s infinite; transform-origin: center; }
+@keyframes lurk-blink { 0%, 92%, 100% { opacity: 1; } 95% { opacity: .1; } }
+@media (prefers-reduced-motion: reduce) { .glyph-lurk .g-eye { animation: none; } }
+.glyphplate { overflow: visible; }
+
+.tile.state-hidden .floor { fill: none; stroke-width: 1; stroke-dasharray: 3 5; opacity: .3; }
+.tile.state-hidden { pointer-events: none; }
+.tile.state-seen .floor { opacity: .78; }
+.tile.kind-boss .floor { stroke-width: 3; stroke: #7b2f27; }
+.tile.kind-treasure .floor { stroke-dasharray: 7 3; }
+.tile.kind-lair .floor { stroke: #4c6b30; stroke-width: 2.6; }
+.tile.reachable { cursor: pointer; }
+.tile.reachable .floor { stroke-width: 1.8; stroke: #7a5a16; stroke-opacity: .55; }
+.tile.reachable:hover .floor { fill: color-mix(in srgb, var(--tint) 38%, #f0e4c6); }
+.tile.reachable:focus-visible .floor { stroke: #3d2d14; stroke-width: 4; }
+
+/* You are here: an inner rule struck inside the room itself. */
+/* Where the party is standing, and where it can go. The figure differs by
+   class; the base carries the class's own color and its symbol. */
+.tile .party { pointer-events: none; }
+.tile .party .shade { fill: rgba(30, 20, 8, .32); }
+.tile .party .base {
+  fill: var(--vellum-lit); stroke: var(--tint, var(--oxblood)); stroke-width: 3;
+  filter: drop-shadow(0 2px 3px rgba(20, 12, 4, .5));
+}
+.tile .party .token { filter: drop-shadow(0 1px 2px rgba(20, 12, 4, .45)); }
+.tile .party .badge circle { fill: var(--tint, var(--oxblood)); stroke: var(--vellum-lit); stroke-width: 1.5; }
+.tile .party .badge path { fill: #f6ecd2; }
+
+/* The country's weather, lying over its stone. */
+.map .weather { mix-blend-mode: multiply; opacity: .18; pointer-events: none; }
+
+.way { cursor: pointer; }
+.way .pad {
+  fill: var(--vellum-lit); stroke: var(--oxblood); stroke-width: 2;
+  opacity: .92; filter: drop-shadow(0 2px 4px rgba(40, 26, 8, .45));
+}
+.way .barb { fill: var(--oxblood); }
+.way.known .pad { stroke: var(--gilt); opacity: .8; }
+.way.known .barb { fill: var(--gilt); }
+.way:hover .pad, .way:focus-visible .pad { fill: #fff6dd; stroke-width: 3; }
+.way:hover .barb { fill: var(--oxblood-lit); }
+.tile .done { fill: none; stroke: #3f6b45; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+.cartouche { font-family: var(--serif); font-size: 12px; fill: var(--sepia); opacity: .7; letter-spacing: .1em; }
+.compass { pointer-events: none; }
+.compass image { mix-blend-mode: multiply; opacity: .72; }
+
+
+/* --- Chronicle ------------------------------------------------------------ */
+
+.chronicle { min-height: 0; display: flex; flex-direction: column; padding-bottom: 4px; }
+.chronicle h2 {
+  font-size: 15px; color: var(--muted); letter-spacing: .14em;
+  margin-bottom: 8px; border-bottom: 1px solid var(--rule); padding-bottom: 6px;
+}
+.log { list-style: none; margin: 0 0 10px; padding: 0; flex: 1; min-height: 0; overflow-y: auto; font-size: 14px; }
+.log li { padding: 8px 0; border-bottom: 1px solid var(--rule-soft); color: var(--muted); }
+.log li.good { color: var(--ink); }
+.log li.bad { color: var(--bad); }
+.log li .day {
+  color: var(--gilt); font-family: var(--serif); font-size: 12px;
+  margin-right: 7px; font-variant-numeric: tabular-nums;
+}
+
+.legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.legend span { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--muted); }
+.legend svg { width: 15px; height: 15px; fill: currentColor; }
+
+.notice { color: var(--oxblood); font-size: 14px; min-height: 18px; margin: 6px 0 0; font-style: italic; }
+
+/* --- Shared quests --------------------------------------------------------- */
+
+.joinrow { display: inline-flex; gap: 8px; align-items: center; }
+.joinrow input {
+  width: 100px; text-transform: uppercase; letter-spacing: .2em; text-align: center;
+  font-family: var(--serif);
+}
+.code { font-family: var(--serif); letter-spacing: .22em; color: var(--oxblood); }
+.lobby { list-style: none; margin: 0; padding: 0; }
+.lobby li { display: flex; gap: 8px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--rule-soft); font-size: 15px; }
+.lobby li span { color: var(--muted); font-size: 13px; }
+.lobby li em { color: var(--oxblood); font-style: normal; font-family: var(--serif); font-size: 12px; letter-spacing: .08em; }
+.lobby li.you { color: var(--ink-deep); }
+
+.panel > header button { white-space: nowrap; }
+
+/* --- What a die can roll, on hover ----------------------------------------- */
+
+.facesheet {
+  /* Fixed to the window, placed by hand — see placeSheet in js/ui.js. Hung
+     inside the die it was clipped by whatever panel the die sat in. */
+  position: fixed; left: 0; top: -9999px;
+  z-index: 90; display: grid; gap: 3px; width: max-content; max-width: 220px;
+  background: var(--vellum-lit); border: 1px solid var(--rule); border-radius: 2px;
+  padding: 8px 10px; text-align: left; pointer-events: none;
+  box-shadow: 0 8px 20px -10px rgba(50, 34, 12, .9);
+  /* Kept in the layout rather than display:none, so its width can be measured
+     and clamped into view before it is ever shown. */
+  visibility: hidden; opacity: 0; transition: opacity .1s ease;
+}
+/* The copy inside each die is the source the shared sheet is filled from,
+   and is never drawn. Only #tip is. */
+.die .facesheet { display: none; }
+.facesheet.shown { visibility: visible; opacity: 1; }
+/* The tumble animation leaves a transform on the die, which makes it a
+   stacking context; without this the sheet is trapped under later content. */
+.die:hover, .die:focus-visible { z-index: 40; }
+@media (prefers-reduced-motion: reduce) { .facesheet { transition: none; } }
+.facesheet .fs-head {
+  display: block; font-family: var(--serif); font-style: normal; font-size: 12px;
+  color: var(--muted); letter-spacing: .05em; margin-bottom: 3px;
+  border-bottom: 1px solid var(--rule-soft); padding-bottom: 4px;
+}
+.facerow { display: grid; grid-template-columns: 15px 1fr auto; align-items: center; gap: 8px; font-size: 14px; }
+.facerow svg { width: 15px; height: 15px; fill: var(--face); }
+.facerow em { font-style: normal; color: var(--ink); }
+.facerow b { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.bearings {
+  margin: 0 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--serif); font-size: 13px; color: var(--muted); letter-spacing: .03em;
+}
+.bearings b { color: var(--ink); font-family: var(--sans); }
+
+/* --- Choosing who takes a room -------------------------------------------- */
+
+.picks { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.pick {
+  display: grid; grid-template-columns: minmax(130px, 1fr) minmax(0, auto) minmax(60px, 110px) 44px;
+  align-items: center; gap: 12px 14px; width: 100%; cursor: pointer;
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft); border-radius: 2px;
+  border-left: 3px solid var(--gilt); padding: 9px 12px; color: inherit; font: inherit; text-align: left;
+}
+.pick:hover { border-color: var(--gilt); background: #f6ecd4; }
+/* Not enough dice to finish the room, whatever the faces do. */
+/* Two go in: the pair you have chosen is marked, and stays marked. */
+.pick.chosen {
+  border-color: var(--oxblood); background: #f7ecd4;
+  box-shadow: inset 3px 0 0 var(--oxblood);
+}
+.pick.chosen .pick-who b::after { content: ' \2713'; color: var(--oxblood); }
+.pick.short { border-color: color-mix(in srgb, var(--oxblood) 45%, transparent); }
+.pick.short .pick-who em { color: var(--oxblood); }
+.pick-who { display: flex; flex-direction: column; line-height: 1.25; }
+.pick-who b { font-family: var(--serif); font-weight: 400; font-size: 17px; color: var(--ink-deep); }
+.pick-who em { font-style: normal; font-size: 12px; color: var(--muted); }
+/* The hand, at a glance, on one row. `auto` let this column be squeezed by
+   its neighbors until the dice lost their shape; it gets its own room now,
+   and wraps onto a second line rather than shrinking. */
+.pick-dice { display: flex; flex-wrap: wrap; gap: 7px 6px; justify-content: flex-end; }
+.pick-fit { height: 5px; background: var(--leaf-sunk); border-radius: 2px; overflow: hidden; }
+.pick-fit i { display: block; height: 100%; background: var(--gilt); }
+.pick-score { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; text-align: right; }
+@media (max-width: 620px) {
+  .pick { grid-template-columns: 1fr auto; }
+  .pick-fit, .pick-score { display: none; }
+}
+
+/* --- The small screen ------------------------------------------------------
+   A phone gets the same game, not a cut-down one. What it does not get is
+   the masthead's flourish or the Chronicle taking a third of the board: the
+   tagline goes, the purse becomes one swipeable rail, and the log moves
+   behind a button in that rail. */
+@media (max-width: 880px) {
+  /* Camp is two stacked panels here, not two columns, and there is no board
+     left to give the company. Squeezing whole cards into whatever is under
+     the header would be worse than scrolling: the panel takes the height it
+     needs and the view scrolls, which on a phone is what a thumb expects. */
+  .panel.fill.company { flex: 0 0 auto; min-height: auto; overflow: visible; }
+  .panel.fill.company .rail { max-height: none; }
+
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 0; padding-inline: 12px; padding-block: 0 10px; }
+  .chronicle { display: none; }
+}
+
+/* Narrow, or simply short. A phone turned sideways is 844 wide and 390 tall,
+   where the full masthead wraps onto three lines and eats better than a third
+   of the screen — so height counts as "small" too. */
+@media (max-width: 620px), (max-height: 520px) {
+  .topbar { padding: 8px 12px 6px; gap: 8px; align-items: center; flex-wrap: nowrap; overflow: hidden; }
+  .brand { min-width: 0; flex: 0 1 auto; }
+  .brand h1 { font-size: 20px; letter-spacing: .04em; white-space: nowrap; }
+  .tagline { display: none; }
+  /* The rail carries the numbers and swipes; the two ways out of the screen
+     are pinned beside it, because a control you have to go looking for on a
+     phone is a control that is not there. */
+  .topbar { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; }
+  .purse {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    min-width: 0; justify-content: flex-start;
+  }
+  .purse::-webkit-scrollbar { display: none; }
+  .coin { flex: none; padding: 3px 9px; font-size: 13px; }
+  .pinned { display: flex; gap: 6px; }
+  .pinned .coin { padding: 4px 8px; }
+  .pinned .coin span { display: none; }
+  .pinned .coin b { font-size: 16px; line-height: 1; }
+  .coin span { font-size: 11px; }
+  .panel { padding: 12px; }
+  .panel h2 { font-size: 19px; }
+  /* A panel header on a phone is one column, not two fighting for the width. */
+  .panel > header { flex-wrap: wrap; margin-bottom: 10px; }
+  .panel > header > div { flex: 1 1 100%; }
+  .namerow { width: 100%; gap: 7px; }
+  .namerow { flex-wrap: nowrap; }
+  .namerow input { min-width: 0; flex: 1; }
+  .namerow button { flex: none; }
+
+  /* Camp keeps the decisions — who you are, what a step costs, who is with
+     you — and folds away the reference: the path you already chose reads the
+     same on the character sheet a tap away. */
+  /* Prose that explains a rule the player has already met. The numbers stay. */
+  .longform { display: none; }
+  p.longform, li.longform { display: none; }
+  /* Nothing left inside it once the standing instruction folds away. */
+  .floornote:not(:has(.notice)):not(:has(.outcold)):not(:has(.curios)):not(:has(.scried)):not(:has(.hurt)) { display: none; }
+  .backmap { white-space: nowrap; }
+
+  .campself .grants { display: none; }
+  .campself .ability { margin-top: 8px; }
+  .campself details.aside { display: none; }
+  .campself .companion h3 { font-size: 19px; }
+  .campself .rank-row + .rank-row { margin-top: 2px; }
+}
+
+.pick.out { opacity: .55; border-left-color: var(--oxblood); cursor: default; }
+.outcold { color: var(--oxblood); font-style: normal; font-family: var(--serif); letter-spacing: .03em; }
+/* Said when the room was decided by arithmetic rather than by a throw: the
+   hand could not have covered what was owed, however it landed. */
+.doomed {
+  margin: 0 0 10px; font-family: var(--letter); font-style: italic; font-size: 16px;
+  color: var(--oxblood); line-height: 1.45;
+}
+body.scened .doomed { color: #f0b9a4; text-shadow: 0 1px 6px rgba(0, 0, 0, .95); }
+.outcome .doomed { color: var(--oxblood); text-shadow: none; }
+
+/* --- The Sword Coast -------------------------------------------------------
+   A painted hex atlas on the same parchment as everything else: the sea and
+   the hills are color, the pen work is sepia, and the places you can go are
+   the only gold on the sheet. */
+
+.worldpanel header .meta { color: var(--muted); font-size: 13px; align-self: center; }
+.worldgrid {
+  display: grid; grid-template-columns: minmax(240px, 288px) minmax(0, 1fr);
+  gap: 16px; align-items: start;
+}
+/* On a phone the map goes first: you cannot choose a posting you have not
+   scrolled past the card to find. */
+@media (max-width: 860px) {
+  /* One column below this width, and a flex column rather than a grid one:
+     grid rows sized before the vista and the web fonts settled, and the card
+     grew past its row into the map underneath it, swallowing the button that
+     sets out. A flex column has no rows to get wrong. */
+  .worldgrid { display: flex; flex-direction: column; }
+  .worldgrid > * { flex: none; }
+  .worldgrid .worldmap { order: 1; }
+  .worldgrid .placecard { order: 2; }
+  /* Once a posting is chosen it is what the screen is about, so it comes
+     first; the map stays underneath to choose a different one from. */
+  .worldgrid.has-place .placecard { order: 1; }
+  .worldgrid.has-place .worldmap { order: 2; }
+}
+@media (max-width: 620px) {
+  details.invite summary .hint { display: none; }
+  details.panel.invite { padding: 8px 12px; }
+}
+
+/* --- Standing somewhere -----------------------------------------------------
+   No screen is blank paper. Every state names the place it is happening in and
+   the page wears it: the roster read out of a book, a posting chosen at a desk,
+   a party mustered at the mouth of the place it is going into, a floor walked
+   in the country it was cut from. The panel gives up its own sheet — a slab of
+   parchment over a painting is a page about a room rather than the room — and
+   what keeps its paper is what a hand would actually be holding.
+
+   Two scrims, not one: a candle-lit hall needs less taken off it than a
+   photograph of a table in daylight, and both need the ink over them to stay
+   read. */
+body.scened { color: #f2e6c9; background-size: cover; background-position: center; }
+body.s-hall, body.s-camp, body.s-delve, body.s-mouth {
+  background-image: linear-gradient(rgba(16, 10, 4, .5), rgba(16, 10, 4, .62)), var(--scene, none);
+}
+body.s-delve {
+  background-image: linear-gradient(rgba(14, 9, 3, .55), rgba(14, 9, 3, .66)), var(--scene, none);
+}
+/* The shade takes its color from the ground being walked on. A brown wash
+   over a wood turns a green place the color of every other place, and the
+   feywild is the one floor whose whole point is that it is not. */
+body.s-delve.shade-wood {
+  background-image: linear-gradient(rgba(6, 26, 14, .5), rgba(5, 20, 11, .62)), var(--scene, none);
+}
+body.s-delve.shade-fen {
+  background-image: linear-gradient(rgba(8, 24, 22, .52), rgba(6, 18, 17, .64)), var(--scene, none);
+}
+body.s-delve.shade-sewer {
+  background-image: linear-gradient(rgba(10, 16, 14, .54), rgba(8, 13, 11, .66)), var(--scene, none);
+}
+/* The desk and the book are lit from above and have bright paper in the middle
+   of them, so their shade deepens toward the foot where the lists sit. */
+body.s-desk, body.s-tome {
+  background-image:
+    linear-gradient(rgba(18, 12, 4, .38) 0%, rgba(18, 12, 4, .5) 45%, rgba(14, 9, 3, .72) 100%),
+    var(--scene, none);
+}
+
+body.scened .brand h1 { color: #e8bfae; text-shadow: 0 2px 8px rgba(0, 0, 0, .8); }
+body.scened .tagline, body.scened .coin span { color: #cbb894; }
+body.scened .coin { background: rgba(28, 19, 8, .6); border-color: rgba(185, 164, 118, .5); color: #f2e6c9; }
+body.scened .coin b { color: #f7edd5; }
+body.scened .chronicle h2, body.scened .log li { color: #cdbb96; }
+body.scened .log li.good { color: #f2e6c9; }
+body.scened .log li { border-bottom-color: rgba(205, 187, 150, .25); }
+/* No sheet, no rule, no shadow. */
+body.scened .panel { background: none; border-color: transparent; box-shadow: none; }
+body.scened .panel h2, body.scened .panel > header h3, body.scened .setgroup {
+  color: #f6ecd2; text-shadow: 0 2px 10px rgba(0, 0, 0, .85);
+}
+body.scened .panel > header .hint, body.scened .panel > header .meta,
+body.scened .bearings, body.scened .status-line, body.scened .ability, body.scened .instruction,
+body.scened .panel > .hint, body.scened .chartline, body.scened .tray-empty {
+  color: #d9c9a6; text-shadow: 0 1px 6px rgba(0, 0, 0, .9);
+}
+body.scened .panel > header .hint b, body.scened .bearings b,
+body.scened .status-line b, body.scened .ability b { color: #f7edd5; }
+/* Anything the page itself says in bold is light ink too — the muster's
+   stamina line and the instructions under a floor were being written in the
+   parchment's dark ink over a photograph. The paper cards below take theirs
+   back. */
+body.scened .required { color: #d9c9a6; text-shadow: 0 1px 6px rgba(0, 0, 0, .9); }
+body.scened .required b, body.scened .panel .hint b, body.scened .instruction b { color: #f7edd5; }
+body.scened .panel > header, body.scened .bearings, body.scened .panelfoot, body.scened .tierline {
+  border-color: rgba(185, 164, 118, .4);
+}
+body.scened button.ghost {
+  color: #f2e6c9; border-color: rgba(185, 164, 118, .6); background: rgba(24, 16, 6, .45);
+}
+body.scened button.ghost:hover:not(:disabled) { color: #fff6dd; border-color: var(--gilt-lit); }
+body.scened .notice { color: #f0c3a6; text-shadow: 0 1px 6px rgba(0, 0, 0, .9); }
+body.scened .field span, body.scened .namerow .field span { color: #d9c9a6; }
+body.scened details.aside { border-color: rgba(185, 164, 118, .45); }
+body.scened details.aside summary { color: #d9c9a6; }
+body.scened details.aside[open] summary { color: #f2e6c9; }
+body.scened details.aside .hint, body.scened .legend span { color: #cbb894; }
+body.scened details.invite { background: rgba(28, 19, 8, .5); border-color: rgba(185, 164, 118, .4); }
+body.scened details.invite summary, body.scened details.invite .hint { color: #e4d5b2; }
+body.scened .lobby li { color: #e4d5b2; border-bottom-color: rgba(205, 187, 150, .25); }
+
+/* What a hand would be holding stays paper, and keeps its own ink. */
+body.scened .companion, body.scened .placecard, body.scened .classcard,
+body.scened .outcome, body.scened .pick, body.scened .switch, body.scened .slot.empty {
+  color: var(--ink); box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .9);
+}
+body.scened .companion, body.scened .classcard, body.scened .pick, body.scened .switch {
+  background: var(--vellum-lit);
+}
+body.scened .companion.is-hero { background: #f5ead0; }
+body.scened .placecard { background: var(--vellum-lit); border-color: var(--gilt); }
+body.scened .outcome { background: var(--vellum-lit); }
+body.scened .outcome.good { background: #e7e5c3; }
+body.scened .outcome.bad { background: #ecdcc9; }
+body.scened .companion h3, body.scened .placecard h3, body.scened .classcard h3,
+body.scened .outcome h3, body.scened .pick-who b, body.scened .switch b {
+  color: var(--ink-deep); text-shadow: none;
+}
+body.scened .companion .hint, body.scened .companion .title, body.scened .companion .blurb,
+body.scened .placecard .hint, body.scened .placecard .tierline, body.scened .classcard .blurb,
+body.scened .outcome p, body.scened .pick-who em, body.scened .switch em, body.scened .grants li {
+  color: var(--muted); text-shadow: none;
+}
+body.scened .rank-row, body.scened .rank-row .cost { color: var(--muted); text-shadow: none; }
+/* Anything bold inside a paper card is the card's own ink, not the light ink
+   the page is written in: the light rules above reach into these cards
+   otherwise and a name goes white on cream. */
+body.scened .companion b, body.scened .placecard b, body.scened .classcard b,
+body.scened .outcome b, body.scened .pick b, body.scened .switch b, body.scened .zonerow b {
+  text-shadow: none;
+}
+body.scened .companion b, body.scened .placecard b, body.scened .classcard b,
+body.scened .outcome b, body.scened .pick b, body.scened .switch b { color: var(--ink-deep); }
+body.scened .companion .ability, body.scened .companion .trainrow .hint { color: var(--muted); text-shadow: none; }
+/* Paper cards keep their own ink throughout, whatever the page is written in.
+   The light rules above are for text on a photograph, and a calling's ability
+   line was picking them up in the middle of a cream card. */
+body.scened .classcard p, body.scened .classcard .ability, body.scened .classcard .hint,
+body.scened .companion p, body.scened .placecard p, body.scened .pick p, body.scened .switch em {
+  color: var(--muted); text-shadow: none;
+}
+body.scened .classcard .ability b, body.scened .classcard p b { color: var(--ink-deep); }
+body.scened .classcard .grants em { color: var(--oxblood); }
+body.scened .companion .ability b { color: var(--ink-deep); }
+
+/* The hall: the panel stops filling the window, so the room is visible under
+   the work on offer. */
+body.s-hall .panel { padding-top: 0; }
+body.s-hall .panel.fill { flex: 0 0 auto; min-height: 0; overflow: visible; }
+body.s-hall .panel.fill > .scroller { overflow: visible; }
+
+/* The desk: the chart and the atlas are the paper on it, so they keep their
+   own edge and gain a shadow. */
+body.s-desk .chartwrap, body.s-desk .worldmap {
+  background: none; border-color: rgba(185, 164, 118, .35); padding: 0;
+  box-shadow: 0 16px 38px -16px rgba(0, 0, 0, .9);
+}
+body.s-desk .chartwrap > svg, body.s-desk .worldmap > svg {
+  border-radius: 2px; box-shadow: 0 10px 26px -12px rgba(0, 0, 0, .9);
+}
+body.scened .zonerow { background: rgba(22, 15, 6, .82); border-color: rgba(185, 164, 118, .45); color: #f2e6c9; }
+body.scened .zonerow b { color: #f7edd5; }
+body.scened .zonerow span { color: #cbb894; }
+body.scened .zonerow:hover { border-color: var(--gilt-lit); background: rgba(44, 30, 12, .88); }
+
+/* Underground: a trial waiting its turn is dark glass on a dark room, and the
+   one being answered is paper. */
+body.s-delve .trial { background: rgba(16, 10, 4, .5); border-color: rgba(185, 164, 118, .4); }
+body.s-delve .trial .label { color: #cbb894; }
+body.s-delve .trial.current { background: var(--vellum-lit); border-color: var(--gilt); }
+body.s-delve .trial.current .label { color: var(--muted); }
+/* Underground the slots sit on a photograph, so the empty ones are dark glass
+   with the symbol lit on them rather than washed into them. */
+body.s-delve .slot {
+  background: color-mix(in srgb, var(--face, #000) 18%, rgba(10, 6, 2, .55));
+  border-color: color-mix(in srgb, var(--face, #b9a476) 50%, rgba(185, 164, 118, .5));
+}
+body.s-delve .slot svg { opacity: .9; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .8)); }
+/* The trial being answered is paper, so its slots go back to ink on parchment. */
+body.s-delve .trial.current .slot {
+  background: color-mix(in srgb, var(--face, var(--muted)) 12%, var(--vellum-lit));
+  border-color: color-mix(in srgb, var(--face, var(--rule)) 55%, var(--rule));
+}
+body.s-delve .trial.current .slot svg { filter: none; opacity: .78; }
+body.s-delve .slot.filled { background: color-mix(in srgb, var(--face) 30%, var(--vellum-lit)); border-color: var(--face); }
+/* With a painting behind the page, a sheet held at a third of its opacity is a
+   window rather than paper: the unwalked ground went see-through and took the
+   trails with it. */
+body.s-delve .map.out-of-doors .vellum { opacity: .88; }
+
+.placecard {
+  border: 1px solid var(--rule); border-radius: 2px; background: var(--vellum-lit);
+  padding: 0 0 14px; overflow: hidden; box-shadow: 0 1px 0 var(--leaf-sunk);
+}
+/* The view from the posting. The painting is cropped to a band and washed
+   with the tint of the dungeon underneath, so twelve pictures by as many
+   hands still read as one atlas; the bottom fades into the card's own paper
+   rather than stopping at a line. */
+.placecard .vista {
+  display: block; position: relative; width: 100%; height: 118px;
+  border-bottom: 1px solid var(--gilt); overflow: hidden; background: var(--sepia);
+}
+.placecard .vista img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  filter: sepia(.3) saturate(.88) contrast(1.03) brightness(.96);
+}
+.placecard .vista .wash {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(232, 217, 181, .28) 0%, rgba(232, 217, 181, 0) 34%, rgba(232, 217, 181, .55) 100%),
+    color-mix(in srgb, var(--wash, #6b5428) 26%, transparent);
+  mix-blend-mode: multiply;
+}
+.placecard h3 { margin: 12px 14px 4px; font-size: 20px; }
+.placecard.empty h3 { margin-top: 14px; }
+.tierline {
+  display: flex; justify-content: space-between; gap: 10px; margin: 0 14px 10px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--rule-soft);
+  font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.tierline .cost b { color: var(--ink-deep); }
+.bounty { margin: 0 14px 12px; font-family: var(--letter); font-style: italic; color: #3c5f72; }
+.finds-label { margin: 0 14px 7px; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.finds { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 14px 12px; }
+/* The two symbols this place keeps asking for, which is the thing you actually
+   want to know before you pick a party. */
+.asks { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 14px 12px; }
+.ask {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: 1px solid var(--rule-soft); border-left: 3px solid var(--face);
+  border-radius: 2px; padding: 3px 9px 3px 7px; background: var(--leaf);
+}
+.ask svg { width: 15px; height: 15px; fill: var(--face); }
+.ask b { font-family: var(--serif); font-weight: 400; font-size: 14px; color: var(--ink-deep); }
+/* The same chips on Choose Your Party, centered under the stamina line. */
+.musterasks { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 10px; margin: -4px 0 12px; }
+.musterasks .required { margin: 0; }
+.musterasks .asks { margin: 0; }
+.find {
+  border: 1px solid var(--rule-soft); border-left: 3px solid var(--gilt);
+  background: var(--leaf); padding: 4px 8px; font-size: 12.5px; color: var(--ink);
+}
+.find.gold { border-left-color: var(--gilt-lit); }
+.find.seal { border-left-color: var(--oxblood); }
+.find.curio { border-left-color: #3c5f72; }
+.placecard .under { margin: 0 14px 12px; font-size: 12px; color: var(--muted); }
+.placecard .chip {
+  display: inline-block; border-bottom: 2px solid var(--tint, var(--rule));
+  margin-right: 6px; color: var(--ink);
+}
+.placecard .action { margin: 0 14px; width: calc(100% - 28px); }
+.placecard .hint { margin: 8px 14px 0; }
+
+.worldmap {
+  border: 1px solid var(--rule); border-radius: 2px; background: var(--vellum);
+  padding: 6px; overflow: hidden; min-height: 0; display: flex;
+}
+
+svg.world { display: block; width: 100%; height: auto; max-height: 74dvh; margin: 0 auto; }
+svg.world .cell { stroke: #6b5428; stroke-opacity: .3; stroke-width: 1; }
+svg.world .grain { opacity: .22; }
+svg.world .vig { pointer-events: none; opacity: .55; }
+svg.world .cuts { opacity: .82; }
+svg.world .cut { mix-blend-mode: multiply; }
+svg.world .seamarks { opacity: .8; }
+svg.world .t-sea { fill: #9cc0cc; }
+svg.world .t-shallows { fill: #bcd9dd; }
+svg.world .t-downs { fill: #d9d3a0; }
+svg.world .t-heath { fill: #ddcb96; }
+svg.world .t-forest { fill: #b3c396; }
+svg.world .t-hills { fill: #cfc28b; }
+svg.world .t-mountains { fill: #ccc0ac; }
+svg.world .t-marsh { fill: #bcc9a0; }
+svg.world .river { fill: none; stroke: #6d9fb0; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+
+/* A place is the same ink as the rest of the country, on a scrap of clean
+   parchment with a gilt ring drawn round it. */
+svg.world .place .seat { fill: #f3e8c8; fill-opacity: .96; stroke: var(--gilt-lit); stroke-width: 2.5; }
+svg.world .place .rim { fill: none; stroke: #8a6a2a; stroke-opacity: .45; stroke-width: 1; }
+svg.world .place .sign { mix-blend-mode: multiply; }
+/* A name is written across the bottom of its own hex, so it cannot be read as
+   the next hex's however close together they sit. Small, because it has a hex
+   to fit in, and haloed, because it is lying over the engraving. */
+svg.world .labels .name {
+  text-anchor: middle; font-family: var(--serif); fill: #2b2116;
+  letter-spacing: .01em; paint-order: stroke; stroke: #f4ead0; stroke-width: 4.5; stroke-linejoin: round;
+}
+svg.world .place .hit { fill: #fff; fill-opacity: 0; cursor: pointer; }
+svg.world .place:hover .seat { fill-opacity: .96; stroke: #ffd98a; }
+svg.world .place.on .seat { stroke: #7ee1ff; stroke-width: 3.5; filter: drop-shadow(0 0 6px #7ee1ff); }
+/* The ring says which hex is chosen. Inverting the engraving as well turned
+   it white on cream — the one place on the map whose art you could not see was
+   the one you had just picked. */
+svg.world .labels .name.on { fill: #123c4a; }
+svg.world .labels text, svg.world .portname { pointer-events: none; }
+
+svg.world .place.locked .seat { fill: #4a4034; fill-opacity: .6; stroke: #7d6b45; }
+svg.world .place.locked .sign { filter: invert(1) sepia(1) saturate(.4) brightness(.8); }
+svg.world .place.locked .hit { cursor: not-allowed; }
+
+/* Camp and the hall are havens, not adventures: ink rings rather than gilt. */
+svg.world .place.haven .seat { fill: #f5ecd2; stroke: var(--sepia); stroke-width: 2; }
+svg.world .place.haven .rim { stroke: var(--sepia); stroke-opacity: .3; }
+svg.world .place.haven:hover .seat { fill: #fff8e4; stroke: var(--oxblood); }
+svg.world .labels .name.haven { fill: #4a3a20; letter-spacing: .06em; }
+
+/* The tower is neither a posting nor a haven: no tier, no lock, and the same
+   hex in all five countries. Ink and gilt both, so it reads as belonging to
+   the map and to nothing on it. */
+svg.world .place.tower .seat { fill: #efe6cc; stroke: var(--gilt); stroke-width: 2.5; }
+svg.world .place.tower .rim { stroke: var(--sepia); stroke-opacity: .45; stroke-dasharray: 4 3; }
+svg.world .place.tower:hover .seat { fill: #fff8e4; stroke: var(--oxblood); }
+svg.world .labels .name.tower { fill: #5a3524; font-style: italic; }
+
+/* A haven is somewhere you walked to. */
+.backmap { align-self: flex-start; white-space: nowrap; }
+
+/* The five countries, as a list you can read and press. */
+.zonelist { list-style: none; margin: 0 14px 12px; padding: 0; display: grid; gap: 6px; }
+.zonerow {
+  display: flex; flex-direction: column; gap: 1px; width: 100%; text-align: left;
+  padding: 7px 10px; cursor: pointer; font: inherit; color: inherit;
+  background: var(--leaf); border: 1px solid var(--rule-soft); border-left: 3px solid var(--tint, var(--rule));
+}
+.zonerow:hover { border-color: var(--gilt); border-left-color: var(--tint, var(--gilt)); }
+.zonerow b { font-family: var(--serif); font-size: 15px; }
+.zonerow span { font-size: 12px; color: var(--muted); }
+.zonerow.shut { opacity: .55; cursor: not-allowed; }
+
+svg.world .place.zone .seat { stroke-width: 3; }
+
+
+svg.world .home .sign {
+  fill: none; stroke: #3b2d18; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+svg.world .portname {
+  text-anchor: middle; font-family: var(--serif); font-size: 18px; fill: #3b2d18;
+  letter-spacing: .06em; paint-order: stroke; stroke: #e9dcb8; stroke-width: 4.5; stroke-linejoin: round;
+}
+svg.world .ship { fill: none; stroke: #23404c; stroke-width: 1.8; stroke-linejoin: round; opacity: .75; }
+
+/* --- Choosing your party ---------------------------------------------------- */
+
+.panel.muster header { align-items: center; gap: 12px; }
+.panel.muster header div { text-align: center; flex: 1; }
+.panel.muster header h2 { margin-bottom: 2px; }
+.required {
+  margin: 0 0 12px; text-align: center; font-size: 13px; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--muted);
+}
+.required b { color: var(--ink-deep); font-size: 15px; }
+.marching {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+}
+.marching .slot {
+  /* The trial slots this shares a class with are 42px squares; a name and a
+     word under it are not, and the second line was being cut off. */
+  width: auto; height: auto; display: block;
+  flex: 1 1 120px; min-width: 120px; padding: 9px 11px; border: 1px solid var(--rule-soft);
+  border-bottom: 3px solid var(--gilt); background: var(--leaf); text-align: center;
+}
+.marching .slot.lead { border-bottom-color: var(--oxblood); }
+.marching .slot.empty { border-bottom-color: var(--rule-soft); opacity: .6; }
+.marching .slot b { display: block; font-family: var(--serif); font-size: 15px; line-height: 1.3; }
+.marching .slot span {
+  display: block; font-size: 11.5px; line-height: 1.5; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* --- The Iron Tower -------------------------------------------------------
+   Two screens: the door, where the rule is read before it can cost anything,
+   and the landing, which is one decision and therefore mostly white space. */
+
+.panel.muster.tower .towerrule {
+  margin: 0 0 14px; padding: 12px 14px; border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--gilt); background: var(--leaf);
+}
+.panel.muster.tower .towerrule p { margin: 0 0 8px; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+.panel.muster.tower .towerrule p:last-child { margin-bottom: 0; }
+.panel.muster.tower .towerrule b { color: var(--ink-deep); }
+
+.panel.landing .onthetable {
+  margin: 14px 0; padding: 16px; text-align: center;
+  border: 1px solid var(--gilt); border-width: 3px 1px; background: var(--leaf);
+}
+/* This box keeps its parchment on a scened page, so it has to keep its ink
+   too: the page's own color is set light for a dark backdrop. */
+.panel.landing .onthetable .take { margin: 0; font-family: var(--serif); font-size: 22px; line-height: 1.4; color: var(--ink); text-shadow: none; }
+.panel.landing .onthetable .take b { color: var(--oxblood); }
+.panel.landing .prizekit {
+  display: flex; gap: 12px; align-items: center; justify-content: center;
+  margin: 12px 0 0; padding-top: 12px; border-top: 1px solid var(--rule-soft); text-align: left;
+}
+.panel.landing .prizekit b { color: var(--ink-deep); }
+.panel.landing .prizekit em { color: var(--muted); font-size: 13px; }
+.panel.landing .prizekit span { text-shadow: none; }
+.panel.landing .buttons { margin-top: 14px; }
+
+/* --- Settings --------------------------------------------------------------
+   Everything the player decides, on one sheet: switches that read as switches
+   and one slider, all of it taste rather than rules. */
+
+.panel.settings { max-width: 640px; }
+.setgroup {
+  font-family: var(--serif); font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); margin: 16px 0 8px; padding-bottom: 5px; border-bottom: 1px solid var(--rule-soft);
+}
+.switches { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.switch {
+  display: flex; gap: 11px; align-items: flex-start; width: 100%; text-align: left;
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft); border-radius: 2px;
+  padding: 10px 12px; cursor: pointer; font: inherit; color: inherit;
+}
+.switch:hover { border-color: var(--gilt); }
+.switch b { display: block; font-family: var(--serif); font-size: 16px; font-weight: 400; }
+.switch em { display: block; font-style: normal; font-size: 13px; color: var(--muted); }
+.switch .pip {
+  flex: 0 0 auto; width: 34px; height: 19px; margin-top: 3px; border-radius: 10px;
+  background: var(--leaf-sunk); border: 1px solid var(--rule); position: relative;
+  transition: background .12s, border-color .12s;
+}
+.switch .pip::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 13px; height: 13px;
+  border-radius: 50%; background: var(--vellum-lit); border: 1px solid var(--rule);
+  transition: transform .12s;
+}
+.switch[aria-pressed="true"] .pip { background: var(--oxblood); border-color: #5e221c; }
+.switch[aria-pressed="true"] .pip::after { transform: translateX(15px); border-color: #5e221c; }
+
+.slider { display: flex; align-items: center; gap: 12px; margin: 10px 0 4px; font-size: 14px; }
+.slider.off { opacity: .5; }
+.slider span { flex: 0 0 auto; color: var(--muted); }
+.slider input { flex: 1 1 auto; accent-color: var(--oxblood); }
+.slider b { font-variant-numeric: tabular-nums; min-width: 2.5ch; text-align: right; }
+
+/* --- The Strand, as a chart ------------------------------------------------
+   Not a hex grid: a drawn coast with five seals on it, so the country map and
+   a country's own map can never be mistaken for one another. */
+
+.chartwrap {
+  border: 1px solid var(--rule); border-radius: 2px; background: var(--vellum);
+  padding: 5px; overflow: hidden; margin-bottom: 12px;
+  box-shadow: 0 2px 0 rgba(255, 250, 235, .5), 0 12px 26px -14px rgba(50, 34, 12, .8);
+}
+/* The chart takes the width it is given, but never so much height that the
+   countries under it are pushed off the board — `max-height: 100%` is no use
+   inside a scroller whose own height is auto. */
+svg.chart { display: block; width: 100%; height: auto; max-height: 62dvh; margin: 0 auto; }
+svg.chart .ocean { fill: #9cc0cc; }
+svg.chart .wave { fill: none; stroke: #e8f2f4; stroke-width: 3; stroke-linecap: round; opacity: .55; }
+svg.chart .coast { fill: #ddd6a8; stroke: #6b5428; stroke-width: 2.5; stroke-opacity: .55; }
+svg.chart .rivers .river { fill: none; stroke: #6d9fb0; stroke-width: 5; stroke-linecap: round; opacity: .85; }
+svg.chart .cuts { opacity: .8; }
+svg.chart .cut { mix-blend-mode: multiply; }
+svg.chart .seamarks { opacity: .8; }
+svg.chart .grain { opacity: .22; }
+svg.chart .vig { opacity: .5; pointer-events: none; }
+svg.chart .rule { fill: none; stroke: var(--sepia); opacity: .45; pointer-events: none; }
+svg.chart .rule.outer { stroke-width: 3; }
+svg.chart .rule.inner { stroke-width: 1; }
+
+svg.chart .country .patch {
+  fill: var(--tint); fill-opacity: .16;
+  stroke: var(--tint); stroke-opacity: .5; stroke-width: 2; stroke-dasharray: 9 7;
+}
+svg.chart .country .disc { fill: #f3e8c8; stroke: var(--gilt-lit); stroke-width: 3.5; }
+svg.chart .country .ring { fill: none; stroke: var(--tint); stroke-opacity: .55; stroke-width: 1.5; }
+svg.chart .country .sign { mix-blend-mode: multiply; }
+svg.chart .country-name {
+  text-anchor: middle; font-family: var(--serif); font-size: 26px; fill: #3b2d18;
+  letter-spacing: .08em; paint-order: stroke; stroke: #efe4c2; stroke-width: 6; stroke-linejoin: round;
+  pointer-events: none;
+}
+svg.chart .country .hit { fill: #fff; fill-opacity: 0; cursor: pointer; }
+svg.chart .country:hover .disc { fill: #fff6dd; stroke: #c99b2e; }
+svg.chart .country.locked .disc { fill: #cfc3a1; stroke: #9b8a63; stroke-width: 2; }
+svg.chart .country.locked .patch { fill-opacity: .07; stroke-opacity: .25; }
+svg.chart .country.locked .sign { opacity: .45; }
+svg.chart .country.locked .country-name { fill: #6b5c42; }
+svg.chart .country.locked .hit { cursor: not-allowed; }
+
+.chartline { margin: 0 0 12px; }
+.countrycards .zonelist { margin: 0; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+
+/* --- The menu ---------------------------------------------------------------
+   Full screen, the Chronicle and Settings used to be three small symbols in
+   the corner of every header, and a symbol has to be learned before it can be
+   used. They are three lines of plain English now, behind one button that
+   says Menu.
+
+   The sheet hangs off the document rather than off a panel: every screen
+   rebuilds its own markup on each render, and a menu living in a header would
+   be torn down and rebuilt under the hand that opened it. */
+.menu[hidden] { display: none; }
+.menu { position: fixed; inset: 0; z-index: 80; }
+.menuback { position: absolute; inset: 0; background: rgba(41, 30, 15, .4); }
+/* The button lives in one corner of the window on every screen, and the menu
+   opens from it rather than from the opposite corner: the hand is already
+   there. It floats, so every scrolling region keeps a button's worth of room
+   at the bottom — otherwise the last thing on any list sits underneath it. */
+@media (max-width: 620px) {
+  .view, .panel.fill > .scroller, .log, .rail { padding-bottom: 56px; }
+  .menudock .menubtn { padding: 6px 12px; font-size: 15px; }
+}
+.menudock[hidden] { display: none; }
+.menudock {
+  position: fixed; z-index: 70;
+  right: calc(14px + env(safe-area-inset-right, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+}
+.menudock .menubtn {
+  background: var(--leaf);
+  box-shadow: 0 6px 18px -8px rgba(30, 20, 8, .9), 0 1px 0 rgba(255, 252, 240, .6) inset;
+}
+.menudock .menubtn:hover { background: var(--vellum-lit); }
+
+.menucard {
+  position: absolute; right: 12px;
+  bottom: calc(66px + env(safe-area-inset-bottom, 0px));
+  /* Scrolls when the window is shorter than the menu. A trailing
+     `overflow: hidden` used to cancel this, and on a short screen the last
+     entries — Settings among them — were cut off with no way to reach them. */
+  max-height: calc(100dvh - 96px); overflow-x: hidden; overflow-y: auto;
+  overscroll-behavior: contain;
+  width: min(300px, calc(100vw - 24px));
+  display: flex; flex-direction: column;
+  background: var(--leaf); border: 1px solid var(--rule); border-radius: var(--radius);
+  box-shadow: 0 20px 48px -18px rgba(30, 20, 8, .92);
+}
+.menuitem {
+  appearance: none; cursor: pointer; font: inherit; text-align: left; width: 100%;
+  background: none; border: 0; border-bottom: 1px solid var(--rule-soft);
+  padding: 11px 14px; color: var(--ink); display: grid; gap: 2px;
+}
+.menuitem:last-child { border-bottom: 0; }
+/* The menu should fit without scrolling on most windows; on a short one the
+   entries tighten up before anything has to scroll. */
+.menuitem { flex: none; }
+@media (max-height: 760px) {
+  .menuitem { padding: 7px 12px; gap: 0; }
+  .menuitem b { font-size: 15px; }
+  .menuitem em { font-size: 12px; line-height: 1.35; }
+}
+.menuitem:hover { background: var(--vellum-lit); }
+.menuitem b {
+  font-family: var(--serif); font-weight: 400; font-size: 16px;
+  color: var(--ink-deep); letter-spacing: .03em;
+}
+.menuitem em { font-style: normal; font-size: 13px; color: var(--muted); }
+.menuitem[aria-pressed="true"] b::after { content: ' \2713'; color: var(--oxblood); }
+/* A way in that is shut still says where it goes and why it is shut. */
+.menuitem:disabled { cursor: not-allowed; opacity: .55; }
+.menuitem:disabled:hover { background: none; }
+.menuitem:disabled em { color: var(--oxblood); font-style: italic; }
+/* The button that opens it reads as a word, not a glyph, in every header. */
+
+
+
+/* The die on the button that opens the menu, traced off the drawing in
+   assets/decoration. It takes the button's own ink, and the three symbols
+   painted on its faces keep their own colors. */
+.d10 { width: 24px; height: 24px; display: block; flex: none; }
+.d10 .shell, .d10 .facet { fill: none; stroke: currentColor; stroke-linejoin: round; }
+.d10 .shell { stroke-width: 5; }
+.d10 .facet { stroke-width: 3; opacity: .65; }
+.d10 .pip { fill: var(--face, currentColor); }
+button.ghost.menubtn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--serif); letter-spacing: .05em; white-space: nowrap;
+}
+.coin.menucoin { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+body.scened .d10 .shell, body.scened .d10 .facet { stroke: #e8dcba; }
+
+/* --- The Chronicle ----------------------------------------------------------
+   Its own page, read off the book it is written in: the tome is behind the
+   whole window, the entries are the only thing on it, and a day's worth of
+   them is one chapter. */
+.chroniclepage .chapter { max-width: 720px; margin: 0 0 22px; }
+.chroniclepage .chapter h3 {
+  font-family: var(--serif); font-weight: 400; font-size: 15px; letter-spacing: .14em;
+  text-transform: uppercase; color: #d9c08a; margin: 0 0 8px; padding-bottom: 6px;
+  border-bottom: 1px solid rgba(185, 164, 118, .4); text-shadow: 0 2px 10px rgba(0, 0, 0, .9);
+}
+.chroniclepage .chapter ul { list-style: none; margin: 0; padding: 0; }
+.chroniclepage .chapter li {
+  padding: 7px 0 7px 18px; position: relative; font-size: 17px; line-height: 1.5;
+  color: #e6d7b4; text-shadow: 0 1px 8px rgba(0, 0, 0, .95);
+}
+.chroniclepage .chapter li::before {
+  content: '\00B7'; position: absolute; left: 4px; color: #b49a63;
+}
+.chroniclepage .chapter li.good { color: #f4ead0; }
+.chroniclepage .chapter li.bad { color: #f0b9a4; }
+
+
+
+/* --- Kit --------------------------------------------------------------------
+   A piece of gear is a card: what it is, what it does to your dice, and how
+   much of it is left. The wear pips are the honest bit — a sound piece shows a
+   full row, and every beating takes one off. */
+.kits { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin: 0 0 14px; }
+.kit {
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--face, var(--rule)); border-radius: 2px;
+  padding: 10px 12px; display: grid; gap: 3px; align-content: start;
+}
+.kit b { font-family: var(--serif); font-weight: 400; font-size: 16px; color: var(--ink-deep); }
+.kit em { font-style: normal; font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.kit p { margin: 4px 0 2px; font-size: 14px; color: var(--muted); }
+.kit.empty { background: none; border-style: dashed; border-left-style: dashed; opacity: .7; }
+.kit.worn { border-left-color: var(--gilt); }
+.kit.broken { opacity: .6; border-left-color: var(--oxblood); }
+.kit .wear { display: flex; gap: 3px; margin-top: 4px; }
+.kit .wear i { width: 14px; height: 5px; border-radius: 1px; background: var(--leaf-sunk); }
+.kit .wear i.sound { background: var(--good); }
+.kit .wear i.gone { background: color-mix(in srgb, var(--oxblood) 45%, var(--leaf-sunk)); }
+.kit .kitrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+button.action.tiny { padding: 3px 9px; font-size: 13px; }
+/* On a photograph the cards keep their paper and their ink. */
+body.scened .kit { background: var(--vellum-lit); color: var(--ink); box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .85); }
+body.scened .kit b { color: var(--ink-deep); text-shadow: none; }
+body.scened .kit em, body.scened .kit p { color: var(--muted); text-shadow: none; }
+body.scened .kit.empty { background: rgba(28, 19, 8, .35); border-color: rgba(185, 164, 118, .4); }
+body.scened .kit.empty b { color: #f2e6c9; }
+body.scened .kit.empty em { color: #cbb894; }
+
+.sheetpage .dicerow { gap: 10px; margin-bottom: 14px; }
+.sheetpage .setgroup:first-of-type { margin-top: 4px; }
+
+/* A button that lives on a paper card is a paper button, whatever the page
+   behind it is doing. */
+body.scened .kit button.ghost, body.scened .kit button.action {
+  background: var(--leaf); color: var(--ink); border-color: var(--rule);
+}
+body.scened .kit button.action { background: var(--oxblood); color: #f4e9cf; border-color: #5e221c; }
+body.scened .kit button.ghost:hover:not(:disabled) { border-color: var(--gilt); color: var(--ink-deep); }
+
+/* The sheet's own prose sits on the page rather than on a card, so it gets a
+   strip of shade to be read against. */
+body.scened .sheetpage .scroller > .hint,
+body.scened .sheetpage .setgroup {
+  background: linear-gradient(to right, rgba(16, 10, 4, .55), rgba(16, 10, 4, 0) 70%);
+  padding: 4px 10px 4px 8px; border-radius: 2px;
+}
+.sheetpage .setgroup { border-bottom-color: rgba(185, 164, 118, .4); }
+.sheetpage .dicerow { background: rgba(16, 10, 4, .4); border-radius: 3px; padding: 8px 10px; }
+.outcome .carried { color: var(--gilt); font-family: var(--letter); font-style: italic; margin-bottom: 6px; }
+
+/* --- Making a character -----------------------------------------------------
+   One large card in the middle: the calling, the figure, the name. The
+   callings either side lean in at the edges on a wide screen, and the dots
+   under it jump straight to any of them. */
+.making { align-items: stretch; }
+/* The card is as tall as it needs to be, and the panel scrolls if the window
+   is shorter than that; nothing is squeezed on top of anything else. */
+.makedeck {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 480px) minmax(0, 1fr) auto;
+  align-items: center; gap: 14px; flex: none; padding-bottom: 6px;
+}
+.makecard {
+  grid-column: 3; width: 100%; justify-self: center;
+  display: flex; flex-direction: column; gap: 14px;
+  background: var(--vellum-lit); color: var(--ink);
+  border: 1px solid var(--rule); border-top: 4px solid var(--face, var(--oxblood)); border-radius: 4px;
+  padding: 18px 20px 14px; box-shadow: 0 18px 40px -18px rgba(20, 12, 4, .9);
+}
+.makeclass .classhead { color: var(--face); }
+.makeclass .classhead svg { width: 26px; height: 26px; }
+.makeclass h3 { font-size: 26px; }
+.makeclass .dicerow { margin: 10px 0 6px; }
+.makeclass .title { color: var(--muted); font-size: 14px; margin: 0 0 6px; }
+.makeclass .blurb { color: var(--muted); font-style: italic; font-family: var(--letter); margin: 0 0 8px; }
+.makeclass .ability { margin: 0 0 6px; }
+.makelook {
+  display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 8px;
+  border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); padding: 12px 0;
+}
+.makelook figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.makelook .figcell { --cell: 150px; filter: drop-shadow(0 6px 10px rgba(20, 12, 4, .45)); }
+.makelook figcaption { display: flex; flex-direction: column; align-items: center; line-height: 1.3; }
+.makelook figcaption b { font-family: var(--serif); font-weight: 400; font-size: 17px; color: var(--ink-deep); }
+.makelook figcaption span { font-size: 12px; color: var(--muted); }
+.lookstep, .deckstep {
+  appearance: none; cursor: pointer; font: inherit; line-height: 1; padding: 0;
+  display: grid; place-items: center; border-radius: 50%;
+  background: var(--leaf); color: var(--ink-deep); border: 1px solid var(--rule);
+  transition: border-color .12s, background .12s;
+}
+.lookstep { width: 40px; height: 40px; font-size: 26px; }
+.deckstep { width: 48px; height: 48px; font-size: 32px; box-shadow: 0 8px 18px -10px rgba(20, 12, 4, .9); }
+.lookstep:hover:not(:disabled), .deckstep:hover { border-color: var(--gilt); background: var(--vellum-lit); }
+.lookstep:disabled { opacity: .3; cursor: default; }
+.deckstep:first-child { grid-column: 1; }
+.deckstep:last-child { grid-column: 5; }
+.makename { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; }
+.makename .field { flex: 1 1 200px; margin: 0; max-width: none; }
+.makename .field span { color: var(--muted); }
+.makecard .notice { margin: 0; min-height: 0; }
+.classpeek {
+  appearance: none; cursor: pointer; font: inherit; color: var(--ink);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  background: var(--vellum-lit); border: 1px solid var(--rule-soft); border-top: 3px solid var(--face);
+  border-radius: 4px; padding: 14px 12px; opacity: .55; transform: scale(.88);
+  transition: opacity .15s, transform .15s; max-width: 190px; width: 100%;
+}
+.classpeek.before { grid-column: 2; justify-self: end; }
+.classpeek.after { grid-column: 4; justify-self: start; }
+.classpeek:hover { opacity: .85; transform: scale(.92); }
+.classpeek .classhead { color: var(--face); }
+.classpeek .classhead svg { width: 18px; height: 18px; fill: currentColor; }
+.classpeek .classhead b { font-family: var(--serif); font-weight: 400; font-size: 17px; color: var(--ink-deep); }
+.classpeek .figcell { --cell: 96px; }
+.makedots { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; flex: none; }
+.makedot {
+  appearance: none; cursor: pointer; width: 38px; height: 38px; padding: 0; border-radius: 50%;
+  display: grid; place-items: center; color: var(--face);
+  background: var(--leaf); border: 1px solid var(--rule); opacity: .7;
+}
+.makedot svg { width: 60%; height: 60%; fill: currentColor; }
+.makedot[aria-pressed="true"] { opacity: 1; border: 2px solid var(--face); background: var(--vellum-lit); box-shadow: 0 0 0 3px color-mix(in srgb, var(--face) 25%, transparent); }
+/* Paper keeps its own ink whatever the page behind it is doing. */
+body.scened .makecard, body.scened .classpeek { color: var(--ink); }
+body.scened .makecard b, body.scened .makecard h3, body.scened .classpeek b { color: var(--ink-deep); text-shadow: none; }
+body.scened .makecard .hint, body.scened .makecard p { text-shadow: none; }
+body.scened .makecard .hint, body.scened .makecard .ability, body.scened .makecard .field span { color: var(--muted); text-shadow: none; }
+body.scened .makecard .ability b { color: var(--ink-deep); }
+body.scened .makecard .notice { color: var(--oxblood); }
+body.scened .makecard button.ghost { background: var(--leaf); color: var(--ink); border-color: var(--rule); }
+/* Narrower: the neighbors step out and the arrows sit on the card's edges. */
+@media (max-width: 900px) {
+  .makedeck { grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; }
+  .classpeek { display: none; }
+  .makecard { grid-column: 2; }
+  .deckstep:last-child { grid-column: 3; }
+}
+@media (max-width: 620px) {
+  .makedeck { grid-template-columns: minmax(0, 1fr); }
+  .makecard { grid-column: 1; padding: 14px 14px 12px; }
+  .deckstep { display: none; }
+  .makelook .figcell { --cell: 120px; }
+  .makeclass h3 { font-size: 22px; }
+}
+
+/* A floor in progress, seen from camp or the hall: the way back is the first
+   thing on the screen. */
+.panel.carryon {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px;
+  border: 1px solid var(--oxblood); border-left: 4px solid var(--oxblood);
+}
+.panel.carryon p { margin: 0; }
+body.scened .panel.carryon { background: rgba(28, 19, 8, .72); border-color: var(--oxblood-lit); }
+body.scened .panel.carryon b { color: #f7edd5; }
+
+/* A shared quest: a column per player, each headed with who they are and
+   who of theirs is in the room. The other player's column is to be looked
+   at, not pressed. Side by side where there is room, stacked on a phone. */
+.traycols {
+  width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;
+}
+.traycol {
+  display: flex; flex-direction: column; align-items: center; min-width: 0;
+  border: 1px solid var(--rule-soft); border-radius: 4px; padding: 8px 10px 4px;
+}
+.traycol.mine { border-color: var(--gilt); }
+.traycol.theirs { border-style: dashed; }
+body.scened .traycol { background: rgba(16, 10, 4, .35); border-color: rgba(185, 164, 118, .4); }
+body.scened .traycol.mine { border-color: var(--gilt-lit); }
+.trayowner { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }
+.trayowner b { font-family: var(--serif); font-weight: 400; font-size: 15px; letter-spacing: .04em; color: var(--ink-deep); }
+.trayowner em { font-style: italic; }
+body.scened .trayowner { color: #cbb894; text-shadow: 0 1px 6px rgba(0, 0, 0, .9); }
+body.scened .trayowner b { color: #f7edd5; }
+.traycol .tray { margin: 8px 0 4px; justify-content: center; }
+button.die.theirs { cursor: not-allowed; opacity: .72; }
+button.die.theirs.matchable .shell polygon { stroke-dasharray: 5 4; }
+
+/* An open quest, as one slim bar over the map. */
+.panel.questbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 8px 14px;
+}
+.questbar .qcode { font-family: var(--serif); letter-spacing: .04em; white-space: nowrap; }
+.questbar .qparty { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.questbar .qwho {
+  font-family: var(--serif); font-size: 14px; padding: 1px 9px; border-radius: 10px;
+  border: 1px solid var(--rule); background: var(--leaf); color: var(--ink-deep);
+}
+.questbar .qwho.you { border-color: var(--gilt); }
+.questbar .qwho em { font-style: normal; font-size: 11px; color: var(--oxblood); margin-left: 3px; }
+.questbar .qnext { flex: 1 1 auto; }
+.questbar .qbuttons { display: inline-flex; gap: 6px; margin-left: auto; }
+.questbar .qnote { flex: 1 1 100%; margin: 0; }
+body.scened .panel.questbar { background: rgba(22, 15, 6, .78); border: 1px solid rgba(185, 164, 118, .45); }
+body.scened .questbar .qcode { color: #f2e6c9; }
+@media (max-width: 620px) {
+  .panel.questbar { padding: 7px 10px; gap: 6px 10px; }
+  .questbar .qnext { flex-basis: 100%; order: 5; }
+}
+
+.questbar .qwho b { font-weight: 600; color: var(--gilt); }
+.questbar .qpick { flex: 1 1 100%; margin-top: 4px; }
+.questbar .qpick .hint { margin: 0 0 6px; }
+.questbar .qpick .buttons { margin-top: 6px; }
+
+/* The load screen: where, who agreed, and who brings whom. */
+.loadout .planwhere { background: var(--vellum-lit); color: var(--ink); border: 1px solid var(--gilt); border-radius: 4px; padding: 12px 14px; margin: 0 0 10px; }
+.loadout .planwhere h3 { font-size: 22px; margin: 0 0 4px; }
+.loadout .planwhere .hint { color: var(--muted); text-shadow: none; margin: 0 0 8px; }
+.loadout .planwhere .asks { margin: 0; }
+.loadout .votes { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.loadout .vote { font-family: var(--serif); font-size: 14px; padding: 2px 10px; border-radius: 10px; border: 1px dashed var(--rule); background: var(--leaf); color: var(--muted); }
+.loadout .vote.yes { border-style: solid; border-color: var(--good); color: var(--good); }
+.loadout .buttons { margin: 0 0 12px; align-items: center; }
+.loadcols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 6px; }
+.loadcol { border: 1px dashed var(--rule-soft); border-radius: 4px; padding: 10px 12px; min-width: 0; }
+.loadcol.mine { border-style: solid; border-color: var(--gilt); }
+.loadwho { list-style: none; margin: 6px 0 8px; padding: 0; }
+.loadwho li { padding: 3px 0; border-bottom: 1px solid var(--rule-soft); }
+.loadwho li b { font-family: var(--serif); font-weight: 400; }
+.loadwho em { font-style: normal; font-size: 12px; color: var(--muted); }
+body.scened .loadcol { background: rgba(16, 10, 4, .45); border-color: rgba(185, 164, 118, .4); }
+body.scened .loadcol.mine { border-color: var(--gilt-lit); }
+body.scened .loadwho li { color: #f2e6c9; border-bottom-color: rgba(185, 164, 118, .25); }
+body.scened .loadwho em { color: #cbb894; }
+
+/* Making a character: the whole window, and the card fits in it. The card
+   gives up space in steps as the window gets shorter rather than running off
+   the bottom — first some air, then the figure shrinks, then the reading
+   that is also on the class dots' tooltips. */
+body.making-hero .layout { padding-block: 8px 8px; }
+body.making-hero .making > header { margin-bottom: 8px; }
+body.making-hero .makedots { margin-bottom: 10px; }
+body.making-hero .makecard { gap: 10px; padding: 14px 18px 12px; }
+body.making-hero .makelook { padding: 8px 0; }
+body.making-hero .makelook .figcell { --cell: clamp(84px, 17vh, 150px); }
+body.making-hero .makeclass .blurb { margin-bottom: 4px; }
+@media (max-height: 820px) {
+  body.making-hero .makeclass h3 { font-size: 22px; }
+  body.making-hero .makeclass .dicerow { margin: 6px 0 4px; }
+  body.making-hero .makeclass .blurb { font-size: 14px; line-height: 1.35; }
+  body.making-hero .makeclass .ability { font-size: 12px; line-height: 1.35; }
+  body.making-hero .makeclass .title { font-size: 13px; margin-bottom: 4px; }
+  body.making-hero .makeclass .hint { display: none; }
+  body.making-hero .makecard > .notice:empty { display: none; }
+}
+@media (max-height: 680px) {
+  body.making-hero .makeclass .blurb { display: none; }
+  body.making-hero .making > header .hint { display: none; }
+  body.making-hero .makedots .makedot { width: 32px; height: 32px; }
+  body.making-hero .makename .field span { display: none; }
+}
+@media (max-width: 620px) {
+  body.making-hero .making > header { flex-wrap: nowrap; align-items: center; }
+  body.making-hero .making > header > div { flex: 1 1 auto; }
+  body.making-hero .making > header h2 { font-size: 18px; }
+  body.making-hero .making > header .backmap { padding: 6px 10px; font-size: 14px; }
+  body.making-hero .makeclass .hint { display: none; }
+  body.making-hero .makeclass .blurb { font-size: 14px; line-height: 1.35; }
+  body.making-hero .makeclass .ability { font-size: 12px; line-height: 1.35; }
+  body.making-hero .makecard { padding: 12px 14px 10px; gap: 8px; }
+}
+
+
+/* =============================================================================
+   Blockhead Odyssey
+   -----------------------------------------------------------------------------
+   The theme, laid over the layout above: the website's indigo and its
+   decorative capitals, dark panels in place of paper, pixel art drawn crisp,
+   and maps colored like the world rather than inked on vellum.
+   ========================================================================== */
+
+body { background-color: var(--vellum); background-image: none; color: var(--ink); font-size: 16px; }
+::selection { background: rgba(217, 165, 58, .35); }
+:focus-visible { outline-color: var(--gilt-lit); }
+h1, h2, h3, h4 { letter-spacing: .02em; }
+img, image, .kitcell, .skinhead, .skinbody { image-rendering: pixelated; }
+
+/* The masthead: the site's own lettering. */
+.brand h1, body.scened .brand h1 {
+  color: #fff; font-size: 28px; letter-spacing: .03em;
+  text-shadow: 0 2px 0 #3a2a8a, 0 4px 14px rgba(0, 0, 0, .7);
+}
+.tagline { font-style: normal; }
+
+/* Scrims over the screenshots: indigo, as the site lays its own. */
+body.s-hall, body.s-camp, body.s-mouth {
+  background-image: linear-gradient(rgba(10, 6, 40, .58), rgba(8, 5, 30, .72)), var(--scene, none);
+}
+body.s-delve, body.s-delve.shade-wood, body.s-delve.shade-fen, body.s-delve.shade-sewer {
+  background-image: linear-gradient(rgba(8, 5, 30, .62), rgba(6, 4, 24, .76)), var(--scene, none);
+}
+body.s-desk, body.s-tome {
+  background-image:
+    linear-gradient(rgba(12, 8, 46, .55) 0%, rgba(10, 6, 40, .66) 45%, rgba(6, 4, 26, .86) 100%),
+    var(--scene, none);
+}
+
+/* Type over a picture. */
+body.scened { color: #ece8fa; }
+body.scened .tagline, body.scened .coin span { color: #b9b2e0; }
+body.scened .panel h2, body.scened .panel > header h3, body.scened .setgroup { color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, .85); }
+body.scened .panel > header .hint, body.scened .panel > header .meta,
+body.scened .bearings, body.scened .status-line, body.scened .ability, body.scened .instruction,
+body.scened .panel > .hint, body.scened .chartline, body.scened .tray-empty,
+body.scened .required, body.scened .field span, body.scened .namerow .field span,
+body.scened details.aside summary, body.scened details.aside .hint, body.scened .legend span,
+body.scened details.invite summary, body.scened details.invite .hint, body.scened .lobby li { color: #d3cdf0; }
+body.scened .panel > header .hint b, body.scened .bearings b, body.scened .status-line b, body.scened .ability b,
+body.scened .required b, body.scened .panel .hint b, body.scened .instruction b, body.scened .coin b,
+body.scened .scried b { color: #fff; }
+body.scened .notice { color: #ffb38a; }
+body.scened .doomed { color: #ffa08c; }
+body.scened .chronicle h2, body.scened .log li { color: #c9c2ec; }
+body.scened .log li.good { color: #fff; }
+body.scened .log li, body.scened .lobby li { border-bottom-color: rgba(143, 134, 201, .25); }
+body.scened .pursebar, body.scened .whosekit, body.scened .tray.idle,
+body.scened .panel > header, body.scened .bearings, body.scened .panelfoot, body.scened .tierline,
+body.scened details.aside { border-color: rgba(143, 134, 201, .4); }
+body.scened details.invite { background: rgba(14, 10, 50, .7); border-color: rgba(143, 134, 201, .45); }
+
+/* Chips and buttons: the site's slanted, outlined buttons. */
+.coin, body.scened .coin {
+  background: rgba(14, 10, 50, .78); border: 1px solid rgba(143, 134, 201, .55);
+  color: #ece8fa; box-shadow: none; border-radius: 3px;
+}
+.coin span { font-family: var(--pixel); font-size: 10px; letter-spacing: .04em; color: #b9b2e0; }
+.coin b { color: #fff; }
+
+button.action, button.ghost, .button {
+  font-family: var(--sans); font-weight: 700; letter-spacing: .03em; border-radius: 3px;
+}
+button.action {
+  background: linear-gradient(#d4683a, #b24c22); color: #fff; border: 1px solid #5c2410;
+  box-shadow: inset 0 1px 0 rgba(255, 220, 190, .35), inset 0 -3px 0 rgba(0, 0, 0, .28);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+}
+button.action:hover:not(:disabled) { background: linear-gradient(#e47a48, #c4582a); }
+button.action:disabled { background: #3d3666; color: #9b94c4; border-color: #2a2452; box-shadow: none; text-shadow: none; }
+button.ghost, body.scened button.ghost {
+  background: rgba(14, 10, 50, .72); color: #ece8fa; border: 1px solid rgba(220, 214, 255, .55);
+}
+button.ghost:hover:not(:disabled), body.scened button.ghost:hover:not(:disabled) { border-color: var(--gilt-lit); color: #fff; }
+button.ghost.danger { color: #ffb0a0; border-color: rgba(239, 106, 88, .6); }
+
+/* Panels and cards: the site's dark content boxes in place of paper. */
+.panel { background: rgba(16, 12, 52, .82); border-color: var(--rule-soft); box-shadow: 0 12px 30px -16px rgba(0, 0, 0, .8); }
+body.scened .panel { background: none; border-color: transparent; box-shadow: none; }
+.companion, .placecard, .classcard, .outcome, .pick, .switch, .kit, .makecard, .classpeek, .zonerow,
+body.scened .companion, body.scened .placecard, body.scened .classcard, body.scened .outcome,
+body.scened .pick, body.scened .switch, body.scened .kit, body.scened .makecard, body.scened .classpeek {
+  background: linear-gradient(180deg, #262056 0%, #1b1644 100%);
+  color: var(--ink); border-color: #4a4290; box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .9);
+}
+body.scened .companion.is-hero { background: linear-gradient(180deg, #2f2766 0%, #211b52 100%); }
+body.scened .placecard { border-color: var(--gilt); }
+body.scened .outcome.good { background: linear-gradient(180deg, #1f4a2c, #163a22); }
+body.scened .outcome.bad { background: linear-gradient(180deg, #4a1f26, #3a161c); }
+body.scened .zonerow { background: rgba(20, 15, 62, .9); border-color: #4a4290; }
+body.scened .zonerow:hover { background: rgba(34, 27, 90, .95); }
+body.scened .kit.empty { background: rgba(14, 10, 50, .55); border-color: rgba(143, 134, 201, .4); }
+body.scened .slot.empty { background: rgba(14, 10, 50, .55); }
+
+.companion h3, .placecard h3, .classcard h3, .outcome h3, .pick-who b, .switch b, .makecard h3, .kit b,
+body.scened .companion h3, body.scened .placecard h3, body.scened .classcard h3, body.scened .outcome h3,
+body.scened .pick-who b, body.scened .switch b, body.scened .makecard h3, body.scened .makecard b,
+body.scened .classpeek b, body.scened .kit b, body.scened .companion b, body.scened .placecard b,
+body.scened .classcard b, body.scened .outcome b, body.scened .pick b, body.scened .switch b,
+body.scened .companion .ability b, body.scened .classcard .ability b, body.scened .classcard p b,
+body.scened .makecard .ability b { color: #fff; text-shadow: none; }
+body.scened .companion .hint, body.scened .companion .title, body.scened .companion .blurb,
+body.scened .placecard .hint, body.scened .placecard .tierline, body.scened .classcard .blurb,
+body.scened .outcome p, body.scened .pick-who em, body.scened .switch em, body.scened .grants li,
+body.scened .rank-row, body.scened .rank-row .cost, body.scened .companion .ability,
+body.scened .companion .trainrow .hint, body.scened .classcard p, body.scened .classcard .ability,
+body.scened .classcard .hint, body.scened .companion p, body.scened .placecard p, body.scened .pick p,
+body.scened .makecard .hint, body.scened .makecard p, body.scened .makecard .ability,
+body.scened .makecard .field span, body.scened .kit em, body.scened .kit p { color: #c9c2ec; text-shadow: none; }
+body.scened .classcard .grants em { color: var(--gilt-lit); }
+.companion h3, .placecard h3, .makecard h3, .outcome h3 { font-family: var(--serif); }
+
+/* Fields. */
+input[type="text"], textarea, .field input, body.scened input[type="text"] {
+  background: #0e0b30; color: #fff; border: 1px solid #5a52a0; border-radius: 3px;
+}
+input::placeholder, textarea::placeholder { color: #7e77b0; }
+
+/* Meters and marks. */
+.meter { background: #120e3a; border-color: #3a336f; }
+.meter i { background: var(--gilt); }
+.meter.stamina i { background: var(--good); }
+
+/* The menu sheet and the face sheet. */
+.menucard { background: #16123f; border-color: #4a4290; box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .9); }
+.menuitem { color: var(--ink); border-bottom-color: #2e2866; }
+.menuitem b { color: #fff; }
+.menuitem em { color: var(--muted); }
+.menuitem:hover:not(:disabled), .menuitem[aria-pressed="true"] { background: #241d5a; }
+.facesheet, #tip { background: #120e3a; color: var(--ink); border-color: #4a4290; }
+.menubtn, body.scened .menubtn { background: rgba(14, 10, 50, .85); }
+.d10 .shell, .d10 .facet, body.scened .d10 .shell, body.scened .d10 .facet { stroke: #e8e2ff; }
+
+/* --- Your skin -------------------------------------------------------------- */
+.skinhead {
+  display: block; width: 48px; height: 48px; flex: none;
+  border: 2px solid #0b0828; box-shadow: 0 0 0 2px var(--gilt), 0 6px 14px -6px rgba(0, 0, 0, .9);
+  background: #2b2560;
+}
+.skinhead.big { width: 128px; height: 128px; margin: 0 auto; }
+.skinbody { display: block; height: 240px; width: auto; margin: 0 auto; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .6)); }
+.whoami { display: flex; gap: 12px; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
+.whoami .skinhead { width: 56px; height: 56px; }
+.whoami-say { display: flex; flex-direction: column; gap: 2px; }
+.whoami-say em { font-size: 12.5px; line-height: 1.45; }
+.whorow { display: flex; gap: 12px; align-items: center; }
+.makelook { display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; padding: 10px 0; }
+body.making-hero .makelook .skinhead.big { width: clamp(84px, 17vh, 128px); height: clamp(84px, 17vh, 128px); }
+body.making-hero .makelook .skinbody { height: clamp(140px, 26vh, 240px); }
+.makelook figure { margin: 0; display: grid; justify-items: center; gap: 8px; text-align: center; }
+.makelook figcaption { display: grid; gap: 2px; }
+.makelook figcaption b { font-family: var(--serif); font-size: 18px; color: #fff; }
+.makelook figcaption span { font-size: 12.5px; color: var(--muted); }
+.classpeek .peekmark { display: grid; place-items: center; width: 64px; height: 64px; margin: 8px auto 0; color: var(--face); opacity: .55; }
+.classpeek .peekmark svg { width: 56px; height: 56px; fill: currentColor; }
+
+/* --- The dice ------------------------------------------------------------- */
+/* Shells read on indigo: pale stone with the symbol in its own ink. */
+.die .shell polygon { fill: #efeadb; stroke: #1a1236; }
+.die.power .shell polygon { fill: #f6f1e2; stroke: var(--face); }
+.die .pips { color: #d3cdf0; font-family: var(--pixel); }
+.mark { background: #0e0b30; }
+
+/* --- The maps --------------------------------------------------------------
+   Coloured like the world from the air, not inked: water, grass, sand,
+   forest, stone. The marks are pixel art and are drawn without blending. */
+svg.world .cut, svg.world .place .sign, .compass image, svg.chart .cut, svg.chart .country .sign { mix-blend-mode: normal; }
+svg.world .cuts { opacity: 1; }
+svg.world .grain, svg.chart .grain, .map .grain { display: none; }
+svg.world .vig, svg.chart .vig, .map .vignette { opacity: .35; }
+svg.world .cell { stroke: rgba(10, 6, 30, .35); stroke-width: 1.2; }
+svg.world .t-sea { fill: #2b58a8; }
+svg.world .t-shallows { fill: #3f74c4; }
+svg.world .t-downs { fill: #6aa84a; }
+svg.world .t-heath { fill: #8cae54; }
+svg.world .t-forest { fill: #3e7a2e; }
+svg.world .t-hills { fill: #7c9a48; }
+svg.world .t-mountains { fill: #8d8d8d; }
+svg.world .t-marsh { fill: #4a6a3a; }
+svg.world .river { stroke: #4f86d8; }
+svg.world .place .seat { fill: #1d1845; fill-opacity: .92; stroke: var(--gilt); }
+svg.world .place .rim { stroke: #f2c75a; stroke-opacity: .35; }
+svg.world .place:hover .seat { stroke: #ffe08a; }
+svg.world .place.on .seat { stroke: #7ee1ff; }
+svg.world .place.haven .seat { fill: #2a2266; stroke: #c9c2ec; }
+svg.world .place.haven:hover .seat { fill: #352c7a; stroke: var(--oxblood-lit); }
+svg.world .place.tower .seat { fill: #3a2a12; stroke: var(--gilt-lit); }
+svg.world .place.tower:hover .seat { fill: #4a3618; stroke: var(--oxblood-lit); }
+svg.world .place.locked .seat { fill: #0b0828; fill-opacity: .72; stroke: #3a336f; }
+svg.world .place.locked .sign { filter: grayscale(1) brightness(.55); }
+svg.world .labels .name { fill: #fff; stroke: #0b0828; stroke-width: 4; font-family: var(--sans); font-weight: 700; }
+svg.world .labels .name.on { fill: #7ee1ff; }
+svg.world .labels .name.haven { fill: #f2c75a; }
+svg.world .labels .name.tower { fill: #ffd98a; font-style: normal; }
+
+/* The chart of Odyssia. */
+svg.chart .ocean { fill: #2b58a8; }
+svg.chart .wave { stroke: #5a8ad8; }
+svg.chart .coast { fill: #6aa84a; stroke: #e8d8a0; stroke-width: 6; }
+svg.chart .river { stroke: #4f86d8; }
+svg.chart .rule { stroke: #f2c75a; }
+svg.chart .country .patch { fill: var(--tint); fill-opacity: .28; stroke: #0b0828; stroke-opacity: .5; }
+svg.chart .country .disc { fill: #1d1845; stroke: var(--gilt); }
+svg.chart .country:hover .disc { fill: #2f2766; stroke: var(--gilt-lit); }
+svg.chart .country.locked .country-name { fill: #b9b2e0; }
+svg.chart .country .ring { stroke: var(--gilt-lit); }
+svg.chart .country-name { fill: #fff; stroke: #0b0828; stroke-width: 5; paint-order: stroke; font-family: var(--serif); }
+svg.chart .country.locked .disc { fill: #0b0828; }
+svg.chart .country.locked .sign { filter: grayscale(1) brightness(.6); }
+
+/* The floor plan: dark slate under block art, not vellum under ink. */
+.map { box-shadow: 0 0 0 2px #0b0828, 0 0 0 4px #4a4290, 0 18px 36px -18px rgba(0, 0, 0, .9); border-radius: 2px; }
+.vellum { fill: #17133a; }
+.map .backdrop { opacity: .18; filter: saturate(.7) brightness(.8); }
+.map:not(.out-of-doors) .everyground { filter: none; }
+.stone { opacity: 1; filter: none; }
+.stone.unlit { opacity: .55; filter: saturate(.6) brightness(.8); }
+.map .weather { mix-blend-mode: soft-light; opacity: .35; }
+.map.out-of-doors .vellum, .map.out-of-doors .grain { opacity: 1; }
+.rule { stroke: #6a62b0; }
+.corridor { stroke: #8f86c9; }
+.cartouche { fill: #c9c2ec; font-family: var(--serif); opacity: .85; }
+.trail.bed { stroke: #5a3f22; opacity: .55; }
+.trail.tread { stroke: #b49a64; opacity: .85; }
+.tile .party .base { fill: #1d1845; }
+.tile .party .headrim { fill: #0b0828; }
+.tile .party .shade { fill: rgba(0, 0, 0, .45); }
+.tile .party .badge path { fill: #fff; }
+.way .pad { fill: #1d1845; stroke: var(--oxblood-lit); }
+.way .barb { fill: var(--oxblood-lit); }
+.way.known .pad { stroke: var(--gilt); }
+.way:hover .pad, .way:focus-visible .pad { fill: #2f2766; }
+.tile .done { stroke: var(--good); }
+.tile.reachable .floor { stroke: #f2c75a; }
+.tile.reachable:hover .floor { fill: color-mix(in srgb, var(--tint) 40%, #1d1845); }
+.map.stone-floor .tile.state-hidden .floor { stroke: #6a62b0; }
+.glyph .g-disc { fill: #0b0828; stroke: #c9c2ec; }
+
+/* Places, postings and the hall. */
+.vista .wash { mix-blend-mode: soft-light; }
+.find { background: #15113a; border-color: #3a336f; color: var(--ink); }
+.chip { background: color-mix(in srgb, var(--tint) 35%, #15113a); color: #fff; border-color: color-mix(in srgb, var(--tint) 60%, #15113a); }
+.ask { background: #15113a; border-color: var(--face); color: #fff; }
+.marching .slot, body.scened .marching .slot { background: #1d1845; color: var(--ink); }
+.towerrule, .onthetable,
+.panel.muster.tower .towerrule, .panel.landing .onthetable { background: rgba(20, 15, 62, .9); color: var(--ink); }
+.panel.muster.tower .towerrule p, .panel.muster.tower .towerrule b { color: var(--ink); }
+
+/* The chronicle as a book is a log here. */
+.chroniclepage .chapter h3 { font-family: var(--serif); color: var(--gilt-lit); }
+@media (max-width: 620px) {
+  body.making-hero .makelook .skinhead.big { width: 88px; height: 88px; }
+  body.making-hero .makelook .skinbody { height: 150px; }
+}

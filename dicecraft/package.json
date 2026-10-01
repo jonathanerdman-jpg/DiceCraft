@@ -1,0 +1,13 @@
+{
+  "name": "blockhead-odyssey-dicecraft",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Blockhead Odyssey: DiceCraft, a press-your-luck dice game themed on the Blockhead Odyssey Minecraft server.",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "start": "node --version >/dev/null && python3 -m http.server 8080",
+    "build:artifact": "node tools/build-artifact.mjs",
+    "build:pages": "node tools/build-pages.mjs"
+  }
+}

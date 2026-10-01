@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blockhead Odyssey: DiceCraft</title>
+<meta name="description" content="A press-your-luck dice game set in the world of the Blockhead Odyssey Minecraft server: gather a company, match the symbols, and know when to climb out.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=Silkscreen:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23080325'/><rect x='4' y='4' width='16' height='16' fill='%23b87333'/><rect x='7' y='9' width='3' height='3' fill='%23080325'/><rect x='14' y='9' width='3' height='3' fill='%23080325'/><rect x='9' y='15' width='6' height='2' fill='%23080325'/></svg>">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Blockhead Odyssey: DiceCraft</h1>
+      <p class="tagline">Mine a dungeon room by room. Press your luck. Know when to climb out.</p>
+    </div>
+    <div class="purse" id="purse"></div>
+    <div class="pinned" id="pinned"></div>
+  </header>
+
+  <div class="layout">
+    <main id="view" class="view"></main>
+    <aside class="chronicle">
+      <h2>Chronicle</h2>
+      <ol id="log" class="log"></ol>
+      <button class="ghost danger" id="reset" data-act="disband-current" type="button">Disband the company</button>
+    </aside>
+  </div>
+
+  <div id="dicestage" class="dicestage" hidden aria-hidden="true"></div>
+  <div id="tip" class="facesheet" aria-hidden="true"></div>
+  <div id="menudock" class="menudock"></div>
+  <div id="menu" class="menu" hidden></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

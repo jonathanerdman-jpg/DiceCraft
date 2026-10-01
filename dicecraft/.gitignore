@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+*.log
+build/
+/*.png
+
+# Somebody else's music, fetched by tools/fetch-music.mjs and not ours to pass on.
+assets/audio/*.mp3
+dist/
+.wrangler/
