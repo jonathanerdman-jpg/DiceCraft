@@ -183,7 +183,7 @@ export function makePiece(kindId, tier = 1, { wear = 0, id = null, gift = null }
 
 // --- What a floor very occasionally leaves in a chest -----------------------
 //
-// One piece in however many carries somebody else's trick in it: a sword that
+// One piece in however many is enchanted: it carries somebody else's trick in it: a sword that
 // knows how to slip a blow, a helm that calls a die back. It is worth one use
 // a night, on top of whatever the wearer already has, and it is the only thing
 // in the game that hands a trick to somebody who was never taught one — a
@@ -207,6 +207,23 @@ export function rollGift(rng, tier) {
 // stays the leaf it is; js/hero.js holds what each one does, and a test keeps
 // the two lists honest.
 export const GIFT_IDS = ['secondWind', 'brace', 'transmute', 'readGround', 'slip', 'blessing'];
+
+// What those tricks are called once they are in a piece of kit: Minecraft
+// enchantments, on armor as much as on weapons. A Diamond Chestplate of
+// Protection can shield-block once a night for whoever wears it.
+export const ENCHANTMENTS = {
+  secondWind: 'Mending',
+  brace: 'Protection',
+  transmute: 'Silk Touch',
+  readGround: 'Fortune',
+  slip: 'Swift Sneak',
+  blessing: 'Loyalty',
+};
+
+export function enchantOf(piece) {
+  const gift = giftOf(piece);
+  return gift ? ENCHANTMENTS[gift] || null : null;
+}
 
 export function kindOf(piece) {
   return piece ? KINDS[piece.kind] : null;

@@ -22,7 +22,7 @@ import { costToMaster, trainingCost } from './training.js';
 import { defaultLook } from './looks.js';
 import {
   KIT_COLS, KIT_ROWS, KIT_SHEET, SLOTS, boonOf, canCarry, describe as describeGear,
-  durabilityOf, giftOf, isBroken, kindOf, kitCell, nameOf as gearName, priceOf, repairCost,
+  ENCHANTMENTS, durabilityOf, giftOf, isBroken, kindOf, kitCell, nameOf as gearName, priceOf, repairCost,
   slotDef, socketCount, tierDef,
 } from './gear.js';
 import { TOWER, TOWER_STAMINA, ordinal, towerDepth } from './tower.js';
@@ -527,7 +527,7 @@ export function createUi(game, root) {
   function kitIcon(piece, cls = '') {
     const at = kitCell(piece);
     if (!at) return '';
-    return `<span class="kitcell ${cls}" aria-hidden="true" style="--kit:url('${kitUrl}');`
+    return `<span class="kitcell ${cls}${giftOf(piece) ? ' enchanted' : ''}" aria-hidden="true" style="--kit:url('${kitUrl}');`
       + ` --kitcols:${KIT_COLS}; --kitrows:${KIT_ROWS}; --col:${at.col}; --row:${at.row}"></span>`;
   }
 
@@ -845,8 +845,8 @@ export function createUi(game, root) {
         <b>${esc(gearName(piece))}</b>
         <em>${esc(slot ? slot.name : slotDef(kind.slot).where)}</em>
         <p>${esc(describeGear(piece))}</p>
-        ${giftOf(piece) ? `<p class="gift">There is something in it: <b>${esc(ABILITIES[giftOf(piece)].name)}</b>,
-          once a night, for whoever wears it.</p>` : ''}
+        ${giftOf(piece) ? `<p class="gift">Enchanted with <b>${esc(ENCHANTMENTS[giftOf(piece)])}</b>:
+          ${esc(ABILITIES[giftOf(piece)].name)} once a night, for whoever ${kind.slot === 'hand' || kind.slot === 'off' ? 'holds' : 'wears'} it.</p>` : ''}
         <span class="wear" title="${max - worn} of ${max} left">${pips}</span>
       </span>
       ${sockets && slot ? socketRow(sockets, slot.id) : ''}
@@ -2492,7 +2492,7 @@ export function createUi(game, root) {
     // owner may spend it.
     const abilities = e.abilities.map((a) => `<button class="ghost ability-btn" data-act="ability" data-id="${a.id}" type="button"
         aria-pressed="${ui.pendingAbility === a.id}" ${e.canUse(a.id) && (!a.uid || game.owns(a.uid)) ? '' : 'disabled'}
-        title="${esc(a.text)} \u2014 ${a.left} of ${a.charges} left until a long rest">${esc(a.name)} <b>&times;${a.left}</b></button>`).join('');
+        title="${a.gift ? `Enchantment: ${esc(ABILITIES[a.id].name)}. ` : ''}${esc(a.text)} \u2014 ${a.left} of ${a.charges} left until a long rest">${esc(a.name)} <b>&times;${a.left}</b></button>`).join('');
 
     const instruction = ui.reshaped !== null
       ? 'The die turns into what the trial wants, and goes where it was turned for.'

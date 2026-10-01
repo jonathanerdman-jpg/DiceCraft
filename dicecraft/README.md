@@ -45,6 +45,7 @@ stand-in. Renaming the character changes the skin. All of this is in
 | Wayfarer's Stone, Ten-Foot Pole, Seer's Glass, Smelling Salts | Recovery Compass, Ten-Block Stick, Pirate Spyglass, Totem of Undying |
 | Worn / Iron / Steel / Silvered / Runed kit | Armor: Leather / Chainmail / Iron / Diamond / Netherite; weapons: Wooden / Stone / Iron / Diamond / Netherite |
 | Shrine | Beacon |
+| A floor-found piece "with something in it" | An enchanted piece, armor or weapon: Mending, Protection, Silk Touch, Fortune, Swift Sneak, Loyalty |
 
 **Ithaca** is the capital: harbor cellars, the Undercity sewers, pirate hulks
 and Lantern Row, with Assistant Mayor Angie in the town hall. **Copperdeep** is

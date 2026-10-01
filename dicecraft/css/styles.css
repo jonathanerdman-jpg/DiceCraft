@@ -2478,3 +2478,23 @@ svg.chart .country.locked .sign { filter: grayscale(1) brightness(.6); }
   body.making-hero .makelook .skinhead.big { width: 88px; height: 88px; }
   body.making-hero .makelook .skinbody { height: 150px; }
 }
+
+/* Enchanted kit glints, the way enchanted items do. */
+.kitcell.enchanted { position: relative; overflow: hidden; box-shadow: 0 0 0 1px #a066e6, 0 0 10px -2px #a066e6; }
+.kitcell.enchanted::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(115deg, transparent 30%, rgba(190, 120, 255, .55) 45%, rgba(255, 200, 255, .35) 50%, transparent 65%);
+  background-size: 250% 250%; animation: glint 3.2s linear infinite;
+}
+@keyframes glint { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+@media (prefers-reduced-motion: reduce) { .kitcell.enchanted::after { animation: none; background-position: 50% 0; } }
+.kit .gift b { color: #c79bff; font-family: var(--sans); font-size: inherit; }
+
+/* Quest codes are read aloud and typed in: plain, large, unmistakable. */
+.code, .joinrow input, #joincode, #savecode {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 700; font-variant-ligatures: none;
+}
+.code { letter-spacing: .18em; color: #fff; background: #0e0b30; border: 1px solid var(--gilt); border-radius: 3px; padding: 1px 6px; font-size: 1.15em; }
+.joinrow input, #joincode { font-size: 18px; letter-spacing: .25em; width: 120px; }
+.questbar .qcode, body.scened .questbar .qcode { font-family: var(--sans); font-weight: 700; color: #fff; }

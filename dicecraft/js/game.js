@@ -6,7 +6,7 @@ import { generateMap, reveal } from './map.js';
 import { DEPTHS, depthByNumber, settingDef, unlockedDepths } from './settings.js';
 import {
   KINDS, KIND_IDS, SLOT_IDS, canCarry, emptyRack, fittedAt, isBroken, kindOf,
-  giftOf, kindsFor, kindsForSkills, makePiece, nameOf as gearName, pieceId, priceOf,
+  ENCHANTMENTS, giftOf, kindsFor, kindsForSkills, makePiece, nameOf as gearName, pieceId, priceOf,
   repairCost, rollGift, setFitted,
   skillsCanCarry, slotOf, socketCount, tierFor,
 } from './gear.js';
@@ -1637,7 +1637,7 @@ export class Game {
     going.forEach((m) => {
       this.giftsOf(m).forEach((id) => {
         if (abilities.some((a) => a.id === id)) return;
-        abilities.push({ ...ABILITIES[id], charges: 1, left: this.giftLeft(m, id), uid: m.uid, gift: true });
+        abilities.push({ ...ABILITIES[id], name: ENCHANTMENTS[id] || ABILITIES[id].name, charges: 1, left: this.giftLeft(m, id), uid: m.uid, gift: true });
       });
     });
     const alone = going.length === 1 ? ALONE_DICE : 0;
@@ -1830,7 +1830,7 @@ export class Game {
       { gift: rollGift(rng, tier) });
     x.pending.gear = [...(x.pending.gear || []), found];
     this.note(found.gift
-      ? `${gearName(found)}, and there is something in it: it knows ${ABILITIES[found.gift].name}.`
+      ? `${gearName(found)}, enchanted with ${ENCHANTMENTS[found.gift]}: ${ABILITIES[found.gift].name}, once a night.`
       : `${gearName(found)}, down here with the rest of it.`, 'good');
     return found;
   }
