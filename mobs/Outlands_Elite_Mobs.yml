@@ -1,0 +1,98 @@
+ROUS:
+  Type: HUSK
+  Display: '&6Rodent of Unusual Size'
+  Health: 120
+  Damage: 12
+
+  Options:
+    AlwaysShowName: true
+    PreventSunburn: true
+    MovementSpeed: 0.3
+    FollowRange: 30
+    KnockbackResistance: 0.6
+    Silent: true
+    PreventOtherDrops: true
+    Despawn: true
+
+  Model:
+    Id: nm_rat_gray
+    Scale: 3.5
+
+  Drops:
+    - LEATHER 1-3 0.45
+    - BONE 1-2 0.25
+    - STRING 1-2 0.20
+
+  Skills:
+    - addtag{t=can_drown} @self ~onSpawn
+    - skill{s=UniversalDrown} @self ~onTimer:40
+
+    - sound{s=entity.ravager.roar;v=1;p=1} @self ~onSpawn
+    - effect:particles{p=block_crack;m=stone;amount=20;hS=1;vS=0.5} @self ~onSpawn
+    - potion{type=SPEED;duration=999999;level=1} @self ~onSpawn
+
+    # Custom ROUS sounds
+    - sound{s=entity.ravager.ambient;v=0.45;p=1.6} @self ~onTimer:120 0.25
+    - sound{s=entity.ravager.hurt;v=0.7;p=1.5} @self ~onDamaged
+    - sound{s=entity.ravager.death;v=0.8;p=1.45} @self ~onDeath
+
+    # Combat flavor
+    - leap{velocity=1.2} @target ~onAttack 0.3
+    - throw{velocity=2;velocityY=0.5} @target ~onAttack 0.2
+
+SpiritGuide:
+  Type: SKELETON
+  Display: '&6Spirit Guide'
+  Health: 250
+  Damage: 5
+  Faction: Undead
+  Options:
+    AlwaysShowName: true
+    PreventRandomEquipment: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    MovementSpeed: 0.24
+    FollowRange: 40
+  Equipment:
+  - bhodyssey:spirit_guide_sombrero HEAD
+  - bhodyssey:skull_staff HAND
+  Skills:
+  - skill{s=SpiritGuide_SunCheck} @Self ~onTimer:20
+  - skill{s=SpiritGuide_Summon} @Target ~onTimer:300
+  - skill{s=SpiritGuide_StaffAttack} @Target ~onTimer:120
+  - potion{type=GLOWING;duration=999999;level=0;particles=false} @self ~onSpawn
+  - effect:particles{particle=SOUL_FIRE_FLAME;amount=3;hS=0.35;vS=0.7;speed=0.01;y=1} @self ~onTimer:10
+  - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain a &e<caster.name>&7 in the Outlands!"} @Server ~onDeath
+  Drops:
+  - bone 4-8 0.8
+  - aetherstones 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:skull_staff 1 silent"} 1 0.02
+  - command{cmd="iagive <killer.name> bhodyssey:spirit_guide_sombrero 1 silent"} 1 0.02
+  - command{cmd="iagive <killer.name> bhodyssey:cracked_repair_sigil 1 silent"} 1 0.03
+  - bhodyssey_collectibles 1 0.08
+  - emerald 1 1
+  - exp 500 1
+
+SpiritHelper:
+  Type: SKELETON
+  Display: '&7Bone Imp'
+  Health: 20
+  Damage: 2
+  Faction: Undead
+  Options:
+    AlwaysShowName: true
+    PreventRandomEquipment: true
+    PreventOtherDrops: true
+    PreventSunburn: true
+    MovementSpeed: 0.35
+    Scale: 0.4
+  Equipment:
+  - bhodyssey:black_imp_wings HEAD
+  - ancient:ancient_dagger HAND
+  Skills:
+  - potion{type=GLOWING;duration=999999;level=0;particles=false} @self ~onSpawn
+  - effect:particles{particle=SOUL_FIRE_FLAME;amount=3;hS=0.35;vS=0.7;speed=0.01;y=1} @self ~onTimer:10
+  Drops:
+  - emerald 1 1
+  - bone 1-2 1
+  - exp 10 1

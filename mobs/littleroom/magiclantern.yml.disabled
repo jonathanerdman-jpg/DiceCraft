@@ -1,0 +1,193 @@
+
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+
+magic_lantern:
+  Type: ARMOR_STAND 
+  Display: 'Magic Lantern'
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    Collidable: false
+    Silent: true
+    Persistent: true
+  DamageModifiers:
+    - SUFFOCATION -1
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Drops:
+  - magic_lantern 1 1
+  Skills:
+  - skill{s=magic_lantern_add_element} @self ~onInteract
+  - skill{s=magic_lantern_spawn_check} @selflocation ~onSpawn
+  - skill{s=magic_lantern_error_prevention} @self ~onTimer:10
+  - model{mid=magic_lantern;n=false;d=false} @self ~onSpawn
+  - model{mid=magic_lantern;n=false;d=false} @self ~onLoad
+
+magic_lantern_diamond:
+  Type: ARMOR_STAND 
+  Display: 'Diamond Magic Lantern'
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    Collidable: false
+    Silent: true
+    Persistent: true
+  DamageModifiers:
+    - SUFFOCATION -1
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Drops:
+  - magic_lantern_diamond 1 1
+  Skills:
+  - skill{s=lantern_detect_diamond} @BlocksNearOrigin{radius=16;radiusy=16;shape=sphere;onlyair=false;noair=true} ~onTimer:60
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=diamond} @self ~onSpawn
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=diamond} @self ~onLoad
+  - skill{s=magic_lantern_spawn_check} @selflocation ~onSpawn
+  - skill{s=magic_lantern_error_prevention} @self ~onTimer:10
+  - model{mid=magic_lantern;n=false;d=false} @self ~onSpawn
+  - model{mid=magic_lantern;n=false;d=false} @self ~onLoad
+
+magic_lantern_emerald:
+  Type: ARMOR_STAND 
+  Display: 'emerald Magic Lantern'
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    Collidable: false
+    Silent: true
+    Persistent: true
+  DamageModifiers:
+    - SUFFOCATION -1
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Drops:
+  - magic_lantern_emerald 1 1
+  Skills:
+  - skill{s=lantern_detect_emerald} @BlocksNearOrigin{radius=16;radiusy=16;shape=sphere;onlyair=false;noair=true} ~onTimer:60
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=emerald} @self ~onSpawn
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=emerald} @self ~onLoad
+  - skill{s=magic_lantern_spawn_check} @selflocation ~onSpawn
+  - skill{s=magic_lantern_error_prevention} @self ~onTimer:10
+  - model{mid=magic_lantern;n=false;d=false} @self ~onSpawn
+  - model{mid=magic_lantern;n=false;d=false} @self ~onLoad
+
+magic_lantern_gold:
+  Type: ARMOR_STAND 
+  Display: 'Gold Magic Lantern'
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    Collidable: false
+    Silent: true
+    Persistent: true
+  DamageModifiers:
+    - SUFFOCATION -1
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Drops:
+  - magic_lantern_gold 1 1
+  Skills:
+  - skill{s=lantern_detect_gold} @BlocksNearOrigin{radius=16;radiusy=16;shape=sphere;onlyair=false;noair=true} ~onTimer:60
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=gold} @self ~onSpawn
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=gold} @self ~onLoad
+  - skill{s=magic_lantern_spawn_check} @selflocation ~onSpawn
+  - skill{s=magic_lantern_error_prevention} @self ~onTimer:10
+  - model{mid=magic_lantern;n=false;d=false} @self ~onSpawn
+  - model{mid=magic_lantern;n=false;d=false} @self ~onLoad
+
+magic_lantern_lapis:
+  Type: ARMOR_STAND 
+  Display: 'Lapis Magic Lantern'
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    Collidable: false
+    Silent: true
+    Persistent: true
+  DamageModifiers:
+    - SUFFOCATION -1
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Drops:
+  - magic_lantern_lapis 1 1
+  Skills:
+  - skill{s=lantern_detect_lapis} @BlocksNearOrigin{radius=16;radiusy=16;shape=sphere;onlyair=false;noair=true} ~onTimer:60
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=lapis} @self ~onSpawn
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=lapis} @self ~onLoad
+  - skill{s=magic_lantern_spawn_check} @selflocation ~onSpawn
+  - skill{s=magic_lantern_error_prevention} @self ~onTimer:10
+  - model{mid=magic_lantern;n=false;d=false} @self ~onSpawn
+  - model{mid=magic_lantern;n=false;d=false} @self ~onLoad
+
+magic_lantern_redstone:
+  Type: ARMOR_STAND 
+  Display: 'Redstone Magic Lantern'
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    Collidable: false
+    Silent: true
+    Persistent: true
+  DamageModifiers:
+    - SUFFOCATION -1
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Drops:
+  - magic_lantern_redstone 1 1
+  Skills:
+  - skill{s=lantern_detect_redstone} @BlocksNearOrigin{radius=16;radiusy=16;shape=sphere;onlyair=false;noair=true} ~onTimer:60
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=redstone} @self ~onSpawn
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=redstone} @self ~onLoad
+  - skill{s=magic_lantern_spawn_check} @selflocation ~onSpawn
+  - skill{s=magic_lantern_error_prevention} @self ~onTimer:10
+  - model{mid=magic_lantern;n=false;d=false} @self ~onSpawn
+  - model{mid=magic_lantern;n=false;d=false} @self ~onLoad
+
+magic_lantern_debris:
+  Type: ARMOR_STAND 
+  Display: 'Ancient Debris Magic Lantern'
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+    Collidable: false
+    Silent: true
+    Persistent: true
+  DamageModifiers:
+    - SUFFOCATION -1
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Drops:
+  - magic_lantern_debris 1 1
+  Skills:
+  - skill{s=lantern_detect_debris} @BlocksNearOrigin{radius=16;radiusy=16;shape=sphere;onlyair=false;noair=true} ~onTimer:60
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=debris} @self ~onSpawn
+  - changepart{m=magic_lantern;pid=lantern;nm=magic_lantern_parts;npid=debris} @self ~onLoad
+  - skill{s=magic_lantern_spawn_check} @selflocation ~onSpawn
+  - skill{s=magic_lantern_error_prevention} @self ~onTimer:10
+  - model{mid=magic_lantern;n=false;d=false} @self ~onSpawn
+  - model{mid=magic_lantern;n=false;d=false} @self ~onLoad
+  

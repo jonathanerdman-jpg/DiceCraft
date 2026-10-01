@@ -1,0 +1,106 @@
+PickaxeGoblin:
+  Type: HUSK
+  Display: '&2Pickaxe Goblin'
+  Health: 20
+  Damage: 0
+  AIGoalsSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=pickaxe_goblin} @self ~onSpawn
+  - skill{skill=PickaxeGoblinAttack;sync=true} ~onTimer:1
+  - sound{s=entity.vindicator.hurt;v=1;p=2} @self ~onDamaged
+  - skill{skill=GoblinDeath} ~onDeath
+  Options:
+    AlwaysShowName: false
+    Collidable: true
+    Silent: true
+    PreventSunburn: true
+    MovementSpeed: 0.3
+    MaxCombatDistance: 10
+    PreventOtherDrops: true
+    Baby: false
+PistolGoblin:
+  Type: HUSK
+  Display: '&2Pistol Goblin'
+  Health: 20
+  Damage: 0
+  AIGoalsSelectors:
+  - 0 clear
+  - 1 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=pistol_goblin} @self ~onSpawn
+  - skill{skill=PistolGoblinStance;sync=true} ~onTimer:1
+  - skill{skill=PistolGoblinAttack;sync=true} ~onTimer:20
+  - sound{s=entity.vindicator.hurt;v=1;p=2} @self ~onDamaged
+  - skill{skill=GoblinDeath} ~onDeath
+  Options:
+    AlwaysShowName: false
+    Collidable: true
+    Silent: true
+    PreventSunburn: true
+    MovementSpeed: 0.2
+    MaxCombatDistance: 10
+    PreventOtherDrops: true
+    Baby: false
+BombGoblin:
+  Type: HUSK
+  Display: '&2Bomb Goblin'
+  Health: 15
+  Damage: 0
+  AIGoalsSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=bomb_goblin} @self ~onSpawn
+  - skill{skill=BombGoblinAttack;sync=true} ~onTimer:1
+  - sound{s=entity.vindicator.hurt;v=1;p=2} @self ~onDamaged
+  - skill{skill=BombGoblinDeath} ~onDeath
+  Options:
+    AlwaysShowName: false
+    Collidable: true
+    Silent: true
+    PreventSunburn: true
+    MovementSpeed: 0.35
+    MaxCombatDistance: 10
+    PreventOtherDrops: true
+    Baby: false
+HammerGoblin:
+  Type: HUSK
+  Display: '&2Hammer Goblin'
+  Health: 60
+  Damage: 0
+  AIGoalsSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=hammer_goblin} @self ~onSpawn
+  - skill{skill=HammerGoblinAttack;sync=true} ~onTimer:20
+  - sound{s=entity.vindicator.hurt;v=1;p=0.5} @self ~onDamaged
+  - skill{skill=HammerGoblinDeath} ~onDeath
+  Options:
+    AlwaysShowName: false
+    Collidable: true
+    Silent: true
+    PreventSunburn: true
+    MovementSpeed: 0.2
+    MaxCombatDistance: 10
+    PreventOtherDrops: true
+    KnockbackResistance: 2
+    Baby: false
+#c4291294b1cde3ee8596591cbb61847e

@@ -1,0 +1,110 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+
+giant_turtle:
+  Type: RAVAGER
+  Display: '&c&lAncient Tortoise'
+  Health: 700
+  Damage: 10
+  Armor: 10
+  Modules:
+    ThreatTable: true
+  DamageModifiers:
+  - PROJECTILE 0.01
+  - FALL 0
+  - FIRE 0.5
+  - FIRE_TICK 0.5
+  - SUFFOCATION 0
+  - DROWNING 0
+  AIGoalSelectors:
+  - clear
+  - meleeattack{speed=1.15}
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - hurtbytarget
+  - players
+  Options:
+    Collidable: true
+    FollowRange: 64
+    Silent: true
+    PreventOtherDrops: true
+    Despawn: false
+    Persistent: true
+  Skills:
+  - model{mid=giant_turtle;step=2;usm=true;save=true} @self ~onSpawnOrLoad
+  - BodyClamp{mh=25;mb=25;rde=10;rdu=10} @self ~onSpawnOrLoad
+
+  - skill{s=ancient_turtle_restore_model_delayed} @self ~onLoad
+  - skill{s=ancient_turtle_bossbar_reload} @self ~onLoad
+
+  - skill{s=giant_turtleIDLEsound} @self ~onTimer:60 .5
+  - skill{s=giant_turtleSPAWN} @self ~onSpawn
+  - skill{s=giant_turtleDEATH} @self ~onDeath
+
+  - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain an &e<caster.name>&7 in the Outlands!"} @Server ~onDeath
+  - skill{s=ancient_tortoise_record_kill} @trigger ~onDeath
+
+  - skill{s=giant_turtleSLAM} @self ~onTimer:20
+  - skill{s=giant_turtlePUSHPLAYERS} @self ~onTimer:5
+  - skill{s=giant_turtleEMERGE_NEARBY} @self ~onTimer:5
+  - skill{s=ancient_turtle_abandon_check} @self ~onTimer:100
+  # No free hits while asleep or emerging
+  - skill{s=ancient_turtle_cancel_sleep_damage;sync=true} @self ~onDamaged
+  - skill{s=ancient_turtle_cancel_waking_damage;sync=true} @self ~onDamaged
+
+  # Damage still triggers the wake/target logic
+  - skill{s=ancient_turtle_damage_wake} @self ~onDamaged
+  - skill{s=ancient_turtle_enrage} @self ~onDamaged
+
+  - skill{s=ancient_turtle_enraged_pressure} @self ~onTimer:60
+  - skill{s=ancient_turtle_bossbar_update} @self ~onTimer:10
+
+  - randomskill{skills=giant_turtleSTOMP1sync,giant_turtleSTOMP2sync,giant_turtleCOMBOsync,giant_turtleSPINsync} @self ~onTimer:20
+  
+giant_turtle_coconut:
+  Type: ARMOR_STAND
+  Options:
+    PreventOtherDrops: true
+  Skills:
+  - lunge{v=1.5;yv=.5} @Sphere{radius=12;points=16;yoffset=5} ~onSpawn
+  - model{mid=giant_turtle_coconut} @self ~onSpawn
+  - model{mid=giant_turtle_coconut} @self ~onLoad
+  - skill{s=giant_turtle_coconutEXPLODE} @self ~onTimer:1
+  
+giant_turtle_palm:
+  Type: ARMOR_STAND
+  Options:
+    PreventOtherDrops: true
+  DamageModifiers:
+  - ENTITY_ATTACK 0.0 
+  - PROJECTILE -0.01  
+  Skills:
+  - skill{s=palmtreeHITBOX} @self ~onTimer:1
+  - skill{s=palmtreeDROP} @self ~onDamaged
+  - model{mid=palm_tree;d=false} @self ~onSpawn
+  - model{mid=palm_tree;d=false} @self ~onLoad
+  
+palm_coconut:
+  Type: ARMOR_STAND
+  Options:
+    PreventOtherDrops: true
+  Skills:
+  - lunge{v=.25;yv=.5} @Sphere{radius=3;points=16;yoffset=3} ~onSpawn
+  - model{mid=giant_turtle_coconut;d=false} @self ~onSpawn
+  - model{mid=giant_turtle_coconut;d=false} @self ~onLoad
+  - skill{s=palm_coconutLAND} @self ~onTimer:1
+  - skill{s=palm_coconutCUT} @self ~onDamaged
+  - skill{s=palm_coconut_pickup} @self ~onInteract
+  
+giant_turtle_sandcastle:
+  Type: ARMOR_STAND
+  Options:
+    PreventOtherDrops: true
+  Skills:
+  - skill{s=palmtreeHITBOX} @self ~onTimer:1
+  - model{mid=sand_castle;d=false} @self ~onSpawn
+  - model{mid=sand_castle;d=false} @self ~onLoad
+  - skill{s=sand_castleREMOVE} @self ~onDamaged

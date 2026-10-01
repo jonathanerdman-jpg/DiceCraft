@@ -1,0 +1,218 @@
+######## created by samus2002 #########
+
+# Pirate Swordsman #
+
+Pirate_Swordsman:
+  Type: ZOMBIE
+  Display: '&4Pirate Swordsman'
+  Health: 30
+  Damage: 3
+  Options:
+    MovementSpeed: 0.23
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 20
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  Drops:
+  - Pirate_Cutlass 1 0.2
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 movetowardstarget
+  - 3 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=pirate_swordsman;n=false} @self ~onSpawn
+  - skill{s=Changetarget} ~onTimer:160 <99%
+  - effect:sound{s=pirate_sounds:samus.pirate_idle;volume=1;pitch=0.95} @self ~onTimer:140 0.7
+  - skill{s=Cancelattack;sync=true} ~onAttack
+  - skill{s=Pirate_Swordsman_Attack} ~onTimer:10
+  
+# Pirate Gunner #
+
+Pirate_Gunner:
+  Type: SKELETON
+  Display: '&9Pirate Gunner'
+  Health: 25
+  Damage: 4
+  Options:
+    MovementSpeed: 0.23
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 20
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  Drops:
+  - Pirate_Pistol 1 0.2
+  Equipment:
+  - bow:HAND
+  Modules:
+    ThreatTable: true
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=pirate_gunner;n=false} @self ~onSpawn
+  - skill{s=Changetarget} ~onTimer:160 <99%
+  - effect:sound{s=pirate_sounds:samus.pirate_idle;volume=1;pitch=0.95} @self ~onTimer:140 0.7
+  - skill{s=Cancelattack;sync=true} ~onShoot
+  - skill{s=Pirate_Gunner_Attack} ~onTimer:40 0.7
+
+# Barrel Bomb #
+
+Barrel_Bomb:
+  Type: ZOMBIE
+  Display: '&8Barrel Bomb'
+  Health: 10
+  Damage: 5
+  Options:
+    MovementSpeed: 0.27
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 15
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 movetowardstarget
+  - 3 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=barrel_bomb;n=false} @self ~onSpawn
+  - skill{s=Changetarget} ~onTimer:160 <99%
+  - skill{s=Cancelattack;sync=true} ~onAttack
+  - skill{s=Barrel_Bomb_Explode} ~onTimer:10
+  
+# Captain Octo #
+
+Captain_Octo:
+  Type: ZOMBIE
+  Display: '&5Captain_Octo'
+  Health: 180
+  Damage: 5
+  BossBar:
+    Enabled: true
+    Title: '&5Captain_Octo'
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_12
+    DarkenSky: false
+  Options:
+    MovementSpeed: 0.25
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  DamageModifiers:
+  - FALL 0
+  AIGoalSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 movetowardstarget
+  - 3 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=captain_octo;n=false} @self ~onSpawn
+  - skill{s=Changetarget} ~onTimer:160 <99%
+  - skill{s=Cancelattack;sync=true} ~onAttack
+  - skill{s=Speed_Boost} ~onTimer:60 0.8
+  - skill{s=Sword_Slash} ~onTimer:10
+  - skill{s=Captain_Octo_Skill} ~onTimer:30 0.6
+  
+Octo_Tentacle:
+  Type: ARMOR_STAND
+  AITargetSelectors:
+  - players
+  Options:
+    Marker: true
+  Skills:
+  - model{mid=octo_tentacle;n=false} @self ~onSpawn
+  - state{mid=octo_tentacle;s=spawn} @self ~onSpawn
+  - state{mid=octo_tentacle;s=slam;delay=30} @self ~onSpawn
+  - totem{md=2;c=1;oH=Tentacle_Attack_DAMAGE;hnp=false;hp=true;hR=2;vR=1;i=1;delay=44} @modelpart{mid=octo_tentacle;pid=tentacle_4} ~onSpawn
+  - effect:sound{s=pirate_sounds:samus.tentacle_skill;volume=1;pitch=1;delay=37} @self ~onSpawn
+  - remove{delay=70} @self ~onSpawn
+  
+
+# Lobster King #
+
+Lobster_King:
+  Type: ZOMBIE
+  Display: '&6Lobster_King'
+  Health: 250
+  Damage: 5
+  BossBar:
+    Enabled: true
+    Title: '&6Lobster_King'
+    Range: 25
+    Color: RED
+    Style: SEGMENTED_12
+    DarkenSky: false
+  Options:
+    MovementSpeed: 0.25
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: false
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 50
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  DamageModifiers:
+  - FALL 0
+  AIGoalSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 movetowardstarget
+  - 3 randomstroll
+  AITargetSelectors:
+  - 0 clear
+  - 1 players
+  Skills:
+  - model{mid=lobster_king;n=false;drive=true} @self ~onSpawn
+  - skill{s=Changetarget} ~onTimer:160 <99%
+  - skill{s=Cancelattack;sync=true} ~onAttack
+  - effect:sound{s=pirate_sounds:samus.lobsterking_growl;volume=1;pitch=1} @self ~onTimer:140 0.7
+  - skill{s=Claw_Punch} ~onTimer:40
+  - skill{s=Abyssal_Leap} ~onTimer:30 0.7
+  - skill{s=Abyssal_Leap_Land} ~onTimer:1
+  - skill{s=Lobster_King_HEAL} ~onTimer:20
+  - skill{s=Lobster_King_STOPHEAL} ~onDamaged
+  - skill{s=Lobster_King_Skill} ~onTimer:50
+  
+#7c9dac09f707475b32e9e93857d93dca

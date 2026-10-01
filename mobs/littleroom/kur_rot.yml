@@ -1,0 +1,101 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+  
+  
+####### MOUNTED ########
+  
+KUR_ROT:
+  Type: RAVAGER  
+  Display: 'Kur and Rot'
+  BossBar:
+    Enabled: true
+    Title: 'Kur and Rot'
+    Range: 32
+    Color: PURPLE
+    Style: SOLID
+  AITargetSelectors:
+  - clear
+  - players
+  Health: 250
+  Damage: 8
+  Modules:
+    ThreatTable: true
+  Options:
+    FollowRange: 64
+    MovementSpeed: .4
+    PreventOtherDrops: true
+    Silent: true
+    LockPitch: true
+    Mountable: false
+  Skills:
+  - skill{s=kurrot_charge_attack} @self ~onTimer:5
+  - skill{s=kurrot_groundslam} @target ~onTimer:20
+  - skill{s=kurrot_charge} @self ~onTimer:20
+  - skill{s=kurrot_ATTACKsync;sync=true} @self ~onAttack
+  - model{mid=kur_rot;d=true;i=true;lpitch=true} @self ~onSpawn
+  - model{mid=kur_rot;d=true;i=true;lpitch=true} @self ~onLoad
+  - skill{s=kurrot_DEATH} @self ~onDeath
+  
+####### ON FOOT ########
+  
+ 
+KUR:
+  Type: IRON_GOLEM  
+  Display: 'Kur'
+  BossBar:
+    Enabled: true
+    Title: 'Kur'
+    Range: 32
+    Color: PURPLE
+    Style: SOLID
+  AITargetSelectors:
+  - clear
+  - players
+  Health: 300
+  Modules:
+    ThreatTable: true
+  Options:
+    FollowRange: 64
+    MovementSpeed: .38
+    PreventOtherDrops: true
+    Silent: true
+    LockPitch: true
+  Skills:
+  - skill{s=kur_rangedslash} @target ~onTimer:14
+  - skill{s=kur_leapattack} @self ~onTimer:10
+  - skill{s=kur_slide} @self ~onTimer:12
+  - skill{s=kurATTACKsync;sync=true} @self ~onAttack
+  - skill{s=kurSPAWN} @self ~onSpawn
+  - skill{s=kurSPAWNLAND} @self ~onTimer:1
+  - model{mid=kur;d=true;i=true;lpitch=true} @self ~onSpawn
+  - model{mid=kur;d=true;i=true;lpitch=true} @self ~onLoad
+  - skill{s=kurDEATH} @self ~onDeath
+  
+  
+  
+####### SKILL SPECIFIC MOBS, DO NOT USE ########
+  
+KUR_GROUNDBREAK:
+  Type: SILVERFISH
+  AITargetSelectors:
+  - clear
+  AIGoalSelectors:
+  - clear
+  Options:
+    PreventBlockInfection: true
+    Silent: true
+    FollowRange: 64
+    Collidable: false
+  Skills:
+  - skill{s=kurrot_groundbreak} @target ~onSpawn
+  - model{mid=kurrot_groundbreak;d=false;i=true} @self ~onSpawn
+  - model{mid=kurrot_groundbreak;d=false;i=true} @self ~onLoad
+  
+KUR_GROUNDROCKS:
+  Type: ARMOR_STAND
+  Skills:
+  - skill{s=kurrot_groundrocksremove} @self ~onTimer:1
+  - model{mid=kurrot_groundrocks;d=false;i=true} @self ~onSpawn
+  - model{mid=kurrot_groundrocks;d=false;i=true} @self ~onLoad
+  

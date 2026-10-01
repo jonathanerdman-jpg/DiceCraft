@@ -1,0 +1,16 @@
+PharaohAkhShaInVision:
+  Type: WITHER
+  Display: '&0Akh-Sha-In &8(Glorified Desert Spirit)'
+  Health: 40
+  Damage: 0
+  Options:
+    NoAI: true
+    Despawn: true
+    PreventOtherDrops: true
+    Silent: false
+    Invincible: true
+    FollowRange: 0
+  BossBar:
+    Enabled: false
+  Skills:
+    - skill{s=PharaohVisionOnSpawn} @self ~onSpawn

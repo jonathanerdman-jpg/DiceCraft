@@ -1,0 +1,92 @@
+CursedRaider_Base:
+  Type: PARCHED
+  Display: '&7Cursed Raider'
+  Health: 1
+  Damage: 1
+  Options:
+    MovementSpeed: 0.28
+    FollowRange: 30
+    Faction: cursedraiders
+    KnockbackResistance: 0.25
+    PreventSunburn: true
+    Silent: false
+    AlwaysShowName: true
+  Skills:
+  - skill{s=CR_SquadBrain} @self ~onTimer:40
+  - skill{s=CR_CallHelp} @target ~onTarget
+  - skill{s=CR_SandStep} @self ~onTimer:120
+
+CursedTombRaider:
+  Template: CursedRaider_Base
+  Type: PARCHED
+  Display: '&6Cursed Tomb Raider'
+  Health: 40
+  Damage: 6
+  Equipment:
+  - IRON_SWORD HAND
+  - LEATHER_HELMET HEAD
+  - LEATHER_CHESTPLATE CHEST
+  - LEATHER_LEGGINGS LEGS
+  - LEATHER_BOOTS FEET
+  Skills:
+  - potion{type=SLOW;duration=40;lvl=1} @target ~onAttack 0.25
+  - skill{s=CR_CombatRush} @self ~onDamaged 0.3
+  Drops:
+  - rotten_flesh 1 2
+  - bone 0 1
+
+CursedScout:
+  Template: CursedRaider_Base
+  Type: PARCHED
+  Display: '&eCursed Scout'
+  Health: 28
+  Damage: 4
+  Options:
+    MovementSpeed: 0.32
+  Equipment:
+  - STONE_SWORD HAND
+  Skills:
+  - skill{s=CR_DashStrike} @target ~onTimer:160
+  - skill{s=CR_CombatRush} @self ~onDamaged 0.3
+
+CursedRelicArcher:
+  Template: CursedRaider_Base
+  Type: PARCHED
+  Display: '&dRelic Archer'
+  Health: 34
+  Damage: 5
+  Equipment:
+  - BOW HAND
+  - LEATHER_HELMET HEAD
+  Skills:
+  - potion{type=WEAKNESS;duration=60;lvl=1} @target ~onAttack 0.25
+  - skill{s=CR_CombatRush} @self ~onDamaged 0.3
+
+CursedForeman:
+  Template: CursedRaider_Base
+  Type: PARCHED
+  Display: '&cCursed Foreman'
+  Health: 60
+  Damage: 7
+  Options:
+    KnockbackResistance: 0.35
+  Equipment:
+  - IRON_SWORD HAND
+  - GOLDEN_HELMET HEAD
+  - GOLDEN_CHESTPLATE CHEST
+  Skills:
+  - skill{s=CR_CommandPulse} @self ~onTimer:80
+  - skill{s=CR_EnrageSquad} @self ~onDeath
+  - skill{s=CR_CombatRush} @self ~onDamaged 0.3
+
+
+RaiderSquadSpawner:
+  Type: ARMOR_STAND
+  Options:
+    Invisible: true
+    Marker: true
+    Silent: true
+    Invincible: true
+  Skills:
+  - skill{s=SpawnRaiderSquad} @self ~onSpawn
+  - remove @self ~onSpawn 1

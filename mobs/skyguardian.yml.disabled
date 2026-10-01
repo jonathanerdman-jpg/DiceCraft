@@ -1,0 +1,38 @@
+SkyElderGuardian:
+  Type: GUARDIAN
+  Display: "&3Sky Guardian"
+  Health: 55
+  Damage: 0
+  Armor: 2
+
+  Options:
+    Despawn: true
+    PreventOtherDrops: true
+    AlwaysShowName: false
+    NoGravity: true
+    NoAI: false
+    KnockbackResistance: 0.35
+    FollowRange: 40
+    Silent: false
+
+  Modules:
+    ThreatTable: true
+
+  Skills:
+    # Store spawn Y on spawn
+    - skill{s=SEG_StoreSpawnY} @self ~onSpawn
+
+    # Acquire / refresh target
+    - skill{s=SEG_AcquireTarget} @self ~onTimer:20
+
+    # Hover bob (no drift)
+    - skill{s=SEG_HoverBob} @self ~onTimer:10
+
+    # Keep within spawnY ± 10 (soft correction, no hard height cap)
+    - skill{s=SEG_KeepSpawnBand} @self ~onTimer:10
+
+    # Open-sky chase/strafe
+    - skill{s=SEG_StrafeChase} @self ~onTimer:15
+
+    # “Beam” attack (since NoAI disables vanilla attacks)
+    - skill{s=SEG_BeamBurst} @self ~onTimer:40

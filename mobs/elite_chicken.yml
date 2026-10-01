@@ -1,0 +1,34 @@
+EliteResourceChicken:
+  Type: CHICKEN
+  Display: '&c&lRabid War Chicken'
+  Health: 250
+  Damage: 12
+  Faction: hostile
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - randomstroll
+    - lookatplayers
+    - float
+  AITargetSelectors:
+    - clear
+    - players
+  Options:
+    Scale: 3.5
+    MovementSpeed: 0.33
+    FollowRange: 32
+    KnockbackResistance: 0.55
+    AlwaysShowName: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    Silent: false
+  Drops:
+    - experience 25
+    - feather 2-5 1
+    - egg 1-3 0.75
+  Skills:
+    - skill{s=EliteResourceChicken_OpeningScreech} @self ~onSpawn
+    - skill{s=EliteResourceChicken_PeckFrenzy} @target ~onAttack 0.35
+    - skill{s=EliteResourceChicken_BattleHop} @target ~onTimer:100
+    - skill{s=EliteResourceChicken_Enrage} @self ~onDamaged 0.25

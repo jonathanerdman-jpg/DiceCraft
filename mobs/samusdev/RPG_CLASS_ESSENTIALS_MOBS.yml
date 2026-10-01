@@ -1,0 +1,299 @@
+######## created by samus2002 #########
+
+#### VFX ####
+
+#impact
+VFX_SAMUS_Impact:
+  Type: text_display
+  DisplayOptions:
+    Text: ""
+    BlockLight: 15
+    SkyLight: 15
+    Scale: 1,1,1
+    Billboard: CENTER
+    #ShadowStrength: 0
+    BackgroundColor: 0,0,0,0
+    Translation: 0,0,0
+    ViewRange: 5
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - settextdisplay{text="ក";delay=0} @self ~onSpawn
+  - settextdisplay{text="ខ";delay=1} @self ~onSpawn
+  - settextdisplay{text="គ";delay=2} @self ~onSpawn
+  - settextdisplay{text="ឃ";delay=3} @self ~onSpawn
+  - settextdisplay{text="ង";delay=4} @self ~onSpawn
+  - settextdisplay{text="ច";delay=5} @self ~onSpawn
+  - settextdisplay{text="ឆ";delay=6} @self ~onSpawn
+  - remove{delay=7} @self ~onSpawn
+
+
+#ground crack
+VFX_SAMUS_Rupture_Small:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_earthquake_rupture_1;lockpitch=true} @self ~onSpawn
+  - brightness{mid=vfx_earthquake_rupture_1;b=15;s=15} @self ~onSpawn
+  - brightness{mid=vfx_earthquake_rupture_1;b=13;s=13;delay=22} @self ~onSpawn
+  - brightness{mid=vfx_earthquake_rupture_1;b=11;s=11;delay=26} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill2} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=F50000;em=false} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=BE0000;em=false;delay=22} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=8D0000;em=false;delay=24} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=570000;em=false;delay=26} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=310000;em=false;delay=30} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=000000;em=false;delay=32} @self ~onSpawn
+  
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_2;np=body;delay=44} @self ~onSpawn
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_3;np=body;delay=46} @self ~onSpawn
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_4;np=body;delay=48} @self ~onSpawn
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_5;np=body;delay=50} @self ~onSpawn
+  - remove{delay=52} @self ~onSpawn
+  
+#rubbles
+VFX_SAMUS_Rubbles_Small:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill;speed=1} @self ~onSpawn
+  - remove{delay=45} @self ~onSpawn
+
+VFX_SAMUS_EXPLOSION:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{d=12;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    - model{usestatemachine=true;mid=vfx_explosion_1;lockpitch=true;scale=0.35}
+    - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0}
+    - brightness{mid=vfx_explosion_1;b=15;s=15}
+    - randomskill{skills=
+    [- state{s=skill;speed=1}],
+    [- state{s=skill2;speed=1}],
+    [- state{s=skill3;speed=1}]}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - changepart{m=vfx_explosion_1;nm=vfx_explosion_<caster.var.iteration>;p=body;np=body}
+    ];
+    oe=[ - remove @self ]} @self ~onSpawn
+
+  - effect:particles{p=smoke;amount=10;hS=0.3;vS=0.3;y=0;size=1;speed=0.05;delay=10} @modelpart{p=body} ~onSpawn
+  - effect:particles{p=campfire_cosy_smoke;amount=3;hS=0.5;vS=0.5;y=0;size=1;speed=0.1;delay=10} @modelpart{p=body} ~onSpawn
+
+VFX_SAMUS_EXPLOSION_MED:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{d=12;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    - model{usestatemachine=true;mid=vfx_explosion_1;lockpitch=true;scale=0.6}
+    - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0}
+    - brightness{mid=vfx_explosion_1;b=15;s=15}
+    - randomskill{skills=
+    [- state{s=skill;speed=1}],
+    [- state{s=skill2;speed=1}],
+    [- state{s=skill3;speed=1}]}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - changepart{m=vfx_explosion_1;nm=vfx_explosion_<caster.var.iteration>;p=body;np=body}
+    ];
+    oe=[ - remove @self ]} @self ~onSpawn
+
+  - effect:particles{p=smoke;amount=10;hS=0.3;vS=0.3;y=0;size=1;speed=0.05;delay=10} @modelpart{p=body} ~onSpawn
+  - effect:particles{p=campfire_cosy_smoke;amount=3;hS=0.5;vS=0.5;y=0;size=1;speed=0.1;delay=10} @modelpart{p=body} ~onSpawn
+
+VFX_SAMUS_EXPLOSION_LARGE:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{d=12;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    - model{usestatemachine=true;mid=vfx_explosion_1;lockpitch=true;scale=1}
+    - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0}
+    - brightness{mid=vfx_explosion_1;b=15;s=15}
+    - randomskill{skills=
+    [- state{s=skill;speed=1}],
+    [- state{s=skill2;speed=1}],
+    [- state{s=skill3;speed=1}]}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - changepart{m=vfx_explosion_1;nm=vfx_explosion_<caster.var.iteration>;p=body;np=body}
+    ];
+    oe=[ - remove @self ]} @self ~onSpawn
+
+  - effect:particles{p=smoke;amount=10;hS=0.3;vS=0.3;y=0;size=1;speed=0.05;delay=10} @modelpart{p=body} ~onSpawn
+  - effect:particles{p=campfire_cosy_smoke;amount=3;hS=0.5;vS=0.5;y=0;size=1;speed=0.1;delay=10} @modelpart{p=body} ~onSpawn
+
+VFX_SAMUS_FLAMEDEBUFF:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_flamedebuff;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=animation;speed=1} @self ~onSpawn
+
+VFX_SAMUS_SNR_OUTWARD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=outward;speed=1} @self ~onSpawn
+  - remove{delay=25} @self ~onSpawn
+  
+VFX_SAMUS_SNR_INWARD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=inward;speed=1} @self ~onSpawn
+  - remove{delay=29} @self ~onSpawn
+
+VFX_SAMUS_SNR_UPWARD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=upward;speed=1} @self ~onSpawn
+  - remove{delay=25} @self ~onSpawn
+
+VFX_SAMUS_SNR_FORWARD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=forward;speed=1} @self ~onSpawn
+  - remove{delay=25} @self ~onSpawn
+
+VFX_SAMUS_SNR_BACKWARD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=backward;speed=1} @self ~onSpawn
+  - remove{delay=25} @self ~onSpawn
+
+VFX_SAMUS_SNR_LEFT:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=left;speed=1} @self ~onSpawn
+  - remove{delay=25} @self ~onSpawn
+
+VFX_SAMUS_SNR_RIGHT:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=right;speed=1} @self ~onSpawn
+  - remove{delay=25} @self ~onSpawn
+
+VFX_SAMUS_SNR_OUTWARD_VERTICAL:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_smoke_n_rubbles;lockpitch=true} @self ~onSpawn
+  - brightness{b=11;s=11} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=outward_vertical;speed=1} @self ~onSpawn
+  - remove{delay=25} @self ~onSpawn

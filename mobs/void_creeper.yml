@@ -1,0 +1,38 @@
+VoidCreeper:
+  Type: CREEPER
+  Display: "&5Void Creeper"
+  Health: 24
+  Damage: 0
+
+  ModelEngine:
+    model: void_creeper
+    scale: 1.0
+
+  Options:
+    AlwaysShowName: false
+    PreventOtherDrops: true
+    MovementSpeed: 0.29
+    Silent: false
+    Despawn: true
+
+  DamageModifiers:
+    - PROJECTILE 0.85      # arrows deal 85% damage
+    - EXPLOSION 0.7        # resistant to explosions
+
+  Skills:
+    # Charging effect when swelling
+    - effect:particlesphere{particle=portal;radius=1;amount=30} @self ~onSwell
+
+    # Void death visual
+    - effect:particlesphere{particle=dragon_breath;radius=2;amount=80} @self ~onDeath
+
+    # Sound effect
+    - sound{s=entity.ender_dragon.hurt;v=1;p=0.5} @self ~onDeath
+
+    # Model
+    - model{mid=void_creeper;n=false;i=true} @self ~onSpawn
+    - model{mid=void_creeper;n=false;i=true} @self ~onLoad
+
+  Drops:
+    - void_creeper
+    - bhodyssey_collectibles 1 0.002

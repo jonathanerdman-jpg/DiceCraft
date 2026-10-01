@@ -1,0 +1,86 @@
+Avarice:
+  Type: STRAY
+  Display: "&6&lAvarice, The Cursed Thief"
+  Health: 160
+  Damage: 7
+  Armor: 4
+
+  DamageModifiers:
+    - FALL 0
+    - VOID 0
+    - SUFFOCATION 0
+    - DROWNING 0
+    - FIRE 0
+    - FIRE_TICK 0
+    - LAVA 0
+    - CONTACT 0
+    - BLOCK_EXPLOSION 0
+    - ENTITY_EXPLOSION 0
+
+  Options:
+    KnockbackResistance: 1
+    PreventOtherDrops: true
+    PreventRangedAttack: true
+    MovementSpeed: 0.32
+    Silent: false
+    Glowing: true
+    ReturnToSpawn: true
+    LeashRange: 25
+
+  BossBar:
+    Enabled: true
+    Title: "&cAvarice, The Cursed Thief"
+    Range: 40
+    Color: RED
+    Style: SEGMENTED_10
+
+  Equipment:
+    - GOLDEN_HELMET HEAD 1
+    - GOLDEN_CHESTPLATE CHEST 1
+    - GOLDEN_LEGGINGS LEGS 1
+    - GOLDEN_BOOTS FEET 1
+    - phantom_bow:phantom_bow HAND
+
+  Skills:
+    - skill{s=AvariceIntro} ~onSpawn
+    - skill{s=AvariceFallFailsafe} ~onTimer:5
+    - skill{s=AvariceArenaReset} ~onTimer:200
+    - skill{s=AvariceCleanWraiths} ~onDeath
+
+    - effect:particles{p=totem;amount=5;hs=0.2;vs=0.4} @self ~onTimer:10
+    - sound{s=block.amethyst_cluster.step;v=0.6;p=0.7} @self ~onTimer:80
+
+    - skill{s=AvaricePhase2} ~onDamaged
+    - skill{s=AvaricePhase3} ~onDamaged
+    - skill{s=AvariceTaunt} ~onTimer:200
+
+    - skill{s=AvariceVolley} ~onAttack
+    - skill{s=AvariceShard} ~onTimer:60
+    - skill{s=AvariceMagnet} ~onTimer:140
+    - skill{s=AvariceBurst} ~onTimer:120
+    - skill{s=AvariceSummon} ~onTimer:180
+
+    - skill{s=AvariceVictory} @PIR{r=40} ~onDeath
+    - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain &e<caster.name>&7 in the Ruined Pyramid!"} @Server ~onDeath
+
+
+
+AvariceWraith:
+  Type: VEX
+  Display: "&eCursed Looter"
+  Health: 1
+  Damage: 2
+
+  Options:
+    PreventOtherDrops: true
+    Glowing: true
+    MovementSpeed: 0.35
+
+  Skills:
+    - effect:particles{p=crit_magic;amount=8;hs=0.2;vs=0.2} @self ~onTimer:10
+    - skill{s=AvariceWraithTaunt} @target ~onAttack
+    - potion{type=SLOW;duration=40;level=0} @target ~onAttack
+    - effect:particles{p=fireworks_spark;amount=40;hs=0.8;vs=0.8} @self ~onDeath
+    - effect:particles{p=crit_magic;amount=30;hs=0.6;vs=0.6} @self ~onDeath
+    - damage{amount=1} @PlayersInRadius{r=3} ~onDeath
+    - skill{s=AvariceWraithDespawn} ~onSpawn

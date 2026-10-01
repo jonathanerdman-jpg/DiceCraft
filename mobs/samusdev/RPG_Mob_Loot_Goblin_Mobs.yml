@@ -1,0 +1,59 @@
+######## created by samus2002 #########
+
+# Goblin_Loot #
+
+Goblin_Loot:
+  Type: VINDICATOR
+  Display: '&fLoot Goblin'
+  Health: 5
+  Damage: 5
+  Faction: Goblin
+  Options:
+    MovementSpeed: 0.25
+    ShowHealth: false
+    PreventRandomEquipment: true
+    AlwaysShowName: true
+    Persistent: false
+    Despawn: true
+    PreventOtherDrops: true
+    FollowRange: 40
+    Silent: true
+    KnockbackResistance: 1
+    PreventSunburn: true
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+  - clear
+  - fleeplayers{s=1.1}
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - players
+  Variables:
+    ModelName: mob_goblin_loot
+  Skills:
+  # MAIN
+  - model{mid="<caster.var.ModelName>";step=1;tint=true;usm=true;save=true} @self ~onSpawn
+  - model{mid="<caster.var.ModelName>";step=1;tint=true;usm=true;save=true} @self ~onLoad
+  - brightness{p=eye;em=false;b=15;s=15} @self ~onSpawn
+  - BodyRotation{mh=0;mb=75;player=true} @self ~onSpawn
+  - setstance{stance=Walking} @self
+  - CancelEvent{sync=true} @self ~onAttack
+
+  # SKILL
+  - skill{s=Goblin_Loot_DROP} ~onTimer:20
+  - skill{s=Goblin_Loot_EXPLODE;delay=42} ~onDeath
+  
+  # SPEED
+  - setspeed{speed=1.1;type=WALK;delay=1} @self ~onSpawn
+
+  # IDLE
+  - effect:sound{s=entity.illusioner.ambient;volume=0.75;pitch=1.5} @self ~onTimer:140 0.45
+
+  # DAMAGED
+  - effect:sound{s=entity.illusioner.hurt;volume=0.7;pitch=1.5} @self ~onDamaged
+
+  # DEATH
+  - effect:sound{s=entity.illusioner.death;volume=0.7;pitch=1.5} @self ~onDeath
+
+  - particles{p=cloud;amount=15;hS=0.9;vS=0.4;y=0.3;size=1;speed=0;delay=42} @modelpart{mid="<caster.var.ModelName>";pid=root;location=0,0,0;em=true} ~onDeath

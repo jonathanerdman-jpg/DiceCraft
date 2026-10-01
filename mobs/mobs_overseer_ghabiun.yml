@@ -1,0 +1,70 @@
+OverseerGhabiun:
+  Type: WITHER_SKELETON
+  Display: '&6Overseer &eGhabiun'
+  Health: 220
+  Damage: 8
+  Armor: 10
+  MovementSpeed: 0.28
+
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    AlwaysShowName: true
+    KnockbackResistance: 0.7
+    FollowRange: 30
+    Silent: false
+    FireImmune: true
+    Scale: 1.25
+
+  BossBar:
+    Enabled: true
+    Title: '&0[&6Overseer &eGhabiun&0]'
+    Color: RED
+    Style: SEGMENTED_10
+    Range: 40
+
+  Equipment:
+    - IRON_SHOVEL HAND 1
+    - IRON_HELMET HEAD 1
+    - CHAINMAIL_CHESTPLATE CHEST 1
+    - CHAINMAIL_LEGGINGS LEGS 1
+    - IRON_BOOTS FEET 1
+
+  Skills:
+    - skill{s=GhabiunIntro} @self ~onSpawn
+    - skill{s=GhabiunWhipStrike} @target ~onAttack
+    - skill{s=GhabiunSandstorm} @self ~onTimer:160
+    - skill{s=GhabiunSoulChains} @PlayersInRadius{r=10} ~onTimer:120
+    - skill{s=GhabiunSummonThralls} @self ~onDamaged
+    - skill{s=GhabiunEnrage} @self ~onDamaged
+    - skill{s=GhabiunDeathCry} @PlayersInRadius{r=40} ~onDeath
+    # Anti-kite check: runs once per second, but ONLY fires if distance condition + cooldown allow it
+    - skill{s=GhabiunRelentlessAdvance} @target ~onTimer:20
+    - skill{s=OverseerVictory} @PIR{r=40} ~onDeath
+    - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain &e<caster.name>&7 in the Ruined Pyramid!"} @Server ~onDeath
+
+  Drops:
+    - pyramid_overseer
+    - pyramid_miniboss_bonus
+    - bhodyssey_collectibles
+    - pyramid_miniboss_magicdrops
+    - EMERALD 1 1
+
+GhabiunSlave:
+  Type: HUSK
+  Display: '&7Enslaved Builder'
+  Health: 28
+  Damage: 4
+  Armor: 1
+  MovementSpeed: 0.24
+
+  Options:
+    Despawn: true
+    PreventOtherDrops: true
+    Silent: false
+
+  Equipment:
+    - STONE_PICKAXE HAND 1
+
+  Skills:
+    - effect:sound{s=entity.zombie.ambient;v=0.8;p=0.6} @self ~onSpawn

@@ -1,0 +1,44 @@
+##############  EROSION MINIBOSS MOB  #################
+
+Erosion:
+  Type: breeze
+  Display: "§e§lErosion, Lord of the Sands"
+  Health: 200
+  Damage: 15
+  Armor: 10
+
+  BossBar:
+    Enabled: true
+    Title: "&e&lErosion, Lord of the Sands"
+    Range: 32
+    Color: YELLOW
+    Style: SEGMENTED_10
+
+  Options:
+    MovementSpeed: 0.35
+    MaxCombatDistance: 25
+    PreventLeashing: true
+    Despawn: false
+    KnockbackResistance: 0.5
+    Scale: 3.0
+    AlwaysShowName: true
+    PreventOtherDrops: true
+    NoAI: false
+
+  Skills:
+    - skill{s=ErosionMeleeHit} @NearestPlayer ~onTimer:10
+    - skill{s=ErosionCloseWither} @self ~onTimer:40
+    - skill{s=ErosionSandTrap} @self ~onTimer:100
+    - skill{s=ErosionFireSlash} @NearestPlayer ~onTimer:20
+    - skill{s=ErosionFireBlast} @self ~onTimer:100
+    - skill{s=ErosionDarkness} @self ~onEnterCombat
+    - skill{s=ErosionVictory} @PIR{r=40} ~onDeath
+    - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain &e<caster.name>&7 in the Ruined Pyramid!"} @Server ~onDeath
+
+  Drops:
+    - pyramid_erosion
+    - pyramid_miniboss_bonus
+    - bhodyssey_collectibles
+    - pyramid_miniboss_magicdrops
+    - EMERALD 1 1
+

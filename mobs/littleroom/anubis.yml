@@ -1,0 +1,192 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+## Modified for Blockhead Odyssey - World Boss Tuning  ##
+#########################################################
+
+
+lr_anubis:
+  Type: IRON_GOLEM
+  Display: Anubis
+  Health: 2400
+  Damage: 20
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  AITargetSelectors:
+  - clear
+  - players
+  Options:
+    PreventOtherDrops: true
+    Despawn: false
+    Respawn: false
+    Persistent: true
+    KnockbackResistance: 1
+    Collidable: true
+    Silent: true
+    FollowRange: 32
+    MovementSpeed: 0.25
+
+  Skills:
+  - CancelEvent{sync=true} @self ~onAttack
+  - CancelEvent{sync=true} @self ~onInteract
+  - model{mid=lr_anubis;d=false;i=true;step=1} @self ~onSpawn
+  - model{mid=lr_anubis;d=false;i=true;step=1} @self ~onLoad  
+  - bodyrotation{mb=0;mh=0;rde=0;rdu=0} @self ~onSpawn
+  - skill{s=ANUBISsitting} @self ~onSpawn
+  - skill{s=ANUBISget_up_prox} @self ~onTimer:20
+  - skill{s=ANUBISget_up_damaged} @self ~onDamaged
+# - skill{s=ANUBIS_anubisidle} @self ~onTimer:60 .2
+  - throw{v=5;yv=-1} @pir{r=1} ~onTimer:1 ?playersinradius{r=1}
+  - skill{s=ANUBISdeath} @self ~onDeath
+  - skill{s=ANUBIS_stun_50} @self ~onDamaged <50%
+  - skill{s=ANUBIS_stun_75} @self ~onDamaged <75%
+  - skill{s=ANUBIS_DARKMODE} @self ~onTimer:20 <25%
+  - skill{s=ANUBIS_DARKMODE_fx} @self ~onTimer:5
+  - skill{s=ANUBIS_stun_hit} @self ~onDamaged
+  - skill{s=ANUBIS_BAR_UPDATE} @self ~onTimer:20
+  - skill{s=ANUBISdamagedfx} @self ~onDamaged
+  - skill{s=ANUBISplague} @self ~onTimer:50
+  - skill{s=ANUBISrun} @self ~onTimer:20
+  - skill{s=ANUBISLASER} @PIR{r=24;limit=1;sort=FURTHEST} ~onTimer:40 .5 ?PlayersInRadius{r=24}
+  - skill{s=ANUBISstoprun} @self ~onTimer:20
+  - skill{s=ANUBISsummonpillars} @self ~onTimer:60
+  - randomskill{skills=ANUBISmelee1,ANUBISmelee2,ANUBISmelee3} @target ~onTimer:20
+
+  Drops:
+    - EMERALD 1 1
+    - anubis_weapon_boss
+    - anubis_glorious_armor
+    - bhodyssey_collectibles
+    - pyramid_pharaoh_magicdrops
+
+lr_anubis_eye:
+  Type: ARMOR_STAND
+  Options:
+    #Marker: true
+    Silent: true
+    NoGravity: true
+    Invincible: true
+  Skills:
+  - mounttarget @parent ~onSpawn
+  - look{headOnly=true;immediately=true} @PlayersInWorld{limit=1;sort=furthest} ~onTimer:1
+  - model{mid=lr_anubis_eye;d=false;i=true} @self ~onSpawn
+  - model{mid=lr_anubis_eye;d=false;i=true} @self ~onLoad  
+  
+lr_anubis_obelisk:
+  Type: CAT
+  Health: 50
+  Faction: ANUBIS
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    MovementSpeed: 0.00001
+    Silent: true
+    #NoGravity: true
+    KnockbackResistance: 1
+    PreventOtherDrops: true
+    FollowRange: 32
+    Collidable: false
+  Skills:
+  - model{mid=lr_anubis_obelisk;d=false;i=true;lp=true} @self ~onSpawn
+  - model{mid=lr_anubis_obelisk;d=false;i=true;lp=true} @self ~onLoad  
+  - bodyrotation{mb=0;mh=360;rde=0;rdu=0} @self ~onSpawn
+  - skill{s=ANUBISobeliskLASER} @PIR{r=24;limit=1;sort=FURTHEST} ~onTimer:40 .5 ?PlayersInRadius{r=24}
+  - skill{s=ANUBISobeliskDEATH} @self ~onDeath
+  - skill{s=ANUBISobeliskHIT} @self ~onDamaged
+  - skill{s=ANUBISobeliskSPAWN} @self ~onSpawn
+  
+ANUBISobeliskLASERFX:
+  Type: CAT
+  Disguise: PIG setInvisible setBurning
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Collidable: false
+    ApplyInvisibility: true
+    Silent: true
+    PreventOtherDrops: true
+  Skills:
+  - velocity{m=add;x=0;y=-10;z=0} @self ~onTimer:1
+  - skill{s=ANUBISobeliskLASERFX} @self ~onSpawn
+  - lunge{v=1} @forward{f=3;y=-1} ~onTimer:1  
+
+ANUBISobeliskGROUNDfx:
+  Type: ARMOR_STAND
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    #Marker: true
+    Collidable: false
+    ApplyInvisibility: true
+    PreventOtherDrops: true
+  Skills:
+  - velocity{m=set;x=0;y=-100;z=0} @self ~onTimer:1
+  - skill{s=ANUBISobeliskGROUNDfx} @self ~onSpawn
+  - model{mid=lr_anubis_groundbreak;d=false;i=true;lp=true} @self ~onSpawn
+  - model{mid=lr_anubis_groundbreak;d=false;i=true;lp=true} @self ~onLoad  
+
+lr_anubis_sandfx:
+  Type: ARMOR_STAND
+  Options:
+    Marker: true
+    Silent: true
+    #NoGravity: true
+  Skills:
+  - velocity{m=set;x=0;y=-1;z=0} @self ~onSpawn
+  - model{mid=lr_anubis_towersand;d=false;i=true} @self ~onSpawn
+  - model{mid=lr_anubis_towersand;d=false;i=true} @self ~onLoad  
+  
+lr_anubis_souls:
+  Type: ARMOR_STAND
+  Options:
+    Marker: true
+    Silent: true
+    NoGravity: true
+  Skills:
+  - model{mid=lr_anubis_souls;d=false;i=true} @self ~onSpawn
+  - model{mid=lr_anubis_souls;d=false;i=true} @self ~onLoad  
+  - brightness{s=15;b=15;em=false} @self ~onSpawn
+  - skill{s=ANUBISplaguelifespan} @self ~onSpawn
+  - mounttarget @PIR{r=2;sort=NEAREST;limit=1} ~onSpawn
+
+  
+lr_anubis_mummy:
+  Type: IRON_GOLEM
+  Display: 'Mummy' 
+  Health: 30
+  Damage: 8
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  AITargetSelectors:
+  - clear
+  - players
+  Options:
+    PreventOtherDrops: true
+    Despawn: true
+    Persistent: false
+    KnockbackResistance: 1
+    Collidable: true
+    Silent: true
+    FollowRange: 32
+    MovementSpeed: 0.5
+  Skills:
+  - CancelEvent{sync=true} @self ~onAttack
+  - CancelEvent{sync=true} @self ~onInteract
+  - model{mid=lr_anubis_mummy;d=false;i=true;step=1} @self ~onSpawn
+  - model{mid=lr_anubis_mummy;d=false;i=true;step=1} @self ~onLoad  
+  - bodyrotation{mb=0;mh=0;rde=0;rdu=0} @self ~onSpawn
+  - brightness{s=15;b=15;em=false} @self ~onSpawn
+  - skill{s=lr_anubis_mummy_death} @self ~onDeath
+  - skill{s=lr_anubis_mummy_spawn} @self ~onSpawn
+  - skill{s=lr_anubis_mummyATTACK} @target ~onTimer:20

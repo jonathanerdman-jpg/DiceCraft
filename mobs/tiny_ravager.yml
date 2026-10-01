@@ -1,0 +1,45 @@
+TinyRavager:
+  Type: RAVAGER
+  Display: '&cTiny &7[Mini-Boss]'
+  # REDUCED Health and Damage for easier kill
+  Health: 125
+  Damage: 6
+  Armor: 2
+  MovementSpeed: 0.28
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    AlwaysShowName: true
+    KnockbackResistance: 0.5
+    FollowRange: 32
+    Silent: false
+    # ADDED: Set the size to 0.5 (half size)
+    Scale: 0.5
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - randomstroll
+    - lookatplayers
+  AITargetSelectors:
+    - clear
+    - players
+  BossBar:
+    Enabled: true
+    Title: '&0[&cTiny &7Mini-Boss&0]'
+    Color: RED
+    Style: SEGMENTED_10
+    Range: 40
+  Skills:
+    - skill{s=Tiny_Charge} @target ~onTimer:80
+    - skill{s=Tiny_GroundSlam} @self ~onTimer:120
+    - skill{s=Tiny_Leap} @target ~onTimer:100
+    - skill{s=Tiny_Enrage} @self ~onDamaged
+    - skill{s=TinyVictory} @PIR{r=40} ~onDeath
+    - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain &e<caster.name>&7 in the Ruined Pyramid!"} @Server ~onDeath
+    
+  Drops:
+    - pyramid_tiny
+    - pyramid_miniboss_bonus
+    - bhodyssey_collectibles
+    - pyramid_miniboss_magicdrops
+    - EMERALD 1 1

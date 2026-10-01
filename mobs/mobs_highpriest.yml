@@ -1,0 +1,55 @@
+HighPriestOfAkhShaIn:
+  Type: EVOKER
+  Display: '&6High Priest of &eAkh-Sha-In'
+  Health: 320
+  Damage: 10
+  Armor: 5
+  MovementSpeed: 0.28
+  Faction: AkhShaIn
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    AlwaysShowName: true
+    KnockbackResistance: 0.6
+    FollowRange: 32
+    Silent: false
+    NoAI: false
+    FireImmune: false
+  Modules:
+    ThreatTable: true
+  BossBar:
+    Enabled: true
+    Title: '&0[&6High Priest of &eAkh-Sha-In&0]'
+    Color: PURPLE
+    Style: SEGMENTED_10
+    Range: 40
+  Equipment:
+    - HighPriestCrown HEAD 1
+    - GOLDEN_CHESTPLATE CHEST 1
+    - GOLDEN_LEGGINGS LEGS 1
+    - GOLDEN_BOOTS FEET 1
+    - HighPriestScarabStaff HAND 1
+  Skills:
+    - skill{s=HighPriestIntro} @self ~onSpawn
+    - skill{s=HighPriestRitualAura} @self ~onTimer:60
+    - skill{s=HighPriestDeath} @PIR{r=40} ~onDeath
+    - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain &e<caster.name>&7 in the Ruined Pyramid!"} @Server ~onDeath
+  Drops:
+    - pyramid_miniboss_bonus
+    - pyramid_high_priest
+    - bhodyssey_collectibles
+    - pyramid_miniboss_magicdrops
+    - EMERALD 1 1
+
+
+TombServant:
+  Type: HUSK
+  Display: '&eServant of Akh-Sha-In'
+  Health: 24
+  Damage: 5
+  MovementSpeed: 0.26
+  Options:
+    PreventOtherDrops: true
+    Despawn: true
+    Silent: false
+

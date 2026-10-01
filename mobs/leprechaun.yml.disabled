@@ -1,0 +1,79 @@
+Leprechaun:
+  Type: VILLAGER
+  Display: '&a&lLeprechaun &7(Trickster)'
+  Health: 80
+  Damage: 5
+  Armor: 6
+  FollowRange: 30
+  Despawn: false
+  Disguise: player Notch setDynamicName
+
+  Attributes:
+    GENERIC_MOVEMENT_SPEED: 0.38
+    GENERIC_KNOCKBACK_RESISTANCE: 0.35
+
+  BossBar:
+    Enabled: true
+    Title: '&aMischievous Leprechaun'
+    Range: 20
+    Color: GREEN
+    Style: SEGMENTED_10
+    CreateFog: false
+
+  Options:
+    Silent: false
+    Persistent: true
+    PreventOtherDrops: true
+    PreventMobKillDrops: true
+    PreventRandomEquipment: true
+    PreventLeashing: true
+    AlwaysShowName: true
+    Scale: 0.5
+
+  AIGoalSelectors:
+    - 0 clear
+    - 1 fleeplayer{d=10;s=1.8}
+    - 2 randomstroll{s=1.2}
+    - 3 lookatplayers
+
+  AITargetSelectors:
+    - 0 clear
+    - 1 hurtbytarget
+
+  Equipment:
+    - STICK HAND
+    - saint_patricks:st_patricks_hat_with_beard HEAD 1
+    - LEATHER_CHESTPLATE{color=0,128,0} CHEST 1
+    - LEATHER_LEGGINGS{color=0,128,0} LEGS 1
+    - LEATHER_BOOTS{color=0,128,0} FEET 1
+
+  Drops:
+    - leprechaun_drops
+    - bhodyssey_collectibles 1 0.02
+
+  DamageModifiers:
+    - PROJECTILE 0.85
+    - MAGIC 0.90
+    - FIRE 1.25
+
+  Skills:
+    - skill{s=Leprechaun_Spawn} @self ~onSpawn
+    - skill{s=Leprechaun_StartTimer} @self ~onSpawn
+
+    - skill{s=Leprechaun_Taunt} @NearestPlayer{r=24} ~onTimer:120 0.70
+    - skill{s=Leprechaun_SmokeStep} @self ~onTimer:60 0.55
+    - skill{s=Leprechaun_GoldToss} @NearestPlayer{r=12} ~onTimer:40 0.65
+    - skill{s=Leprechaun_LuckyHex} @NearestPlayer{r=10} ~onTimer:60 0.45
+    - skill{s=Leprechaun_TauntMiss} @self ~onTimer:60 0.25
+    - skill{s=Leprechaun_LookCheck} @self ~onTimer:80
+    - skill{s=Leprechaun_TimerTick} @self ~onTimer:20
+
+    - skill{s=Leprechaun_FakeGold} @self ~onDamaged 0.25
+    - skill{s=Leprechaun_Retaliate} @NearestPlayer{r=8} ~onDamaged 0.55
+    - skill{s=Leprechaun_ExitStageLeft} @self ~onDamaged 1.0 =<50%
+
+    - skill{s=Leprechaun_StealGold} @NearestPlayer{r=5} ~onAttack 0.35
+
+    - skill{s=Leprechaun_Death} @self ~onDeath
+    - skill{s=Leprechaun_RainbowDeath} @self ~onDeath 0.15
+    - skill{s=Leprechaun_FastKillReward} @self ~onDeath

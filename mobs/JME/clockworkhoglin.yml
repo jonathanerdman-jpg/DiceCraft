@@ -1,0 +1,144 @@
+# ============================================================
+#  Clockwork Hoglin
+# ------------------------------------------------------------
+#  Base entity: vanilla HOGLIN
+#
+#  Vanilla Minecraft handles:
+#    - movement
+#    - targeting
+#    - melee attacks
+#    - knockback behavior
+#    - pathfinding
+#
+#  Model Engine handles:
+#    - copper_hoglin model
+#    - idle / walk / run animations
+#
+#  MythicMobs adds:
+#    - model attachment
+#    - attack animation
+#    - mechanical sounds
+#    - light steam / spark effects
+# ============================================================
+
+clockworkhoglin:
+  Type: polar_bear
+  Display: 'Clockwork Boar'
+
+  Health: 40
+  Damage: 6
+
+  Options:
+
+    # --------------------------------------------------------
+    # VANILLA HOGLIN BEHAVIOR
+    # --------------------------------------------------------
+
+    NoAI: false
+
+    Interactable: true
+    PreventLeashing: false
+    PreventRenaming: false
+    Scale: 0.75
+    Despawn: PERSISTENT
+
+
+    # --------------------------------------------------------
+    # CUSTOM MOB HOUSEKEEPING
+    # --------------------------------------------------------
+
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventItemPickup: true
+
+    # Suppress normal hoglin sounds so the mechanical
+    # replacement sounds are not layered over them.
+    Silent: true
+
+
+  Skills:
+
+    # ========================================================
+    # MODEL
+    # ========================================================
+
+    # Keep the vanilla hoglin hitbox/interactions.
+    # The BBModel's model_identifier is "copper_hoglin".
+    - model{mid=copper_hoglin;n=false;h=false;save=true} @self ~onSpawn
+
+    # Reattach the model after chunk/entity reload.
+    - model{mid=copper_hoglin;n=false;h=false;save=true} @self ~onLoad
+
+
+    # ========================================================
+    # SPAWN
+    # ========================================================
+
+    - state{mid=copper_hoglin;s=spawn} @self ~onSpawn
+
+    - sound{s=block.piston.extend;v=1.2;p=0.85;sc=MASTER} @self ~onSpawn
+    - sound{s=entity.copper_golem.ambient;v=0.8;p=0.85;sc=MASTER} @self ~onSpawn
+
+    - particle{p=cloud;a=8;hs=0.30;vs=0.25;s=0.03;y=1.35} @self ~onSpawn
+
+
+    # ========================================================
+    # ATTACK
+    # ========================================================
+
+    # Steam-powered tusk extension / ram animation from the BBModel.
+    - state{mid=copper_hoglin;s=attack} @self ~onAttack
+
+    # Heavy mechanical impact.
+    - sound{s=entity.iron_golem.attack;v=1.1;p=0.80;sc=MASTER} @self ~onAttack
+
+    # Piston firing as the tusks extend.
+    - sound{s=block.piston.extend;v=1.2;p=0.75;sc=MASTER} @self ~onAttack
+
+    # Short pressure release.
+    - particle{p=cloud;a=7;hs=0.30;vs=0.20;s=0.04;y=1.30} @self ~onAttack
+    - particle{p=smoke;a=5;hs=0.22;vs=0.18;s=0.03;y=1.35} @self ~onAttack
+
+
+    # ========================================================
+    # HURT
+    # ========================================================
+
+    - state{mid=copper_hoglin;s=hurt} @self ~onDamaged
+
+    - sound{s=entity.copper_golem.hurt;v=1.0;p=0.85;sc=MASTER} @self ~onDamaged
+
+    # Small metallic spark when struck.
+    - particle{p=electric_spark;a=4;hs=0.28;vs=0.20;s=0.03;y=1.05} @self ~onDamaged
+
+
+    # ========================================================
+    # DEATH
+    # ========================================================
+
+    - state{mid=copper_hoglin;s=death} @self ~onDeath
+
+    - sound{s=entity.copper_golem.death;v=1.1;p=0.75;sc=MASTER} @self ~onDeath
+    - sound{s=block.anvil.land;v=0.8;p=0.70;sc=MASTER} @self ~onDeath
+
+    - particle{p=cloud;a=14;hs=0.45;vs=0.30;s=0.05;y=1.10} @self ~onDeath
+    - particle{p=smoke;a=8;hs=0.35;vs=0.25;s=0.04;y=1.15} @self ~onDeath
+
+
+    # ========================================================
+    # AMBIENT / STEAM
+    # ========================================================
+
+    # Soft mechanical ambience.
+    # Roughly 35% chance every 7 seconds.
+    - sound{s=entity.copper_golem.ambient;v=0.65;p=0.85;sc=MASTER} @self ~onTimer:140 0.35
+
+    # Occasional piston / gear movement.
+    - sound{s=block.piston.contract;v=0.45;p=1.15;sc=MASTER} @self ~onTimer:100 0.18
+
+    # Light steam venting.
+    # The BBModel also contains animated visual steam puffs and
+    # steam_emitter_left / steam_emitter_right bones for later
+    # Model Engine particle attachment if desired.
+    - particle{p=cloud;a=3;hs=0.30;vs=0.22;s=0.025;y=1.45} @self ~onTimer:60 0.30
+    - particle{p=smoke;a=2;hs=0.24;vs=0.18;s=0.02;y=1.50} @self ~onTimer:80 0.20

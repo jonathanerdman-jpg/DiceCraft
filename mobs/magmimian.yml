@@ -1,0 +1,92 @@
+############################################################
+# MAGMIMIAN — THE MOLTEN MAW
+# Vanilla Frog Boss
+# Blockhead Odyssey
+############################################################
+
+Magmimian:
+  Type: FROG
+  Display: '&c&lMagmimian &8- &6The Molten Maw'
+  Health: 1200
+  Damage: 30
+  Faction: Magmimian
+
+  BossBar:
+    Enabled: true
+    Title: '&c&lMagmimian &8- &6The Molten Maw'
+    Range: 64
+    Color: RED
+    Style: SEGMENTED_10
+
+  Options:
+    AlwaysShowName: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: false
+    Silent: false
+    FollowRange: 48
+    MovementSpeed: 0.18
+    KnockbackResistance: 1
+    Collidable: true
+    MaxCombatDistance: 48
+
+  DamageModifiers:
+    - FIRE 0
+    - LAVA 0
+    - HOT_FLOOR 0
+    - FALL 0
+
+  Skills:
+    # Setup / visuals
+    - skill{s=Magmimian_SpawnSetup} @self ~onSpawn
+    - skill{s=Magmimian_AmbientFX} @self ~onTimer:80
+
+    # Main attacks
+    - skill{s=Magmimian_LavaLeap} @target ~onTimer:280
+    - skill{s=Magmimian_MoltenTongue} @target ~onTimer:200
+    - skill{s=Magmimian_CroakOfRuin} @self ~onTimer:440
+    - skill{s=Magmimian_LavaSlam} @target ~onTimer:240
+
+    # Passive retaliation
+    - skill{s=Magmimian_MagmaSkin} @trigger ~onDamaged
+
+    # Adds
+    - skill{s=Magmimian_SpawnTadpoles} @self ~onTimer:360
+
+    # Phase 2
+    - skill{s=Magmimian_Phase2_Check} @self ~onTimer:40
+    - skill{s=Magmimian_Phase2_Attacks} @self ~onTimer:200
+
+
+############################################################
+# MAGMIMIAN LAVA TADPOLES
+############################################################
+
+Magmimian_LavaTadpole:
+  Type: FROG
+  Display: '&6Lava Tadpole'
+  Health: 16
+  Damage: 5
+  Faction: Magmimian
+
+  Options:
+    AlwaysShowName: false
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Despawn: true
+    Silent: false
+    MovementSpeed: 0.36
+    KnockbackResistance: 0.2
+    FollowRange: 32
+
+  DamageModifiers:
+    - FIRE 0
+    - LAVA 0
+    - HOT_FLOOR 0
+    - FALL 0
+
+  Skills:
+    - skill{s=Magmimian_TadpoleSetup} @self ~onSpawn
+    - skill{s=Magmimian_TadpoleFX} @self ~onTimer:40
+    - skill{s=Magmimian_TadpoleContact} @PlayersInRadius{r=1.5} ~onTimer:40
+    - skill{s=Magmimian_TadpoleDeath} @self ~onDeath

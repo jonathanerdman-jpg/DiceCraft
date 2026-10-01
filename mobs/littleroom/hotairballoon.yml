@@ -1,0 +1,100 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+hot_air_balloon_red:
+  Type: happy_ghast
+  Display: "Red Hot Air Balloon"
+  Drops: []
+  Equipment: []
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Skills: 
+  - skill{s=hot_air_balloon_rainsound} @self ~onTimer:10
+  - skill{s=hot_air_balloon_airsound} @self ~onTimer:10
+  - skill{s=hot_air_balloon_lightning} @self ~onTimer:60
+  - skill{s=hotairballoon_spawn} @self ~onSpawn
+  - skill{s=hotairballoon_air_animation} @self ~onTimer:10
+  - model{mid=hotairballoon_red;n=false;d=false;drive=true} @self ~onSpawn
+  - model{mid=hotairballoon_red;n=false;d=false;drive=true} @self ~onLoad
+  - skill{s=hot_air_balloon_MOUNT} @self ~onInteract
+  Options:
+    Tamed: true
+    Collidable: true
+    Despawn: true
+    AlwaysShowName: false
+    PreventOtherDrops: true
+    Silent: true
+    KnockbackResistance: 1
+    FollowRange: 20
+    PreventItemPickup: true
+    PreventRandomEquipment: true
+    Mountable: true
+    MovementSpeed: 0.15
+    
+hot_air_balloon_white:
+  Type: happy_ghast
+  Display: "White Hot Air Balloon"
+  Drops: []
+  Equipment: []
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Skills: 
+  - skill{s=hot_air_balloon_rainsound} @self ~onTimer:10
+  - skill{s=hot_air_balloon_airsound} @self ~onTimer:10
+  - skill{s=hot_air_balloon_lightning} @self ~onTimer:60
+  - skill{s=hotairballoon_spawn} @self ~onSpawn
+  - skill{s=hotairballoon_air_animation} @self ~onTimer:10
+  - model{mid=hotairballoon_white;n=false;d=false;drive=true} @self ~onSpawn
+  - model{mid=hotairballoon_white;n=false;d=false;drive=true} @self ~onLoad
+  - skill{s=hot_air_balloon_MOUNT} @self ~onInteract
+  Options:
+    Tamed: true
+    Collidable: true
+    Despawn: true
+    AlwaysShowName: false
+    PreventOtherDrops: true
+    Silent: true
+    KnockbackResistance: 1
+    FollowRange: 20
+    PreventItemPickup: true
+    PreventRandomEquipment: true
+    Mountable: true
+    MovementSpeed: 0.15
+    
+hot_air_balloon_blue:
+  Type: happy_ghast
+  Display: "blue Hot Air Balloon"
+  Drops: []
+  Equipment: []
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Skills: 
+  - skill{s=hot_air_balloon_rainsound} @self ~onTimer:10
+  - skill{s=hot_air_balloon_airsound} @self ~onTimer:10
+  - skill{s=hot_air_balloon_lightning} @self ~onTimer:60
+  - skill{s=hotairballoon_spawn} @self ~onSpawn
+  - skill{s=hotairballoon_air_animation} @self ~onTimer:10
+  - model{mid=hotairballoon_blue;n=false;d=false;drive=true} @self ~onSpawn
+  - model{mid=hotairballoon_blue;n=false;d=false;drive=true} @self ~onLoad
+  - skill{s=hot_air_balloon_MOUNT} @self ~onInteract
+  Options:
+    Tamed: true
+    Collidable: true
+    Despawn: true
+    AlwaysShowName: false
+    PreventOtherDrops: true
+    Silent: true
+    KnockbackResistance: 1
+    FollowRange: 20
+    PreventItemPickup: true
+    PreventRandomEquipment: true
+    Mountable: true
+    MovementSpeed: 0.15
+    

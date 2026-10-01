@@ -1,0 +1,37 @@
+#########################################################
+## HypactC Swing Ride - Blockhead Odyssey conversion   ##
+## MythicMobs 5.13 / ModelEngine 4                     ##
+#########################################################
+
+HPC_Swingride:
+  Type: PIG
+  Display: ''
+  Health: 1
+
+  AIGoalSelectors:
+  - clear
+
+  AITargetSelectors:
+  - clear
+
+  Options:
+    NoAI: true
+    Invisible: true
+    Silent: true
+    Invincible: true
+    Collidable: false
+    Despawn: false
+    Persistent: true
+    PreventOtherDrops: true
+    AlwaysShowName: false
+    MovementSpeed: 0
+
+  Skills:
+  - model{mid=hypactc_swingride;usm=true;drive=true;ride=true} @self ~onSpawn
+  - model{mid=hypactc_swingride;usm=true;drive=true;ride=true} @self ~onLoad
+
+  # Sneaking interaction returns the item.
+  - skill{s=HPC_Swingride_Pickup} @self ~onInteract
+
+  # Normal interaction starts the ride.
+  - skill{s=HPC_Swingride_Start} @self ~onInteract

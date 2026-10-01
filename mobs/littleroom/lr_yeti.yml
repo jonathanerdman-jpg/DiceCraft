@@ -1,0 +1,100 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+lr_yeti:
+  Type: IRON_GOLEM
+  Display: "<gradient:#d9f3ff:#ffffff:#7fb3c8>Kragor, Warden of the Peaks</gradient>"
+  Health: 1250
+  Modules:
+    ThreatTable: true
+  AITargetSelectors:
+    - players
+  Options:
+    PreventOtherDrops: true
+    Despawn: false
+    Persistent: true
+    KnockbackResistance: 1
+    Collidable: true
+    Silent: true
+    FollowRange: 32
+  Skills:
+    - SudoSkill{s=YETI_bloodeffect;cat=true} @trigger ~onDamaged
+
+    # Stable custom bossbar. Same internal ID is used by all barSet calls.
+    - skill{s=YETI_bossbar_create} @self ~onSpawn
+    - skill{s=YETI_bossbar_create} @self ~onLoad
+
+    - skill{s=YETI_death} @self ~onDeath
+    - skill{s=YETI_bossbar_damage} @self ~onDamaged
+    - bodyclamp{m=lr_yeti;c=0} @self ~onSpawn
+    - bodyclamp{m=lr_yeti;c=0} @self ~onLoad
+    - skill{s=YETI_stun_hit} @self ~onDamaged
+    - skill{s=YETI_stun_75} @self ~onDamaged <75%
+    - skill{s=YETI_stun_50} @self ~onDamaged <50%
+    - skill{s=YETI_stun_25} @self ~onDamaged <25%
+    - skill{s=YETI_grab_snowballs} @self ~onTimer:20
+    - skill{s=YETI_throw_snowballs} @target ~onTimer:20
+    - skill{s=YETI_rage} @target ~onTimer:25
+    - skill{s=YETI_burrow} @self ~onTimer:30
+    - skill{s=YETI_icespikes_attack} @self ~onTimer:35
+    - skill{s=YETI_snowball} @target ~onTimer:40
+    - skill{s=YETIrun} @self ~onTimer:20
+    - skill{s=YETIstoprun} @self ~onTimer:20
+    - skill{s=YETI_melee_combo_1} @self ~onTimer:14
+    - skill{s=YETI_snow_FX} @self ~onTimer:20
+    - skill{s=YETI_melee_1_snowballs;sync=true} @self ~onAttack
+    - randomskill{s=YETI_melee_1,YETI_melee_2;sync=true} @self ~onAttack
+    - model{mid=lr_yeti;d=false;i=true;step=1} @self ~onSpawn
+    - model{mid=lr_yeti;d=false;i=true;step=1} @self ~onLoad
+
+lr_yeti_snowball:
+  Type: RAVAGER
+  Modules:
+    ThreatTable: true
+  AIGoalSelectors:
+    - clear
+  AITargetSelectors:
+    - players
+  Options:
+    Invincible: true
+    Silent: true
+  Display: 'Yeti Snowball'
+  Skills:
+    - bodyclamp{m=lr_yeti_snowball;c=0} @self ~onSpawn
+    - bodyclamp{m=lr_yeti_snowball;c=0} @self ~onLoad
+    - skill{s=YETI_snowball_damage} @pir{r=4} ~onTimer:1
+    - skill{s=YETI_snowball_grabplayers} @pir{r=4} ~onTimer:1
+    - skill{s=YETI_snowball_hitwall} @forward{f=1.25;y=1.25} ~onTimer:1
+    - skill{s=YETI_snowball_lifespawn} @self ~onSpawn
+    - model{mid=lr_yeti_snowball;d=false;i=true;step=1;ride=true;lp=true;ly=true} @self ~onSpawn
+    - model{mid=lr_yeti_snowball;d=false;i=true;step=1;ride=true;lp=true;ly=true} @self ~onLoad
+
+lr_yeti_icespike:
+  Type: ARMOR_STAND
+  Display: 'Yeti Ice Spike'
+  Options:
+    Marker: true
+  Skills:
+    - skill{s=YETI_icespike_lifespan} @self ~onSpawn
+    - model{mid=lr_yeti_icespikes;d=false;i=true} @self ~onSpawn
+    - model{mid=lr_yeti_icespikes;d=false;i=true} @self ~onLoad
+
+YETI_concussion:
+  Type: ARMOR_STAND
+  Options:
+    Marker: true
+  Skills:
+    - skill{s=YETI_concussion} @self ~onSpawn
+    - model{mid=concussion;d=false;i=true} @self ~onSpawn
+    - model{mid=concussion;d=false;i=true} @self ~onLoad
+
+lr_yeti_chest:
+  Type: ARMOR_STAND
+  Display: 'Yeti Chest'
+  Options:
+    Marker: true
+  Skills:
+    - skill{s=YETI_chest_lifespan} @self ~onSpawn
+    - model{mid=lr_yeti_chest;d=false;i=true} @self ~onSpawn
+    - model{mid=lr_yeti_chest;d=false;i=true} @self ~onLoad

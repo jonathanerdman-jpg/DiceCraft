@@ -1,0 +1,610 @@
+#############################################
+# BLOCKBEARD BUCCANEERS - SHIP MINIBOSSES
+# v3 - Anti-flight + Doyle engagement fixes
+#############################################
+
+vs_pillager_pirate_sniper:
+  Type: VINDICATOR
+  Display: "&e&lDeadeye Doyle"
+  Health: 180
+  Damage: 8
+  Armor: 10
+  Faction: Blockbeard Buccaneers
+
+  Drops:
+  - gunpowder 4-8 0.8
+  - command{cmd="iagive <killer.name> bhodyssey:pistol_ball 1 silent"} 4-8 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:sharpshooter_flintlock 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_treasure_key 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:ship_spyglass 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:map_fragment_2 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:deadeye_eyepatch 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:gold_doubloon 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:dusty_tome 1 silent"} 1 0.05
+
+  # Rare Pieces of Eight
+  - command{cmd="iagive <killer.name> bhodyssey:pieceofeight 1-4 silent"} 0.08
+
+  # Card drop
+  - command{cmd="rollcard <killer.name>"} @trigger 0.15
+
+  # Optional sigil
+  - command{cmd="iagive <killer.name> bhodyssey:cracked_repair_sigil 1 silent"} 0.1
+
+  - bhodyssey_collectibles 1 0.15
+  - emerald 1 1
+  - exp 1500 1
+
+  DamageModifiers:
+  - SUFFOCATION 0
+
+  Options:
+    MovementSpeed: 0.15
+    PreventOtherDrops: true
+    Despawn: false
+    Respawn: false
+    Persistent: true
+    Silent: true
+    MaxCombatDistance: 55
+    FollowRange: 50
+    PreventLeashing: true
+    NoDamageTicks: 40
+    KnockbackResistance: 1
+    PreventRandomEquipment: true
+    PreventSuffocation: true
+    PreventBlockIn: true
+
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+
+  BossBar:
+    Enabled: true
+    Title: '&e&lDeadeye Doyle'
+    Range: 50
+    Color: YELLOW
+    Style: SEGMENTED_10
+
+  AIGoalSelectors:
+  - clear
+  - lookatplayers
+
+  AITargetSelectors:
+  - clear
+  - players{r=50}
+  - attacker
+  - OtherFaction
+
+  Skills:
+  - model{mid=vs_pillager_pirate3;n=false;save=true} @self ~onSpawnOrLoad
+
+  - addtag{t=can_drown} @self ~onSpawn
+  - skill{s=UniversalDrown} @self ~onTimer:40
+
+  - command{c="contagionimmune <caster.uuid>";asConsole=true} @self ~onSpawn
+
+  # Immediately acquire target
+  - settarget @NearestPlayer{r=50} @self ~onSpawn
+  - skill{s=sniper_combat_start} @self ~onEnterCombat
+  - skill{s=voxelspawns_pillager_combat_leave} @self ~onDropCombat
+
+  - effect:sound{s=entity.pillager.hurt;volume=1;pitch=1.2} @self ~onDamaged 0.4
+  - skill{s=voxelspawns_pillager_death} @self ~onDeath
+
+  # Base flintlock attack
+  # Disabled while Doyle is in water
+  - skill{s=voxelspawns_pillager_attack_flintlock_c;sync=true} @self !inblock{b=WATER} ~onAttack
+
+  # Main sniper shot
+  # Disabled while Doyle is in water
+  - skill{s=sniper_aimed_shot} @target !inblock{b=WATER} ~onTimer:90 0.7
+
+  # Anti-air support
+  # Disabled while Doyle is in water
+  - skill{s=sniper_anti_air} @self !inblock{b=WATER} ~onTimer:100 0.35
+
+  # Combat flavor
+  - skill{s=sniper_call_out} @self ~onTimer:200 0.35
+
+  # Defensive reaction
+  - skill{s=sniper_close_quarters} @trigger ~onDamaged 0.35
+
+  # Idle scan
+  - skill{s=sniper_idle_scan} @self ~onTimer:240
+
+  # Kill Tracking
+  - skill{s=PirateSniperPlayerKill} @trigger ~onDeath
+  - skill{s=PirateDeathAnnouncement} @trigger ~onDeath
+
+  # Parrot management
+  - summon{type=doyles_parrot;amount=1} @self ~onSpawn
+  - signal{s=sic_em} @MIR{r=50;types=doyles_parrot} ~onEnterCombat
+  - signal{s=come_back} @MIR{r=50;types=doyles_parrot} ~onDropCombat
+  - damage{a=9999;pi=true} @MIR{r=100;types=doyles_parrot} ~onDeath
+
+doyles_parrot:
+  Type: PARROT
+  Display: "&c&lPolly"
+  Health: 40
+  Damage: 5
+  Options:
+    MovementSpeed: 0.45
+    FollowRange: 50
+    Despawn: false
+    Respawn: false
+    Persistent: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+  Faction: Blockbeard Buccaneers
+  Drops:
+  - exp 350 1
+  - feather 1-3 0.8
+  AIGoalSelectors:
+  - clear
+  - float
+  - meleeattack
+  AITargetSelectors:
+  - clear
+  - players{r=40}
+  - OtherFaction
+  Skills:
+  # Shoulder perch
+  - teleport @self @owner ~onTimer:200
+
+  # Arrow dodge — cancels projectile damage entirely
+  - skill{s=parrot_arrow_dodge} @self ~onDamaged
+
+  # Doyle signals engagement/return
+  - skill{s=parrot_dismount_attack} @self ~onSignal:sic_em
+  - skill{s=parrot_return} @self ~onSignal:come_back
+
+  # Combat behavior
+  - skill{s=parrot_scratch} @target ~onAttack
+  - skill{s=parrot_squawk} @self ~onTimer:60
+
+  # Death
+  - skill{s=parrot_death} @self ~onDeath
+  
+  
+vs_pillager_pirate_firstmate:
+  Type: VINDICATOR
+  Display: "&6&lFirstmate Flint"
+  Health: 240
+  Damage: 12
+  Armor: 12
+  Faction: Blockbeard Buccaneers
+  # Minibosses
+  Drops:
+  - command{cmd="iagive <killer.name> bhodyssey:gold_doubloon 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_treasure_key 1 silent"} 1 0.08
+  - emerald 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:bosuns_whistle 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:firstmate_pirate_hat 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:firstmate_flintlock_pistol 1 silent"} 1 0.08
+  # Rare Pieces of Eight (treat)
+  - command{cmd="iagive <killer.name> bhodyssey:pieceofeight 1-4 silent"} 0.08
+  # Card drop (your existing system)
+  - command{cmd="rollcard <killer.name>"} @trigger 0.15
+  # Optional sigil
+  - command{cmd="iagive <killer.name> bhodyssey:cracked_repair_sigil 1 silent"} 0.1
+  - command{cmd="iagive <killer.name> bhodyssey:map_fragment_2 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:dusty_tome 1 silent"} 1 0.05
+  - bhodyssey_collectibles 1 0.15
+  - golden_apple 1 0.15
+  - exp 1500 1
+  Options:
+    MovementSpeed: 0.2
+    PreventOtherDrops: true
+    Despawn: false
+    Respawn: false
+    Persistent: true
+    Silent: true
+    MaxCombatDistance: 36
+    PreventLeashing: true
+    NoDamageTicks: 10
+    KnockbackResistance: 0.7
+    PreventRandomEquipment: true
+    PreventSuffocation: true
+    PreventBlockIn: true
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+  BossBar:
+    Enabled: true
+    Title: '&6&lFirstmate Flint'
+    Range: 40
+    Color: YELLOW
+    Style: SEGMENTED_10
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - movetowardstarget
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+  Skills:
+  - model{mid=vs_pillager_pirate2;n=false;save=true} @self ~onSpawnOrLoad
+  - setVariable{var=caster.enraged;val=0} @self ~onSpawn
+  - addtag{t=can_drown} @self ~onSpawn
+  - skill{s=UniversalDrown} @self ~onTimer:40
+  - skill{s=voxelspawns_pillager_combat_enter} @self ~onEnterCombat
+  - skill{s=voxelspawns_pillager_combat_leave} @self ~onDropCombat
+  - command{c="contagionimmune <caster.uuid>";asConsole=true} @self ~onSpawn
+  - effect:sound{s=entity.pillager.hurt;volume=1;pitch=0.9} @self ~onDamaged 0.5
+  - skill{s=voxelspawns_pillager_death} @self ~onDeath
+  - skill{s=voxelspawns_pillager_move} @self ~onTimer:40
+  - skill{s=voxelspawns_pillager_attack_pirate_sword;sync=true} @self ~onAttack
+  - skill{s=firstmate_riposte} @self ~onDamaged 0.25
+  - skill{s=firstmate_enrage_check} @self ~onDamaged
+  - skill{s=firstmate_call_reinforcements} @self ~onDamaged 0.6
+  - skill{s=firstmate_call_reinforcements} @self ~onTimer:200 0.3
+  - skill{s=firstmate_pistol_whip} @self ~onTimer:40 0.4
+  - skill{s=firstmate_barrage} @target ~onTimer:50 0.5
+  - skill{s=firstmate_gapclose} @self ~onTimer:45 0.5
+  - skill{s=firstmate_rally_cry} @self ~onTimer:80 0.4
+  - skill{s=voxelspawns_pillager_idle_pirate} @self ~onTimer:200
+  # Kill Tracking
+  - skill{s=PirateFrstmtPlayerKill} @trigger ~onDeath
+  - skill{s=PirateDeathAnnouncement} @trigger ~onDeath
+
+vs_pillager_pirate_cook:
+  Type: VINDICATOR
+  Display: '&2&lCook Cornelius'
+  Health: 180
+  Damage: 10
+  Armor: 10
+  Faction: Blockbeard Buccaneers
+  # Minibosses
+  Drops:
+  - command{cmd="iagive <killer.name> bhodyssey:gold_doubloon 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_treasure_key 1 silent"} 1 0.08
+  - emerald 1-3 0.4
+  - command{cmd="iagive <killer.name> bhodyssey:burnt_bandana 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_fishing_rod 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:dirty_frying_pan 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:map_fragment_2 1 silent"} 1 0.08
+  # Rare Pieces of Eight (treat)
+  - command{cmd="iagive <killer.name> bhodyssey:pieceofeight 1-4 silent"} 0.08
+  # Card drop (your existing system)
+  - command{cmd="rollcard <killer.name>"} @trigger 0.15
+  # Optional sigil
+  - command{cmd="iagive <killer.name> bhodyssey:cracked_repair_sigil 1 silent"} 0.1
+  - command{cmd="iagive <killer.name> bhodyssey:dusty_tome 1 silent"} 1 0.05
+  - bhodyssey_collectibles 1 0.15
+  - golden_apple 1 0.15
+  - exp 1500 1
+  Options:
+    MovementSpeed: 0.2
+    PreventOtherDrops: true
+    Despawn: false
+    Respawn: false
+    Persistent: true
+    Silent: true
+    MaxCombatDistance: 28
+    PreventLeashing: true
+    NoDamageTicks: 10
+    KnockbackResistance: 0.4
+    PreventRandomEquipment: true
+    PreventSuffocation: true
+    PreventBlockIn: true
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+  BossBar:
+    Enabled: true
+    Title: '&2&lCook Cornelius'
+    Range: 40
+    Color: GREEN
+    Style: SEGMENTED_10
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - movetowardstarget
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+  Skills:
+  - model{mid=vs_pillager_pirate5;n=false;save=true} @self ~onSpawnOrLoad
+  - addtag{t=can_drown} @self ~onSpawn
+  - skill{s=UniversalDrown} @self ~onTimer:40
+  - skill{s=voxelspawns_pillager_combat_enter} @self ~onEnterCombat
+  - skill{s=voxelspawns_pillager_combat_leave} @self ~onDropCombat
+  - command{c="contagionimmune <caster.uuid>";asConsole=true} @self ~onSpawn
+  - effect:sound{s=entity.pillager.hurt;volume=1;pitch=1.1} @self ~onDamaged 0.4
+  - skill{s=voxelspawns_pillager_death} @self ~onDeath
+  - skill{s=voxelspawns_pillager_move} @self ~onTimer:40
+  - skill{s=voxelspawns_pillager_attack_pirate_cook;sync=true} @self ~onAttack
+  - skill{s=cook_knife_throw} @self ~onTimer:30 0.4
+  - skill{s=cook_hot_oil} @self ~onTimer:55 0.35
+  - skill{s=cook_rotten_meal} @self ~onTimer:70 0.3
+  - skill{s=cook_pan_slam} @self ~onTimer:35 0.35
+  - skill{s=cook_taste_test} @self ~onTimer:100 0.45
+  - skill{s=voxelspawns_pillager_idle_pirate} @self ~onTimer:200
+
+  # Kill Tracking
+  - skill{s=PirateCookPlayerKill} @trigger ~onDeath
+  - skill{s=PirateDeathAnnouncement} @trigger ~onDeath
+
+
+vs_pillager_pirate_anchor:
+  Type: VINDICATOR
+  Display: "&4&lAnchor Angus"
+  Health: 320
+  Damage: 16
+  Armor: 18
+  Faction: Blockbeard Buccaneers
+  # Minibosses
+  Drops:
+  - command{cmd="iagive <killer.name> bhodyssey:gold_doubloon 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_treasure_key 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:saint_medallion 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_anchor 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:mermaid_trident 1 silent"} 1 0.08  
+  - command{cmd="iagive <killer.name> bhodyssey:map_fragment_2 1 silent"} 1 0.08
+  # Rare Pieces of Eight (treat)
+  - command{cmd="iagive <killer.name> bhodyssey:pieceofeight 1-4 silent"} 0.08
+  # Card drop (your existing system)
+  - command{cmd="rollcard <killer.name>"} @trigger 0.15
+  # Optional sigil
+  - command{cmd="iagive <killer.name> bhodyssey:cracked_repair_sigil 1 silent"} 0.1
+  - command{cmd="iagive <killer.name> bhodyssey:dusty_tome 1 silent"} 1 0.05
+  - bhodyssey_collectibles 1 0.15
+  - golden_apple 1 0.25
+  - EMERALD 1 1
+  - exp 1500 1
+  Options:
+    MovementSpeed: 0.12
+    PreventOtherDrops: true
+    Despawn: false
+    Respawn: false
+    Persistent: true
+    Silent: true
+    MaxCombatDistance: 32
+    PreventLeashing: true
+    NoDamageTicks: 5
+    KnockbackResistance: 0.95
+    PreventRandomEquipment: true
+    PreventSuffocation: true
+    PreventBlockIn: true
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+  BossBar:
+    Enabled: true
+    Title: '&4&lAnchor Angus'
+    Range: 40
+    Color: RED
+    Style: SEGMENTED_10
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - movetowardstarget
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+  Skills:
+  - model{mid=vs_pillager_pirate4;n=false;save=true} @self ~onSpawnOrLoad
+  - addtag{t=can_drown} @self ~onSpawn
+  - skill{s=UniversalDrown} @self ~onTimer:40
+  - skill{s=voxelspawns_pillager_combat_enter} @self ~onEnterCombat
+  - skill{s=voxelspawns_pillager_combat_leave} @self ~onDropCombat
+  - command{c="contagionimmune <caster.uuid>";asConsole=true} @self ~onSpawn
+  - effect:sound{s=entity.pillager.hurt;volume=1;pitch=0.6} @self ~onDamaged 0.3
+  - skill{s=voxelspawns_pillager_death} @self ~onDeath
+  - skill{s=voxelspawns_pillager_move} @self ~onTimer:40
+  - skill{s=voxelspawns_pillager_attack_pirate_axe;sync=true} @self ~onAttack
+  - skill{s=anchor_slam} @self ~onTimer:45 0.4
+  - skill{s=anchor_chain_pull} @target ~onTimer:60 0.4
+  - skill{s=anchor_bull_charge} @self ~onTimer:80 0.35
+  - skill{s=anchor_enrage} @self ~onDamaged 0.15
+  - skill{s=anchor_arrow_deflect;sync=true} @self ~onDamaged
+  - skill{s=voxelspawns_pillager_idle_pirate} @self ~onTimer:200
+  - skill{s=anchor_rat_revenge} @trigger ~onDamaged 0.3
+  - skill{s=anchor_summon_rats} @self ~onTimer:100 0.5
+  - skill{s=anchor_summon_rats} @self ~onDamaged 0.25
+  
+  # Kill Tracking
+  - skill{s=PirateAnchorPlayerKill} @trigger ~onDeath
+  - skill{s=PirateDeathAnnouncement} @trigger ~onDeath
+  
+
+vs_pillager_pirate_captain:
+  Type: VINDICATOR
+  Display: '&c&lCaptain Blockbeard'
+  Health: 450
+  Damage: 14
+  Armor: 14
+  Faction: Blockbeard Buccaneers
+  # Captain
+  Drops:
+  - command{cmd="iagive <killer.name> bhodyssey:gold_doubloon 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_treasure_key 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:signet_ring 1 silent"} 1 1
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_captain_hat 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_captain_sword 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:map_fragment_3 1 silent"} 1 0.25
+  - command{cmd="iagive <killer.name> bhodyssey:pieceofeight 1-4 silent"} 1 0.08
+  - command{cmd="rollcard <killer.name>"} 1 0.15
+  - command{cmd="iagive <killer.name> bhodyssey:pristine_repair_sigil 1 silent"} 1 0.1
+  - command{cmd="iagive <killer.name> bhodyssey:dusty_tome 1 silent"} 1 0.05
+  - bhodyssey_collectibles 1 0.25
+  - golden_apple 1 0.25
+  - EMERALD 1 1
+  - exp 5000 1
+
+  Options:
+    MovementSpeed: 0.18
+    PreventOtherDrops: true
+    Despawn: false
+    Persistent: true
+    Silent: true
+    MaxCombatDistance: 40
+    PreventLeashing: true
+    NoDamageTicks: 8
+    KnockbackResistance: 0.6
+    PreventRandomEquipment: true
+    PreventSuffocation: true
+    PreventBlockIn: true
+
+  Modules:
+    ThreatTable: true
+    ImmunityTable: true
+
+  BossBar:
+    Enabled: true
+    Title: '&c&lCaptain Blockbeard'
+    Range: 50
+    Color: RED
+    Style: SEGMENTED_20
+
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - movetowardstarget
+  - randomstroll
+
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+
+  Skills:
+  # Model
+  - model{mid=vs_pillager_pirate1;n=false;save=true} @self ~onSpawnOrLoad
+  - addtag{t=can_drown} @self ~onSpawn
+  - skill{s=UniversalDrown} @self ~onTimer:40
+
+  # Initialize Phase
+  - setVariable{var=caster.phase;val=1} @self ~onSpawn
+
+  # Phase system
+  - skill{s=captain_phase_handler} @self ~onTimer:10
+
+  # Combat flavor
+  - skill{s=captain_spawn_announce} @self ~onSpawn
+  - skill{s=voxelspawns_pillager_combat_enter} @self ~onEnterCombat
+  - skill{s=voxelspawns_pillager_combat_leave} @self ~onDropCombat
+  - command{c="contagionimmune <caster.uuid>";asConsole=true} @self ~onSpawn
+
+  # Phase-based abilities (FIXED)
+  - skill{s=captain_sword_combo} @self ~onTimer:50 0.5 ?variableEquals{var=caster.phase;value=1}
+  - skill{s=captain_sword_combo} @self ~onTimer:50 0.35 ?variableEquals{var=caster.phase;value=2}
+  - skill{s=captain_sword_combo} @self ~onTimer:50 0.25 ?variableEquals{var=caster.phase;value=3}
+
+  - skill{s=captain_cutlass_wave} @target ~onTimer:60 0.5 ?variableInRange{var=caster.phase;value=>1}
+  - skill{s=captain_command_crew} @self ~onTimer:120 0.4 ?variableEquals{var=caster.phase;value=2}
+  - skill{s=captain_whirlwind} @self ~onTimer:70 0.5 ?variableEquals{var=caster.phase;value=3}
+  - skill{s=captain_desperation} @self ~onTimer:40 0.5 ?variableEquals{var=caster.phase;value=3}
+
+  # Reactive
+  - skill{s=captain_parry} @self ~onDamaged 0.2 ?variableEquals{var=caster.phase;value=1}
+
+  # Death
+  - skill{s=captain_death} @self ~onDeath
+  - skill{s=processrats_skill} @self ~onDeath
+  - skill{s=PirateDeathAnnouncement} @trigger ~onDeath
+
+vs_cutlass_pirate:
+  Type: VINDICATOR
+  Display: '&cPillager Pirate'
+  Health: 36
+  Damage: 3
+  Faction: Blockbeard Buccaneers
+  Options:
+    MovementSpeed: 0.25
+    AttackSpeed: 0.7
+    Scale: 0.85
+    FollowRange: 32
+    KnockbackResistance: 0.3
+    Despawn: true
+    DespawnDelay: 200
+    PreventOtherDrops: true
+    PreventSuffocation: true
+  Equipment:
+  - bhodyssey:pirate_cutlass HAND
+  - bhodyssey:pillager_pirate_hat HEAD
+
+  Drops:
+  - command{cmd="iagive <killer.name> bhodyssey:pillager_pirate_hat 1 silent"} 1 0.08
+  - command{cmd="iagive <killer.name> bhodyssey:pirate_cutlass 1 silent"} 1 0.08
+  # Rare Pieces of Eight (treat)
+  - command{cmd="iagive <killer.name> bhodyssey:pieceofeight 1-4 silent"} 0.08
+  # Optional sigil
+  - command{cmd="iagive <killer.name> bhodyssey:cracked_repair_sigil 1 silent"} 0.03
+  - command{cmd="iagive <killer.name> bhodyssey:dusty_tome 1 silent"} 1 0.02
+  - bhodyssey_collectibles 1 0.02
+  - EMERALD 1 1
+  - exp 100 1
+  AIGoalSelectors:
+  - clear
+  - meleeattack
+  - movetowardstarget
+  - randomstroll
+  AITargetSelectors:
+  - clear
+  - attacker
+  - players
+  - OtherFaction
+  Skills:
+  - settarget @trigger ~onSpawn
+  - effect:sound{s=entity.vindicator.ambient} @self ~onSpawn
+  - effect:particles{p=SMOKE;a=10} @self ~onSpawn
+#  - potion{type=SPEED;level=1;duration=80} @self ~onSpawn
+  - addtag{t=can_drown} @self ~onSpawn
+  - skill{s=UniversalDrown} @self ~onTimer:40
+  - skill{s=cutlass_gapclose} @target ~onTimer:40
+  - skill{s=voxelspawns_pillager_attack_pirate_sword;sync=true} @self ~onAttack
+  - skill{s=CardDrop} @trigger ~onDeath
+
+#pirate_sniper:
+#  Type: PILLAGER
+#  Display: '&e&lPirate Sniper'
+#  Health: 30
+#  Damage: 3
+#  Faction: Blockbeard Buccaneers
+#  Options:
+#    MovementSpeed: 0.2
+#    AttackSpeed: 0.7
+#    FollowRange: 40
+#    Silent: false
+#    Despawn: true
+#    PreventOtherDrops: true
+#  Equipment:
+#  - crossbow HAND
+#  - bhodyssey:pillager_pirate_hat HEAD
+#  - leather_chestplate CHEST
+#  - leather_leggings LEGS
+#  - leather_boots FEET
+#  Drops:
+#  - command{cmd="iagive <killer.name> bhodyssey:pirate_hat 1 silent"} 1 0.08
+#  - command{cmd="iagive <killer.name> bhodyssey:pirate_cutlass 1 silent"} 1 0.08
+  # Rare Pieces of Eight (treat)
+#  - command{cmd="iagive <killer.name> bhodyssey:pieceofeight 1-4 silent"} 0.08
+  # Card drop (your existing system)
+#  - command{cmd="rollcard <killer.name>"} @trigger 0.15
+  # Optional sigil
+#  - command{cmd="iagive <killer.name> bhodyssey:cracked_repair_sigil 1 silent"} 0.03
+#  - bhodyssey_collectibles 1 0.02
+#  - EMERALD 1 1
+#  Skills:
+  # Immediately acquire target
+#  - settarget @NearestPlayer{r=40} ~onSpawn
+#  - addtag{t=can_drown} @self ~onSpawn
+#  - skill{s=UniversalDrown} @self ~onTimer:40
+  # Anti-air shot loop
+#  - skill{s=pirate_sniper_shot} @target ~onTimer:60
+  # Despawn after time (important)
+#  - remove @self ~onTimer:400
+  # Small spawn effect
+#  - effect:particles{p=smoke;a=10;hS=0.5;vS=0.5} @self ~onSpawn
+#  - effect:sound{s=entity.pillager.celebrate;v=1;p=1} @self ~onSpawn

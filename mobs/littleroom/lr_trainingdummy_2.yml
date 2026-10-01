@@ -1,0 +1,34 @@
+
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+
+
+lr_trainingdummy:
+  Type: IRON_GOLEM
+  Display: '&f&lTraining Dummy' 
+  Health: 999
+  AITargetSelectors:
+  - clear
+  AIGoalSelectors:
+  - clear
+  Options:
+    PreventOtherDrops: true
+    Despawn: false
+    Persistent: true
+    KnockbackResistance: 1
+    Collidable: true
+    Silent: true
+  Skills:
+  - velocity{m=set;x=0;y=0;z=0} @self ~onTimer:1
+  - throw{v=2;vy=-1} @eir{r=1} ~onTimer:1
+  - bodyclamp{mh=0;mb=0} @self ~onSpawn
+  - CancelEvent{sync=true} @self ~onShoot
+  - CancelEvent{sync=true} @self ~onAttack
+  - skill{s=TRAININGDUMMY_hit} @self ~onDamaged
+  - model{mid=lr_trainingdummy_2;d=false;i=true;step=1;ride=true} @self ~onSpawn
+  - model{mid=lr_trainingdummy_2;d=false;i=true;step=1;ride=true} @self ~onLoad
+  - command{c="minecraft:tag <caster.uuid> add bhod_training_dummy";asOp=true} @self ~onSpawn
+  - command{c="minecraft:tag <caster.uuid> add bhod_training_dummy";asOp=true} @self ~onLoad
+  - skill{s=TRAININGDUMMY_pickup} @self ~onInteract

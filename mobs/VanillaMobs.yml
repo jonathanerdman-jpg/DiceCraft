@@ -1,0 +1,19 @@
+CAVE_SPIDER:
+  Health: 30
+  Damage: 7
+
+WITHER_SKELETON:
+  Faction: Order of Anubis
+  Health: 50
+  Damage: 10
+
+GIANT:
+  Health: 1000
+  Damage: 20
+  Skills:
+  - potion{type=POISON;duration=100;lvl=1} @target ~onAttack
+
+PILLAGER:
+  Faction: Blockbeard Buccaneers
+  Options:
+    Despawn: true

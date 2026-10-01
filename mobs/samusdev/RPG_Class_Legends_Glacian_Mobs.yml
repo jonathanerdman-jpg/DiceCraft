@@ -1,0 +1,547 @@
+######## created by samus2002 #########
+
+#### VFX ####
+
+VFX_Glacian_Frost_Slash_LR:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=lr;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=3;d=6;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_slash_1;n=vfx_frost_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Frost_Slash_RL:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=rl;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=3;d=6;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_slash_1;n=vfx_frost_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Frost_Slash_Diag_R:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=diag_r;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=3;d=6;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_slash_1;n=vfx_frost_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Frost_Slash_Diag_L:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=diag_l;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=3;d=6;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_slash_1;n=vfx_frost_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Frost_Slash_Up:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=up;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=3;d=6;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_slash_1;n=vfx_frost_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Frost_Slash_Down:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=down;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=3;d=6;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_slash_1;n=vfx_frost_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_Spin1:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spin1;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_Spin2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spin2;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_Spin3:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spin3;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_Spin4:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spin4;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_Spin5:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spin5;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_Down:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=down;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_LRD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=lrd;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Spin_Slash_RLD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{showshadow=false;usestatemachine=true;mid=vfx_frost_spin_slash_1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=rld;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=2;d=8;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_frost_spin_slash_1;n=vfx_frost_spin_slash_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Glacian_Frost_Cut_LRD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_frost_cut;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=lrd;speed=1} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+VFX_Glacian_Frost_Cut_RLD:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_frost_cut;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=rld;speed=1} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+VFX_Glacian_Frost_Cut_LR:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_frost_cut;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=lr;speed=1} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+VFX_Glacian_Frost_Cut_V:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_frost_cut;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=v;speed=1} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+VFX_Glacian_Frost_Cut_V2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_frost_cut;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=v2;speed=1} @self ~onSpawn
+  - remove{delay=14} @self ~onSpawn
+
+VFX_Glacian_Snow_Outward:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_snow_effect;scale=1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=outward;speed=1} @self ~onSpawn
+  - remove{delay=26} @self ~onSpawn
+
+VFX_Glacian_Snow_Outward_Big:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_snow_effect;scale=1.4;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=outward;speed=1} @self ~onSpawn
+  - remove{delay=26} @self ~onSpawn
+
+VFX_Glacian_Snow_Inward:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_snow_effect;scale=1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=inward;speed=1} @self ~onSpawn
+  - remove{delay=31} @self ~onSpawn
+
+VFX_Glacian_Snow_Forward:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_snow_effect;scale=1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=forward;speed=1} @self ~onSpawn
+  - remove{delay=26} @self ~onSpawn
+
+VFX_Glacian_Snow_Forward_Big:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_snow_effect;scale=1.3;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=forward;speed=1} @self ~onSpawn
+  - remove{delay=26} @self ~onSpawn
+
+VFX_Glacian_Snow_Outward_Vertical:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_snow_effect;scale=1;lockpitch=true} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=outward_vertical;speed=1} @self ~onSpawn
+  - remove{delay=26} @self ~onSpawn
+
+VFX_Glacian_Freeze:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_freeze;lockpitch=true} @self ~onSpawn
+  - lockmodel @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=loop;speed=1} @self ~onSpawn
+
+VFX_GLACIAN_Rupture_Small:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_earthquake_rupture_1;lockpitch=true;showshadow=false} @self ~onSpawn
+  - brightness{mid=vfx_earthquake_rupture_1;b=15;s=15} @self ~onSpawn
+  - brightness{mid=vfx_earthquake_rupture_1;b=13;s=13;delay=22} @self ~onSpawn
+  - brightness{mid=vfx_earthquake_rupture_1;b=11;s=11;delay=26} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill2} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=#89e7ff;em=false} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=#7dbcfb;em=false;delay=22} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=#3e79bc;em=false;delay=24} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=#2f5d80;em=false;delay=26} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=#14263a;em=false;delay=30} @self ~onSpawn
+  - tint{m=vfx_earthquake_rupture_1;c=#000000;em=false;delay=32} @self ~onSpawn
+
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_2;np=body;delay=44} @self ~onSpawn
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_3;np=body;delay=46} @self ~onSpawn
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_4;np=body;delay=48} @self ~onSpawn
+  - changepart{m=vfx_earthquake_rupture_1;p=body;nm=vfx_earthquake_rupture_5;np=body;delay=50} @self ~onSpawn
+  - remove{delay=52} @self ~onSpawn

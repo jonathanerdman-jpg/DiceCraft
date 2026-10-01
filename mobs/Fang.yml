@@ -1,0 +1,60 @@
+Fang:
+  Type: CAVE_SPIDER
+  Display: "&cFang"
+  Health: 300
+  Damage: 10
+  Armor: 4
+
+  BossBar:
+    Enabled: true
+    Title: "&cFang"
+    Range: 40
+    Color: RED
+    Style: SEGMENTED_10
+
+  Options:
+    MovementSpeed: 0.32
+    FollowRange: 30
+    KnockbackResistance: 0.4
+    Silent: false
+    Scale: 2.0
+    PreventSunburn: true
+    AlwaysShowName: true
+    PreventOtherDrops: true
+    NoAI: false
+
+  Leash:
+    Radius: 20
+    Action: teleport
+
+  Skills:
+    # --- Opening Screech ---
+    - effect:sound{s=entity.spider.ambient;v=2;p=1} @self ~onSpawn
+    - message{m="&cFang awakens!"} @PlayersInRadius{r=40} ~onSpawn
+
+    # --- Poison Bite ---
+    - potion{type=POISON;duration=40;level=1} @target ~onHit
+    - effect:particles{p=witch;amount=10;hS=0.3;vS=0.3} @target ~onHit
+
+    # --- Web Shot ---
+    - projectile{onHit=FangWebHit;v=8;i=1;hR=0.5;vR=0.5} @target ~onTimer:80
+
+    # --- AOE Web Snare ---
+    - effect:particles{p=block_crack;material=COBWEB;amount=60;hS=2;vS=1} @self ~onTimer:120
+    - damage{a=4} @PlayersInRadius{r=4} ~onTimer:120
+    - potion{type=SLOW;duration=60;level=2} @PlayersInRadius{r=4} ~onTimer:120
+
+    # --- Enrage at 30% ---
+    - skill{s=FangEnrage} @self ?Health{percent=<30}
+
+      # --- Death Victory Message ---  
+    - skill{s=FangVictory} @PIR{r=40} ~onDeath
+    - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain &e<caster.name>&7 in the Ruined Pyramid!"} @Server ~onDeath
+
+  Drops:
+    - EMERALD 1 1
+    - pyramid_fang
+    - pyramid_miniboss_bonus
+    - bhodyssey_collectibles
+    - pyramid_miniboss_magicdrops
+

@@ -1,0 +1,39 @@
+leprechaun_ally:
+  Type: VILLAGER
+  Display: '&aLeprechaun Ally'
+  Health: 40
+  Damage: 4
+  Despawn: true
+  Persistent: false
+  Faction: player
+
+  Disguise: player setSkin skin2 setDynamicName
+
+  Attributes:
+    GENERIC_MOVEMENT_SPEED: 0.35
+    GENERIC_KNOCKBACK_RESISTANCE: 0.4
+
+  Options:
+    PreventOtherDrops: true
+    PreventMobKillDrops: true
+    PreventRandomEquipment: true
+    Silent: false
+    AlwaysShowName: true
+    Collidable: false
+
+  AIGoalSelectors:
+    - 0 clear
+    - 1 meleeattack
+    - 2 movetowardstarget
+    - 3 lookatplayers
+
+  AITargetSelectors:
+    - 0 clear
+    - 1 monsters
+    - 2 attackers
+
+  Skills:
+    - skill{s=Lep_Ally_SpawnFX} @self ~onSpawn
+    - skill{s=Lep_Ally_Taunt} @Owner ~onTimer:100 0.4
+    - skill{s=Lep_Ally_AttackFX} @target ~onAttack
+    - skill{s=Lep_Ally_Timer} @self ~onTimer:20

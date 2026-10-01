@@ -1,0 +1,124 @@
+# ============================================================
+#  Clockwork Wolf / CopperDog
+# ------------------------------------------------------------
+#  Base entity: vanilla WOLF
+#
+#  Vanilla Minecraft handles:
+#    - taming
+#    - sitting / standing
+#    - following
+#    - feeding / healing
+#    - combat
+#    - movement
+#
+#  No custom state variables are used.
+#  Every right-click simply gives the same mechanical
+#  toggle sound + particle effect.
+# ============================================================
+
+clockworkwolf:
+  Type: WOLF
+  Display: 'Clockwork Wolf'
+
+  Options:
+
+    # --------------------------------------------------------
+    # VANILLA WOLF BEHAVIOR
+    # --------------------------------------------------------
+
+    NoAI: false
+
+    Tameable: true
+    Interactable: true
+    PreventLeashing: false
+    PreventRenaming: false
+
+    Despawn: PERSISTENT
+
+
+    # --------------------------------------------------------
+    # CUSTOM MOB HOUSEKEEPING
+    # --------------------------------------------------------
+
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventItemPickup: true
+
+    # Suppress normal wolf sounds.
+    Silent: true
+
+
+  Skills:
+
+    # ========================================================
+    # MODEL
+    # ========================================================
+
+    # Keep vanilla wolf hitbox/interactions.
+    # Save model association across unloads.
+    - model{mid=copperdog;n=false;h=false;save=true} @self ~onSpawn
+
+    # Reattach model when entity/chunk loads again.
+    - model{mid=copperdog;n=false;h=false;save=true} @self ~onLoad
+
+
+    # ========================================================
+    # INTERACTION / MECHANICAL TOGGLE
+    # --------------------------------------------------------
+    # Same effect every time the wolf is right-clicked.
+    #
+    # No attempt is made to determine whether the interaction
+    # means sit, stand, feed, heal, etc.
+    # ========================================================
+
+    # Mechanical servo/click.
+    - sound{s=block.piston.extend;v=1.5;p=1.35;sc=MASTER} @self ~onInteract
+
+    # Brief electrical spark.
+    - particle{p=electric_spark;a=7;hs=0.22;vs=0.18;s=0.04;y=0.55} @self ~onInteract
+
+    # Small copper flecks.
+    - particle{p=scrape;a=4;hs=0.20;vs=0.15;s=0.02;y=0.50} @self ~onInteract
+
+
+    # ========================================================
+    # TAMING
+    # ========================================================
+
+    # Happy mechanical confirmation when taming succeeds.
+    - sound{s=block.note_block.chime;v=1.0;p=1.5;sc=MASTER} @self ~onTame
+
+    - particle{p=electric_spark;a=8;hs=0.25;vs=0.25;s=0.04;y=0.55} @self ~onTame
+
+
+    # ========================================================
+    # ATTACK
+    # ========================================================
+
+    # Existing CopperDog attack animation.
+    - state{mid=copperdog;s=attack} @self ~onAttack
+
+    # Metallic attack sound.
+    - sound{s=entity.iron_golem.attack;v=1.0;p=1.4;sc=MASTER} @self ~onAttack
+
+
+    # ========================================================
+    # HURT
+    # ========================================================
+
+    - sound{s=entity.copper_golem.hurt;v=1.0;p=1.3;sc=MASTER} @self ~onDamaged
+
+
+    # ========================================================
+    # DEATH
+    # ========================================================
+
+    - sound{s=entity.copper_golem.death;v=1.0;p=1.3;sc=MASTER} @self ~onDeath
+
+
+    # ========================================================
+    # AMBIENT
+    # ========================================================
+
+    # Roughly 40% chance every 7 seconds.
+    - sound{s=entity.copper_golem.ambient;v=0.7;p=1.3;sc=MASTER} @self ~onTimer:140 0.4

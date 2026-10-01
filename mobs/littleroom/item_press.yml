@@ -1,0 +1,24 @@
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+item_press:
+  Type: ARMOR_STAND
+  Display: 'Item Press'
+  Options:
+    HasArms: false
+    PreventOtherDrops: true
+    Despawn: false
+    Persistent: true
+    Collidable: false
+    Marker: false
+    Interactable: true
+  Skills:
+  - throw{v=1;yv=-1} @pir{r=1} ~onTimer:1
+  - skill{s=pressITEMPLACE} @self ~onInteract
+  - skill{s=itemWAIT} @self ~onTimer:1
+  - skill{s=blockcheckPRESS} @self ~onSpawn
+  - model{mid=item_press;d=false;i=true} @self ~onSpawn
+  - model{mid=item_press;d=false;i=true} @self ~onLoad
+  - skill{s=pressROT} @self ~onInteract
+  - skill{s=pressREMOVE} @self ~onInteract

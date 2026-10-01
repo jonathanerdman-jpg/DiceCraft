@@ -1,0 +1,458 @@
+
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+
+####################
+## GOBLINTEK MECH ##
+####################
+
+#### MOUNT ####
+
+goblin_mechmount:
+  Type: RAVAGER
+  Display: 'Goblin Mech'
+  DamageModifiers:
+  - DROWNING 0
+  - VOID 0
+  - LIGHTNING 0
+  - SUICIDE 0
+  - STARVATION 0
+  - POISON 0
+  - MAGIC 0
+  - DRAGON_BREATH 0
+  - WITHER 0
+  - FALLING_BLOCK 0
+  - THORNS 0
+  - MELTING 0
+  - FIRE_TICK 0
+  - FIRE 0
+  - HOT_FLOOR 0
+  - SUFFOCATION 0
+  - PROJECTILE -0.001
+  - CONTACT 0
+  - ENTITY_ATTACK 0
+  - ENTITY_EXPLOSION 0
+  - BLOCK_EXPLOSION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Health: 250
+  Options:
+    Silent: true
+    KnockbackResistance: 1
+    PreventOtherDrops: true
+    MovementSpeed: 0.1
+  Skills:
+  - model{mid=goblin_mech;n=false;i=true;drive=true;ride=true;step=1.25;d=false} @self ~onSpawn
+  - model{mid=goblin_mech;n=false;i=true;drive=true;ride=true;step=1.25;d=false} @self ~onLoad
+  - setspeed{s=0.5} @self ~onSpawn
+  - bodyclamp{m=goblin_mech;c=15} @self ~onSpawn
+  - throw{velocity=1;velocityY=-3} @EIR{r=2} ~onTimer:1
+  - skill{s=goblinmechmountSTEAM} @self ~onTimer:4
+  - summon{t=goblin_mechmount} @self ~onDeath
+  - skill{s=goblinmechDAMAGEfilter} @trigger ~onDamaged
+  - skill{s=goblinmechMOUNTITEMCLEAN} @pir{r=3} ~onTimer:5
+  - skill{s=goblinmechmountSPAWN} @self ~onSpawn
+  - skill{s=goblinmechmountMELEE} @trigger ~onDamaged
+  - skill{s=goblinmechmountFLAMETHROWERsync} @trigger ~onDamaged
+  - skill{s=goblinmechmountMOUNT} @self ~onInteract
+  - skill{s=goblinmechmountCHARGE} @trigger ~onDamaged
+  - skill{s=goblinmechINSERTCANNISTER} @self ~onInteract
+  - skill{s=goblin_mechmountDEATH} @self ~onDeath
+  - potion{type=DAMAGE_RESISTANCE;duration=15;level=4;p=true;i=true} @ModelDriver ~onTimer:10
+
+##### MOB #####
+
+goblin_mech:
+  Type: RAVAGER
+  Display: 'Goblin Mech'
+  Faction: GOBLIN
+  Health: 250
+  AITargetSelectors:
+  - attackers
+  - villagers
+  - golems
+  - players
+  Modules:
+    ThreatTable: true
+  DamageModifiers:
+  - PROJECTILE -0.001
+  BossBar:
+    Enabled: true
+    Title: 'Goblin Mech'
+    Range: 20
+    Color: RED
+    Style: SOLID
+  Options:
+    Silent: true
+    KnockbackResistance: 1
+    FollowRange: 32
+    PreventOtherDrops: true
+    PreventMobKillDrops: true
+    Mountable: false
+  Skills:
+  - skill{s=goblinmechSTEAM} @self ~onTimer:4
+  - throw{velocity=1;velocityY=-3} @EIR{r=2} ~onTimer:1
+  - randomskill{skills=goblinmechCHARGE,goblinmechFLAMETHROWERsync} @target ~onTimer:10
+  - randomskill{skills=goblinmechPUNCH1sync,goblinmechKICKsync,goblinmechGRABsync,goblinmechSLAMsync,goblinmechSWINGsync,goblinmechSTOMPsync;sync=true} @target ~onAttack
+  - summon{t=goblin_mechmount} @self ~onDeath
+  - summon{t=goblin_engineer_ejected} @ModelPart{mid=goblin_mech;p=cannister} ~onDeath
+  - model{mid=goblin_mech;n=false;i=true;drive=true;ride=true;step=1;d=false} @self ~onSpawn
+  - model{mid=goblin_mech;n=false;i=true;drive=true;ride=true;step=1;d=false} @self ~onLoad
+  - bodyclamp{m=goblin_mech;c=15} @self ~onSpawn
+  
+  
+  
+  
+  
+  
+  
+#######################
+## GOBLINTEK CHOPPER ##
+#######################
+  
+goblin_chopper:
+  Type: GHAST
+  Display: 'Goblin Chopper'
+  Faction: GOBLIN
+  Health: 50
+  AITargetSelectors:
+  - players
+  Modules:
+    ThreatTable: true
+  Options:
+    Silent: true
+    KnockbackResistance: 1
+    FollowRange: 32
+    PreventOtherDrops: true
+    PreventMobKillDrops: true
+    PreventSunburn: true
+  Skills:
+  - skill{s=goblinchopperIDLEsound} @self ~onTimer:10
+  - skill{s=goblinchopperSPAWN} @self ~onSpawn
+  - CancelEvent{sync=true} @self ~onShoot
+  - skill{s=goblinchopperDASH} @self ~onShoot
+  - skill{s=goblinchopperSTEAM} @self ~onTimer:4
+  - summon{t=goblin_choppermount} @self ~onDeath
+  - summon{t=goblin_engineer_ejected} @ModelPart{mid=goblin_chopper;p=cannister} ~onDeath
+  - model{mid=goblin_chopper;n=false;i=true;drive=true;ride=true;d=false} @self ~onSpawn
+  - model{mid=goblin_chopper;n=false;i=true;drive=true;ride=true;d=false} @self ~onLoad
+  - bodyclamp{m=goblin_chopper;c=5} @self ~onSpawn
+  
+#### MOUNT ####
+  
+goblin_choppermount:
+  Type: RABBIT
+  Display: 'Goblin Chopper'
+  Faction: GOBLIN
+  Health: 50
+  DamageModifiers:
+  - DROWNING 0
+  - VOID 0
+  - LIGHTNING 0
+  - SUICIDE 0
+  - STARVATION 0
+  - POISON 0
+  - MAGIC 0
+  - DRAGON_BREATH 0
+  - WITHER 0
+  - FALLING_BLOCK 0
+  - THORNS 0
+  - MELTING 0
+  - FIRE_TICK 0
+  - FIRE 0
+  - HOT_FLOOR 0
+  - SUFFOCATION 0
+  - CONTACT 0
+  - ENTITY_ATTACK 0
+  - ENTITY_EXPLOSION 0
+  - BLOCK_EXPLOSION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Silent: true
+    KnockbackResistance: 1
+    FollowRange: 32
+    PreventOtherDrops: true
+    PreventMobKillDrops: true
+    PreventRenaming: false
+  Skills:
+  - model{mid=goblin_chopper;n=false;i=true;drive=true;ride=true;d=false} @self ~onSpawn
+  - model{mid=goblin_chopper;n=false;i=true;drive=true;ride=true;d=false} @self ~onLoad
+  - bodyclamp{m=goblin_chopper;c=5} @self ~onSpawn
+  - skill{s=goblinchopperIDLEsound} @self ~onTimer:10
+  - skill{s=goblinchoppermountCRASH} @self ~onTimer:1
+  - skill{s=goblinchoppermountSPAWN} @self ~onSpawn
+  - skill{s=goblinchopperSTEAM} @self ~onTimer:4
+  - skill{s=goblinmechDAMAGEfilter} @trigger ~onDamaged
+  - skill{s=goblinchopperMOUNTITEMCLEAN} @pir{r=3} ~onTimer:5
+  - skill{s=goblinchoppermountDASH} @trigger ~onDamaged
+  - skill{s=goblinchoppermountMOUNT} @self ~onInteract
+  - skill{s=goblinchopperINSERTCANNISTER} @self ~onInteract
+  - skill{s=goblin_choppermountDEATH} @self ~onDeath
+
+#### BOMB ####
+  
+goblin_chopperbomb:
+  Type: SILVERFISH
+  Display: 'SMOKEFX'
+  Faction: GOBLIN
+  AITargetSelectors:
+  - clear
+  AIGoalSelectors:
+  - clear
+  Options:
+    ApplyInvisibility: true
+    PreventBlockInfection: true
+    Invincible: true
+    Silent: true
+  Skills:
+  - lunge{velocity=.5;velocityY=0} @forward{f=2} ~onSpawn
+  - potion{type=SLOW;duration=20;level=1} @self ~onSpawn
+  - effect:particles{particle=large_smoke;amount=1;hS=.2;vS=.2;speed=0;size=2} @self ~onTimer:2
+  - skill{s=goblin_chopperbomb_detonate} @self ~onTimer:1
+  - skill{s=goblin_chopperbomb_detonate} @self ~onDamaged
+  - model{mid=goblin_bomb;n=false;i=true} @self ~onSpawn
+  - model{mid=goblin_bomb;n=false;i=true} @self ~onLoad
+  
+  
+#####################
+## GOBLIN ENGINEER ##
+#####################
+  
+#### EJECTED #### 
+  
+goblin_engineer_ejected:
+  Type: PIG
+  Display: 'Goblin Engineer'  
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    FollowRange: 32
+    Silent: true
+    Invincible: true
+    KnockbackResistance: 1
+  Skills:
+  - skill{s=randomGoblinVOX} @self ~onSpawn
+  - lunge{velocity=.5;velocityY=4} @forward{f=2} ~onSpawn
+  - effect:particles{particle=large_smoke;amount=2;hS=.25;vS=.25} @self ~onTimer:1
+  - skill{s=goblinengiLAND} @self ~onTimer:1
+  - model{mid=goblin_engineer_ejected;n=false;d=false;i=true;drive=true;ride=true} @self ~onSpawn
+  - model{mid=goblin_engineer_ejected;n=false;d=false;i=true;drive=true;ride=true} @self ~onLoad  
+ 
+#### GROUND ####  
+
+goblin_engineer:
+  Type: RAVAGER
+  Display: 'Goblin Engineer'  
+  Faction: GOBLIN
+  Health: 25
+  Modules:
+    ThreatTable: true
+  AITargetSelectors:
+  - players
+  Options:
+    Silent: true
+    PreventOtherDrops: true
+    KnockbackResistance: 1
+  Skills:
+  - skill{s=goblinengineerSTACHE} @self ~onSpawn .5
+  - skill{s=goblinengineerDEATH} @self ~onDeath
+  - skill{s=goblinengineerATTACKsync;sync=true} @self ~onAttack
+  - model{mid=goblin_engineer;n=false;i=true} @self ~onSpawn
+  - model{mid=goblin_engineer;n=false;i=true} @self ~onLoad
+ 
+ 
+ 
+#### FX #### 
+  
+goblin_explodeFX:
+  Type: SILVERFISH
+  Display: 'SMOKEFX'
+  Equipment:
+  - torch:0
+  AITargetSelectors:
+  - clear
+  AIGoalSelectors:
+  - clear
+  Options:
+    ApplyInvisibility: true
+    PreventBlockInfection: true
+    Invincible: true
+    Silent: true
+  Skills:
+  - effect:particles{particle=flame;amount=3;hS=.1;vS=.1;speed=0.02} @self ~onTimer:2
+  - effect:particles{particle=large_smoke;amount=5;hS=.2;vS=.2;speed=0;size=2} @self ~onTimer:2
+  - skill{s=goblin_explodeFXspawn} @self ~onSpawn
+  
+  
+  
+  
+#### MECH FLAMETHROWER #### 
+  
+goblinmechFLAMETHROWERFX_small:
+  Display: 'goblinmech Flamethrower'
+  Type: ARMOR_STAND
+  Disguise: SILVERFISH setInvisible
+  Options:
+    Collidable: false
+    Invisible: true
+  Skills:
+  - skill{s=goblinmechFLAMETHROWERdamage} @EIR{r=2} ~onTimer:1
+  - skill{s=goblinmechFLAMETHROWERFXSPAWN_small} @self ~onSpawn
+  
+goblinmechFLAMETHROWERFX_medium:
+  Display: 'goblinmech Flamethrower'
+  Type: ARMOR_STAND
+  Disguise: PIG setInvisible
+  Options:
+    Collidable: false
+    Invisible: true
+  Skills:
+  - skill{s=goblinmechFLAMETHROWERdamage} @EIR{r=2} ~onTimer:1
+  - skill{s=goblinmechFLAMETHROWERFXSPAWN_medium} @self ~onSpawn
+  
+goblinmechFLAMETHROWERFX_large:
+  Display: 'goblinmech Flamethrower'
+  Type: ARMOR_STAND
+  Disguise: HORSE setInvisible
+  Options:
+    Collidable: false
+    Invisible: true
+  Skills:
+  - skill{s=goblinmechFLAMETHROWERdamage} @EIR{r=2} ~onTimer:1
+  - skill{s=goblinmechFLAMETHROWERFXSPAWN_large} @self ~onSpawn
+  
+goblinmechFLAMETHROWERFX_xlarge:
+  Display: 'goblinmech Flamethrower'
+  Type: ARMOR_STAND
+  Disguise: RAVAGER setInvisible
+  Health: 1000
+  Options:
+    Collidable: false
+    Invisible: true
+  Skills:
+  - skill{s=goblinmechFLAMETHROWERdamage} @EIR{r=2} ~onTimer:1
+  - skill{s=goblinmechFLAMETHROWERFXSPAWN_xlarge} @self ~onSpawn
+
+#### STATUES ####
+  
+goblin_chopperdisplay:
+  Type: RABBIT
+  Display: 'Goblin Chopper Display'
+  Faction: GOBLIN
+  Health: 1
+  DamageModifiers:
+  - DROWNING 0
+  - VOID 0
+  - LIGHTNING 0
+  - SUICIDE 0
+  - STARVATION 0
+  - POISON 0
+  - MAGIC 0
+  - DRAGON_BREATH 0
+  - WITHER 0
+  - FALLING_BLOCK 0
+  - THORNS 0
+  - MELTING 0
+  - FIRE_TICK 0
+  - FIRE 0
+  - HOT_FLOOR 0
+  - SUFFOCATION 0
+  - CONTACT 0
+  - ENTITY_ATTACK 0
+  - ENTITY_EXPLOSION 0
+  - BLOCK_EXPLOSION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Options:
+    Silent: true
+    KnockbackResistance: 1
+    FollowRange: 32
+    PreventOtherDrops: true
+    PreventMobKillDrops: true
+    PreventRenaming: false
+    Despawn: false
+  Skills:
+  - model{mid=goblin_chopper;n=false;i=true;drive=true;ride=true;d=false} @self ~onSpawn
+  - model{mid=goblin_chopper;n=false;i=true;drive=true;ride=true;d=false} @self ~onLoad
+  - bodyclamp{m=goblin_chopper;c=5} @self ~onSpawn
+  - skill{s=goblinchopperIDLEsound} @self ~onTimer:10
+  - skill{s=goblinchoppermountCRASH} @self ~onTimer:1
+  - skill{s=goblinchopperdisplaySPAWN} @self ~onSpawn
+  - skill{s=goblinchopperdisplaySPAWN} @self ~onLoad
+  - skill{s=goblinchopperSTEAM} @self ~onTimer:4
+  - skill{s=goblinmechDAMAGEfilter} @trigger ~onDamaged
+  - skill{s=goblinchopperMOUNTITEMCLEAN} @pir{r=3} ~onTimer:5
+  - skill{s=goblinchoppermountDASH} @trigger ~onDamaged
+  - skill{s=goblin_choppermountDEATH} @self ~onDeath
+
+goblin_mechdisplay:
+  Type: RABBIT
+  Display: 'Goblin Mech Display'
+  DamageModifiers:
+  - DROWNING 0
+  - VOID 0
+  - LIGHTNING 0
+  - SUICIDE 0
+  - STARVATION 0
+  - POISON 0
+  - MAGIC 0
+  - DRAGON_BREATH 0
+  - WITHER 0
+  - FALLING_BLOCK 0
+  - THORNS 0
+  - MELTING 0
+  - FIRE_TICK 0
+  - FIRE 0
+  - HOT_FLOOR 0
+  - SUFFOCATION 0
+  - PROJECTILE -0.001
+  - CONTACT 0
+  - ENTITY_ATTACK 0
+  - ENTITY_EXPLOSION 0
+  - BLOCK_EXPLOSION 0
+  - FALL 0
+  AIGoalSelectors:
+  - clear
+  AITargetSelectors:
+  - clear
+  Health: 1
+  Options:
+    Silent: true
+    KnockbackResistance: 1
+    PreventOtherDrops: true
+    MovementSpeed: 0.1
+    PreventRenaming: false
+    Despawn: false
+  Skills:
+  Skills:
+  - model{mid=goblin_mech;n=false;i=true;drive=true;ride=true;step=1.25;d=false} @self ~onSpawn
+  - model{mid=goblin_mech;n=false;i=true;drive=true;ride=true;step=1.25;d=false} @self ~onLoad
+  - setspeed{s=0.5} @self ~onSpawn
+  - bodyclamp{m=goblin_mech;c=15} @self ~onSpawn
+  - throw{velocity=1;velocityY=-3} @EIR{r=2} ~onTimer:1
+  - skill{s=goblinmechmountSTEAM} @self ~onTimer:4
+  - summon{t=goblin_mechmount} @self ~onDeath
+  - skill{s=goblinmechDAMAGEfilter} @trigger ~onDamaged
+  - skill{s=goblinmechMOUNTITEMCLEAN} @pir{r=3} ~onTimer:5
+  - skill{s=goblinmechdisplaySPAWN} @self ~onSpawn
+  - skill{s=goblinmechdisplaySPAWN} @self ~onLoad
+  - skill{s=goblinmechmountMELEE} @trigger ~onDamaged
+  - skill{s=goblinmechmountFLAMETHROWERsync} @trigger ~onDamaged
+  - skill{s=goblinmechmountCHARGE} @trigger ~onDamaged
+  - skill{s=goblin_mechmountDEATH} @self ~onDeath
+  - potion{type=DAMAGE_RESISTANCE;duration=15;level=4;p=true;i=true} @ModelDriver ~onTimer:10
+  

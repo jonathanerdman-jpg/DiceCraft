@@ -1,0 +1,12 @@
+PirateDeckhand:
+  Type: SKELETON
+  Display: "&eDeckhand"
+  Health: 45
+  Damage: 6
+  AITargetSelectors:
+    - players
+  Options:
+    MovementSpeed: 0.28
+    PreventOtherDrops: true
+  Equipment:
+    - Pirate_Cutlass:HAND

@@ -1,0 +1,170 @@
+############################################################
+# mobs_akhshain.yml
+# Akh-Sha-In — 3 Phase Boss (P1 Wither Skeleton acting Illusioner)
+############################################################
+
+# ==========================
+# PHASE 1 — ARROGANT (WITHER SKELETON ACTING LIKE ILLUSIONER)
+# ==========================
+AkhShaIn_P1:
+  Type: WITHER_SKELETON
+  Display: '&6Akh-Sha-In, &eGlorified Sand King'
+  Health: 300
+  Damage: 10
+  Armor: 8
+  MovementSpeed: 0.28
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    AlwaysShowName: true
+    KnockbackResistance: 0.7
+    FollowRange: 32
+    Silent: false
+    FireImmune: true
+  Modules:
+    ThreatTable: true
+  BossBar:
+    Enabled: true
+    Title: '&0[&6Akh-Sha-In, Glorified Sand King&0]'
+    Color: YELLOW
+    Style: SEGMENTED_10
+    Range: 40
+  Equipment:
+    - bhodyssey:pharaoh_mask HEAD 1
+    - GOLDEN_CHESTPLATE CHEST 1
+    - GOLDEN_LEGGINGS LEGS 1
+    - GOLDEN_BOOTS FEET 1
+    - AkhShaInRoyalStaff HAND 1
+  Skills:
+    - skill{s=AkhP1Intro} ~onSpawn
+
+    # Illusioner-like behavior (on a Wither Skeleton)
+    - skill{s=AkhP1IllusionInvis} ~onTimer:120 0.60
+    - skill{s=AkhP1IllusionTeleport} ~onDamaged 0.35
+    - skill{s=AkhP1MirrorImages} ~onDamaged 0.22
+
+    # Your existing phase pacing
+    - skill{s=AkhP1Arrogance75} ~onHealth{h=<75%}
+    - skill{s=AkhP1Arrogance40} ~onHealth{h=<40%}
+    - skill{s=AkhCommonRitualAura} ~onTimer:40
+    - skill{s=AkhSandBlast} ~onTimer:80 0.7
+    - skill{s=AkhSandBind} ~onTimer:120 0.5
+    - skill{s=AkhP1ToP2} ~onDeath
+
+
+# ==========================
+# PHASE 2 — ANGRY / VENGEFUL
+# ==========================
+AkhShaIn_P2:
+  Type: WITHER_SKELETON
+  Display: '&6Akh-Sha-In, &eExposed Bones of the Desert'
+  Health: 400
+  Damage: 12
+  Armor: 8
+  MovementSpeed: 0.30
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    AlwaysShowName: true
+    Scale: 0.95
+    KnockbackResistance: 0.8
+    FollowRange: 40
+    Silent: false
+    FireImmune: true
+  Modules:
+    ThreatTable: true
+  BossBar:
+    Enabled: true
+    Title: '&0[&6Akh-Sha-In, Exposed Bones of the Desert&0]'
+    Color: GOLD
+    Style: SEGMENTED_10
+    Range: 40
+  Equipment:
+    - GOLDEN_CHESTPLATE CHEST 1
+    - GOLDEN_LEGGINGS LEGS 1
+    - GOLDEN_BOOTS FEET 1
+    - AkhShaInBoneSickle HAND 1
+  Skills:
+    - skill{s=AkhP2Intro} ~onSpawn
+    - skill{s=AkhP2ScaleUp} ~onSpawn
+    - skill{s=AkhP2Rage70} ~onHealth{h=<70%}
+    - skill{s=AkhP2Rage35} ~onHealth{h=<35%}
+    - skill{s=AkhCommonRitualAura} ~onTimer:40
+    - skill{s=AkhBoneCleave} ~onTimer:70 0.8
+    - skill{s=AkhSandStormRing} ~onTimer:140 0.6
+    - skill{s=AkhP2ToP3} ~onDeath
+
+
+# ==========================
+# PHASE 3 — WITHER AVATAR (NO DIALOGUE)
+# ==========================
+AkhShaIn_P3:
+  Type: WITHER
+  Display: '&0Akh-Sha-In, &8Glorified Sand Spirit'
+  Health: 300
+  Damage: 7
+  Armor: 4
+  MovementSpeed: 0.26
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    AlwaysShowName: true
+    KnockbackResistance: 1.0
+    FollowRange: 50
+    Silent: false
+    FireImmune: true
+  Modules:
+    ThreatTable: true
+  BossBar:
+    Enabled: false
+    Title: '&0[&0Akh-Sha-In, Glorified Sand Spirit&0]'
+    Color: PURPLE
+    Style: SEGMENTED_10
+    Range: 50
+  Skills:
+    - skill{s=AkhP3Intro} ~onSpawn
+    - skill{s=AkhP3ScaleDown} ~onSpawn
+    - skill{s=AkhCommonRitualAura} ~onTimer:30
+    - skill{s=AkhWitherComet} ~onTimer:80 0.7
+    - skill{s=AkhSoulBurst} ~onTimer:130 0.5
+    - skill{s=AkhFinalDeath} ~onDeath
+    - skill{s=AkhVictoryBroadcast} ~onDeath
+    - message{m="&6&lOdyssia Herald 》 &b<trigger.name> &7has slain &e<caster.name>&7 in the Ruined Pyramid!"} @Server ~onDeath
+    - skill{s=KillPharaoh_EndDungeon} ~onDeath
+  Drops:
+    - pyramid_pharaoh_bonus
+    - pyramid_pharaoh
+    - anubis_ritual_armor
+    - pyramid_relic_items
+    - bhodyssey_collectibles
+    - pyramid_pharaoh_magicdrops
+    - NETHER_STAR 1 1
+
+
+# ==========================
+# P1 DECOY — MIRROR IMAGE
+# ==========================
+AkhShaIn_P1_Decoy:
+  Type: WITHER_SKELETON
+  Display: '&6Akh-Sha-In'
+  Health: 10
+  Damage: 4
+  Armor: 0
+  MovementSpeed: 0.01
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+    AlwaysShowName: false
+    NoAI: false
+    Silent: true
+    Scale: 1.5
+    KnockbackResistance: 1.0
+  Equipment:
+    - bhodyssey:pharaoh_mask HEAD 1
+    - GOLDEN_CHESTPLATE CHEST 1
+    - GOLDEN_LEGGINGS LEGS 1
+    - GOLDEN_BOOTS FEET 1
+    - AkhShaInRoyalStaff HAND 1
+  Skills:
+    - potion{type=GLOWING;duration=40;level=0} @self ~onSpawn
+    - effect:particles{p=smoke;amount=12;hS=0.4;vS=0.4} @self ~onSpawn

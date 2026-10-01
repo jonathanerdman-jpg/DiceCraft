@@ -1,0 +1,97 @@
+######## created by samus2002 #########
+
+VFX_Phantom_Bow_Arrow_Small:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_spectral_arrow_small} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=shoot;p=1} @self ~onSpawn
+  - state{s=shoot_end;delay=20;p=2} @self ~onSpawn
+
+VFX_Phantom_Bow_Arrow_Big:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_spectral_arrow} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=true;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=shoot;p=1} @self ~onSpawn
+  - partvis{p=trail;v=false;em=false;child=true} @self ~onSpawn
+  #- state{s=shoot_end;delay=20;p=2} @self ~onSpawn
+
+VFX_Phantom_Bow_Charge:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_spectral_arrow;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=spawn_arrow;speed=1} @self ~onSpawn
+  - remove{delay=33} @self ~onSpawn
+  - tp @forward{f=1.5;y=1.6;ofowner=true} ~onTimer:1
+  - look{force=true} @forward{f=2.5;y=1.6;ofowner=true} ~onTimer:1
+
+VFX_Phantom_Bow_ShootImpact:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_spectral_impact_1;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=1;d=7;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_spectral_impact_1;n=vfx_spectral_impact_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn
+
+VFX_Phantom_Bow_ShootImpact2:
+  Type: block_display
+  DisplayOptions:
+    Block: AIR
+    Billboard: FIXED
+  Options:
+    Invincible: true
+    Collidable: false
+  Skills:
+  - model{usestatemachine=true;mid=vfx_spectral_impact_1;lockpitch=false} @self ~onSpawn
+  - brightness{b=15;s=15} @self ~onSpawn
+  - BodyRotation{playermode=false;stable=0;rdelay=0;rduration=0} @self ~onSpawn
+  - state{s=skill2;speed=1} @self ~onSpawn
+  - setvariable{var=caster.iteration;val=1;type=INTEGER} @self ~onSpawn
+  - aura{delay=1;d=7;i=1;
+    os=[
+    - setvariable{var=caster.iteration;val=1;type=INTEGER}
+    ];
+    ot=[
+    - setvariable{var=caster.iteration;val="<caster.var.iteration>+1"}
+    - remapmodel{m=vfx_spectral_impact_1;n=vfx_spectral_impact_<caster.var.iteration>}
+    ];
+    oe=[ - remove{delay=1} @self ]} @self ~onSpawn

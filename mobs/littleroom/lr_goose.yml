@@ -1,0 +1,33 @@
+
+#########################################################
+## Developed by Little Room, patreon.com/littleroomdev ##
+#########################################################
+
+goose:
+  Type: SILVERFISH
+  Display: 'Goose'
+  Health: 10
+  Modules:
+    ThreatTable: true
+  Options:
+    Collidable: true
+    Silent: true
+    PreventOtherDrops: true
+    FollowRange: 4
+    PreventBlockInfection: true
+  Skills:
+  - sound{s=littleroom_goose:littleroom.goose.honk4;v=1;sc=HOSTILE} @self ~onDamaged
+  - skill{s=gooseRANDOMHONK} @self ~onTimer:120 .5
+  - potion{type=SLOW_FALLING;duration=200;level=4;p=false} @self ~onTimer:120
+  - skill{s=gooseWATER} @SelfLocation{y=-1.0} ~onTimer:60
+  - skill{s=gooseNAV} @forward{f=2} ~onTimer:1
+  - skill{s=gooseFALLING} @self ~onTimer:10
+  - skill{s=gooseLAND} @self ~onTimer:10
+  - model{mid=goose;n=false} @self ~onSpawn
+  - bodyclamp{m=goose;c=5} @self ~onSpawn
+  - skill{s=gooseENTERCOMBAT} @self ~onEnterCombat
+  - skill{s=gooseDROPCOMBAT} @self ~onDropCombat
+  - skill{s=gooseSPAWN} @self ~onSpawn
+  - skill{s=gooseATTACK} @self ~onTimer:30 .25
+  - skill{s=gooseDEATH} @self ~onDeath
+  

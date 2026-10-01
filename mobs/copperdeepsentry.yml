@@ -1,0 +1,15 @@
+CopperdeepSentry:
+  Type: COPPER_GOLEM
+  Display: "&6Copperdeep Sentry"
+  Health: 140
+  Damage: 10
+
+  Options:
+    Despawn: false
+    Silent: false
+    PreventOtherDrops: true
+    PreventMobKillDrops: true
+    AlwaysShowName: false
+    KnockbackResistance: 0.8
+    MovementSpeed: 0.18
+    Scale: 2.25

@@ -1,0 +1,30 @@
+VorpalBunny:
+  Type: RABBIT
+  Display: "&cVorpal Bunny"
+  Health: 40
+  Damage: 6
+
+  Options:
+    MovementSpeed: 0.35
+    FollowRange: 20
+    Size: 4
+    RabbitType: THE_KILLER_BUNNY
+    Silent: false
+
+  AIGoalSelectors:
+    - clear
+    - meleeattack
+    - randomstroll
+
+  AITargetSelectors:
+    - clear
+    - players
+    - hurtbytarget
+
+  Skills:
+    - delay 1
+    - damage{amount=4} @target ~onAttack
+    - skill{s=VorpalFrenzy} @self ~onDamaged 0.4
+
+  Drops:
+    - rabbit_foot 1 1
