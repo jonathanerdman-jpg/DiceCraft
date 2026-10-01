@@ -43,7 +43,7 @@ stand-in. Renaming the character changes the skin. All of this is in
 | The Iron Tower | The Clocktower |
 | Seals of the Stag, Griffon, Wyvern, Phoenix | Copper Cogs, Gold Doubloons, Pirate Treasure Keys, Seals of Anubis |
 | Wayfarer's Stone, Ten-Foot Pole, Seer's Glass, Smelling Salts | Recovery Compass, Ten-Block Stick, Pirate Spyglass, Totem of Undying |
-| Worn / Iron / Steel / Silvered / Runed kit | Stone / Copper / Iron / Diamond / Netherite kit |
+| Worn / Iron / Steel / Silvered / Runed kit | Armor: Leather / Chainmail / Iron / Diamond / Netherite; weapons: Wooden / Stone / Iron / Diamond / Netherite |
 | Shrine | Beacon |
 
 **Ithaca** is the capital: harbor cellars, the Undercity sewers, pirate hulks

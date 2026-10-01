@@ -30,8 +30,8 @@ import { SYMBOLS } from './data.js';
 
 export const SLOTS = [
   { id: 'head', name: 'Helmet', where: 'on the head' },
-  { id: 'chest', name: 'Chest', where: 'on the chest' },
-  { id: 'legs', name: 'Legs', where: 'on the legs' },
+  { id: 'chest', name: 'Chestplate', where: 'on the chest' },
+  { id: 'legs', name: 'Leggings', where: 'on the legs' },
   { id: 'feet', name: 'Boots', where: 'on the feet' },
   { id: 'hand', name: 'Weapon', where: 'in hand' },
   { id: 'off', name: 'Off Hand', where: 'in the off hand' },
@@ -122,11 +122,11 @@ export function skillsCanCarry(proficiencies, piece) {
 // better off not buying, so the ladder starts at d8 — where the extra face and
 // the wild face between them beat a plain die whatever the room asks for.
 export const TIERS = [
-  { tier: 1, name: 'Stone', minLevel: 1, sides: 8, wilds: 1, carry: 1, durability: 2, price: 120 },
-  { tier: 2, name: 'Copper', minLevel: 4, sides: 8, wilds: 2, carry: 1, durability: 3, price: 260 },
-  { tier: 3, name: 'Iron', minLevel: 8, sides: 10, wilds: 2, carry: 1, durability: 4, price: 520 },
-  { tier: 4, name: 'Diamond', minLevel: 12, sides: 10, wilds: 3, carry: 1, durability: 5, price: 900 },
-  { tier: 5, name: 'Netherite', minLevel: 16, sides: 12, wilds: 3, carry: 1, durability: 6, price: 1400 },
+  { tier: 1, name: 'Wooden', armor: 'Leather', minLevel: 1, sides: 8, wilds: 1, carry: 1, durability: 2, price: 120 },
+  { tier: 2, name: 'Stone', armor: 'Chainmail', minLevel: 4, sides: 8, wilds: 2, carry: 1, durability: 3, price: 260 },
+  { tier: 3, name: 'Iron', armor: 'Iron', minLevel: 8, sides: 10, wilds: 2, carry: 1, durability: 4, price: 520 },
+  { tier: 4, name: 'Diamond', armor: 'Diamond', minLevel: 12, sides: 10, wilds: 3, carry: 1, durability: 5, price: 900 },
+  { tier: 5, name: 'Netherite', armor: 'Netherite', minLevel: 16, sides: 12, wilds: 3, carry: 1, durability: 6, price: 1400 },
 ];
 
 // --- What a piece looks like ------------------------------------------------
@@ -220,7 +220,11 @@ export function slotOf(piece) {
 export function nameOf(piece) {
   const kind = kindOf(piece);
   if (!kind) return 'Nothing';
-  return `${tierDef(piece.tier).name} ${kind.name}`;
+  // Armor is named the way Minecraft names armor — Leather, Chainmail, Iron,
+  // Diamond, Netherite — and everything held in the hand the way it names
+  // tools. The grade underneath is the same either way.
+  const grade = tierDef(piece.tier);
+  return `${ARMOUR_KINDS.includes(kind.id) ? grade.armor : grade.name} ${kind.name}`;
 }
 
 // How many dice a piece can change, which is how many sockets it carries. A

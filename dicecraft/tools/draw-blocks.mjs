@@ -11,7 +11,7 @@
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Canvas, headCube, icon, shade } from './art/blocks.mjs';
-import { FIXED, KIT, MATERIALS } from './art/kit.mjs';
+import { ARMOR_MATERIALS, FIXED, KIT, MATERIALS } from './art/kit.mjs';
 import { HEADS } from './art/heads.mjs';
 import { ICONS } from './art/icons.mjs';
 import { PROPS, SCRUB } from './art/props.mjs';
@@ -19,7 +19,7 @@ import { drawPiece, wildGround } from './art/tiles.mjs';
 import { blockField, rng } from './art/blocks.mjs';
 import { SETS, WILDS } from '../js/tiles.js';
 import { CELL, COLS, DENIZENS, ROWS, SHEET } from '../js/bestiary.js';
-import { KIND_IDS, KIT_CELL, KIT_COLS, KIT_SHEET } from '../js/gear.js';
+import { ARMOUR_KINDS, KIND_IDS, KIT_CELL, KIT_COLS, KIT_SHEET } from '../js/gear.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const want = process.argv.slice(2);
@@ -48,7 +48,7 @@ const PARTS = {
     KIND_IDS.forEach((kind, row) => {
       const rows = KIT[kind];
       if (!rows) throw new Error(`no sprite for ${kind}`);
-      MATERIALS.forEach((mat, col) => {
+      (ARMOUR_KINDS.includes(kind) ? ARMOR_MATERIALS : MATERIALS).forEach((mat, col) => {
         const x = col * KIT_CELL;
         const y = row * KIT_CELL;
         const slot = KIT_CELL - 8;
@@ -61,7 +61,11 @@ const PARTS = {
         // Netherite is dark enough that its own outline vanishes; the
         // enchanted ones glint.
         if (mat.name === 'netherite') pal.k = '#100c0e';
-        const art = icon(rows, pal, KIT_CELL - 14, { pad: 0.04, outline: '#05030a' });
+        // Chainmail is see-through links: every other material pixel is a gap.
+        const drawn = mat.chain
+          ? rows.map((r, y) => [...r].map((c, x) => (c === 'm' && (x + y) % 2 ? 'd' : c)).join(''))
+          : rows;
+        const art = icon(drawn, pal, KIT_CELL - 14, { pad: 0.04, outline: '#05030a' });
         sheet.draw(art, x + 7, y + 7);
       });
     });

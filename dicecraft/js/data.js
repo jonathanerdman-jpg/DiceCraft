@@ -2,7 +2,7 @@ import { SYMBOL_IDS, WILD } from './dice.js';
 
 export const SYMBOLS = {
   might:   { id: 'might', name: 'Combat', color: '#d8492f', art: 'M18 0h6v2h-6zM16 2h8v2h-8zM14 4h8v2h-8zM12 6h8v2h-8zM10 8h8v2h-8zM2 10h2v2h-2zM8 10h8v2h-8zM2 12h4v2h-4zM8 12h6v2h-6zM4 14h8v2h-8zM6 16h4v2h-4zM4 18h8v2h-8zM2 20h4v2h-4zM10 20h4v2h-4zM0 22h4v2h-4z' },
-  guard:   { id: 'guard', name: 'Armor', color: '#5b8fc4', art: 'M2 0h6v2h-6zM16 0h6v2h-6zM0 2h24v2h-24zM0 4h24v2h-24zM2 6h20v2h-20zM4 8h16v2h-16zM4 10h16v2h-16zM4 12h6v2h-6zM14 12h6v2h-6zM4 14h16v2h-16zM4 16h16v2h-16zM4 18h16v2h-16zM4 20h16v2h-16zM6 22h12v2h-12z' },
+  guard:   { id: 'guard', name: 'Armor', color: '#5b8fc4', art: 'M2 0h6v2h-6zM16 0h6v2h-6zM0 2h8v2h-8zM16 2h8v2h-8zM0 4h10v2h-10zM14 4h10v2h-10zM2 6h20v2h-20zM2 8h20v2h-20zM2 10h20v2h-20zM6 12h12v2h-12zM6 14h12v2h-12zM6 16h12v2h-12zM6 18h12v2h-12zM6 20h12v2h-12zM6 22h12v2h-12z' },
   arcana:  { id: 'arcana', name: 'Enchant', color: '#a066e6', art: 'M10 0h4v2h-4zM10 2h4v2h-4zM8 4h8v2h-8zM8 6h8v2h-8zM4 8h16v2h-16zM0 10h24v2h-24zM0 12h24v2h-24zM4 14h16v2h-16zM8 16h8v2h-8zM8 18h8v2h-8zM10 20h4v2h-4zM10 22h4v2h-4z' },
   nature:  { id: 'nature', name: 'Wilds', color: '#52ab3c', art: 'M8 0h8v2h-8zM4 2h16v2h-16zM2 4h20v2h-20zM2 6h8v2h-8zM14 6h8v2h-8zM4 8h6v2h-6zM14 8h6v2h-6zM10 10h4v2h-4zM2 12h4v2h-4zM10 12h4v2h-4zM18 12h4v2h-4zM2 14h6v2h-6zM10 14h4v2h-4zM16 14h6v2h-6zM4 16h16v2h-16zM10 18h4v2h-4zM10 20h4v2h-4zM6 22h12v2h-12z' },
   cunning: { id: 'cunning', name: 'Ender', color: '#1fa591', art: 'M8 0h8v2h-8zM4 2h16v2h-16zM2 4h20v2h-20zM2 6h8v2h-8zM14 6h8v2h-8zM0 8h8v2h-8zM16 8h8v2h-8zM0 10h6v2h-6zM18 10h6v2h-6zM0 12h6v2h-6zM18 12h6v2h-6zM0 14h8v2h-8zM16 14h8v2h-8zM2 16h8v2h-8zM14 16h8v2h-8zM2 18h20v2h-20zM4 20h16v2h-16zM8 22h8v2h-8z' },

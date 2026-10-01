@@ -3,8 +3,18 @@
 // different metal. `m` is the material, `M` its highlight, `d` its shadow,
 // `h` wood, `k` the dark line inside the sprite.
 export const MATERIALS = [
+  { name: 'wooden', m: '#a07a48', M: '#c49a62', d: '#6a4a28' },
   { name: 'stone', m: '#8a8a8a', M: '#b0b0b0', d: '#5a5a5a' },
-  { name: 'copper', m: '#c06a3a', M: '#e8945e', d: '#8a4524' },
+  { name: 'iron', m: '#d4d4d4', M: '#ffffff', d: '#959595' },
+  { name: 'diamond', m: '#3ad6c6', M: '#a8fff2', d: '#16908a' },
+  { name: 'netherite', m: '#4f4549', M: '#776a6f', d: '#2c2427' },
+];
+
+// Armor follows Minecraft's own ladder: leather, chainmail, iron, diamond,
+// netherite.
+export const ARMOR_MATERIALS = [
+  { name: 'leather', m: '#a0582e', M: '#c6774a', d: '#6e3a1c' },
+  { name: 'chainmail', m: '#6e6e74', M: '#b8b8c0', d: '#3c3c42', chain: true },
   { name: 'iron', m: '#d4d4d4', M: '#ffffff', d: '#959595' },
   { name: 'diamond', m: '#3ad6c6', M: '#a8fff2', d: '#16908a' },
   { name: 'netherite', m: '#4f4549', M: '#776a6f', d: '#2c2427' },
